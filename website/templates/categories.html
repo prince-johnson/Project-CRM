@@ -122,8 +122,8 @@
 {% for category in categories %}
     <div class="card">
         <div class="row right">
-            <a href="#{{ category.categoryId }}" class="modal-close btn-flat waves-effect waves-orange" onclick="$('#{{ category.categoryId }}').modal('open');">Edit
-                <i class="material-icons right">edit</i>
+            <a href="#{{ category.categoryId }}" class="modal-close btn-flat green-text waves-effect waves-green" onclick="$('#{{ category.categoryId }}').modal('open');">Edit
+                <i class="material-icons green-text right">edit</i>
             </a>
             <div id="{{ category.categoryId }}" class="modal">
                 <div class="modal-content">
@@ -140,12 +140,9 @@
                             </div>
                         </div>
                         <div class="input-field col s6">
-                            <select name="editCategoryStatus" id="editCategoryStatus{{ category.categoryId }}" disabled>
-                                {% if category.categoryStatus %}
+                            <select name="editCategoryStatus" id="editCategoryStatus{{ category.categoryId }}">
                                 <option value='1'>ENABLED</option>
-                                {% else %}
                                 <option value=''>DISABLED</option>
-                                {% endif %}
                             </select>
                             <label>Category Status</label>
                         </div>
@@ -168,8 +165,14 @@
 
             <div class="switch"><!--TO BE MODIFIED-->
                 <label>
-                  <input type="checkbox">
+                  DISABLED
+                  {% if category.categoryStatus %}
+                  <input type="checkbox" id="categorySwitch" name="categoryClose" onClick="toggleCategory()" value="ENABLED" checked disabled>
+                  {% else %}
+                  <input type="checkbox" id="categorySwitch" name="categoryClose" onClick="toggleCategory()" value="ENABLED" disabled>
+                  {% endif %}
                   <span class="lever"></span>
+                  ENABLED
                 </label>
             </div>
             <!--<a href="#modal4" class="modal-close btn-flat waves-effect waves-orange" onclick="$('#modal4').modal('open');">Delete

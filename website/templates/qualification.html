@@ -123,8 +123,8 @@
 {% for qual in qualifications %}
     <div class="card">
         <div class="row right">
-            <a href="#{{ qual.qualificationId }}" class="modal-close btn-flat waves-effect waves-orange" onclick="$('#{{ qual.qualificationId }}').modal('open');">Edit
-                <i class="material-icons right">edit</i>
+            <a href="#{{ qual.qualificationId }}" class="modal-close btn-flat green-text waves-effect waves-green" onclick="$('#{{ qual.qualificationId }}').modal('open');">Edit
+                <i class="material-icons green-text right">edit</i>
             </a>
             <div id="{{ qual.qualificationId }}" class="modal">
                 <div class="modal-content">
@@ -141,11 +141,17 @@
                             </div>
                         </div>
                         <div class="input-field col s6">
-                            <select name="editQualificationStatus" id="editQualificationStatus{{ qual.qualificationId }}">
+                            <select name="qualificationStatus" id="editQualificationStatus{{ qual.qualificationId }}">
                                 <option value='1'>ENABLED</option>
                                 <option value=''>DISABLED</option>
                             </select>
                             <label>Qualification Status</label>
+                        </div>
+                        <div class="row"><!--comments-->
+                            <div class="input-field col s12">
+                                <textarea name="qualificationComments" id="editQualificationComments{{ qual.qualificationId }}" class="materialize-textarea" placeholder="{{ qual.qualificationComments }}"></textarea>
+                                <label for="qualificationComments">Qualification comments</label>
+                            </div>
                         </div>
                         
                         <div class="modal-footer">
@@ -159,8 +165,14 @@
             </div>
             <div class="switch"><!--TO BE MODIFIED-->
                 <label>
-                  <input type="checkbox">
+                  DISABLED
+                  {% if qual.qualificationStatus %}
+                  <input type="checkbox" id="qualSwitch" name="qualClose" onClick="toggleQualification()" value="ENABLED" checked disabled>
+                  {% else %}
+                  <input type="checkbox" id="qualSwitch" name="qualClose" onClick="toggleQualification()" value="ENABLED" disabled>
+                  {% endif %}
                   <span class="lever"></span>
+                  ENABLED
                 </label>
             </div>
             <!--<a href="#modal4" class="modal-close btn-flat waves-effect waves-orange" onclick="$('#modal4').modal('open');">Delete
