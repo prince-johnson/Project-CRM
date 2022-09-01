@@ -21,6 +21,34 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 
+// Search Users
+function searchUser() {
+    searchBy = document.getElementById("searchBy").value;
+    searchConstraint = document.getElementById("searchConstraint").value;
+  
+    fetch("/users/" + searchBy + "/" + searchConstraint, {method: "GET"}).then(() => (window.location.href = "/users/" + searchBy + "/" + searchConstraint));
+  }
+
+// Filter user-role Batch
+function applyRoleFilters() {
+    inputs = document.querySelectorAll(".filterCheckbox:checked");
+    let roles = {
+        roles: []
+    };
+    inputs.forEach(ip => {
+        roles["roles"].push(ip.value);
+    });
+    if (roles["roles"] == []) {
+        window.location.href = "/users";
+    }
+    fetch("/users", {method: "GET"}).then(() => (window.location.href = "/users?roles=" + roles["roles"]));
+    }
+
+
+// Back to users
+function userBack(){
+    window.location.href = "/users"
+}
 
 // Batch 
 // Close/Open Batch
@@ -78,55 +106,26 @@ function searchBatch(date){
     .then(() => window.location.href="/batches/" + searchBy + '/' + searchConstraint);
 }
 
-// Back to users
-function userBack(){
-    window.location.href = "/users"
-}
-
-// Search Users
-function searchUser() {
-    searchBy = document.getElementById("searchBy").value;
-    searchConstraint = document.getElementById("searchConstraint").value;
-  
-    fetch("/users/" + searchBy + "/" + searchConstraint, {method: "GET"}).then(() => (window.location.href = "/users/" + searchBy + "/" + searchConstraint));
-  }
-
-  // Filter user-role Batch
-  function applyRoleFilters() {
-    inputs = document.querySelectorAll(".filterCheckbox:checked");
-    let roles = {
-      roles: []
-    };
-    inputs.forEach(ip => {
-      roles["roles"].push(ip.value);
-    });
-    if (roles["roles"] == []) {
-      window.location.href = "/users";
-    }
-    fetch("/users", {method: "GET"}).then(() => (window.location.href = "/users?roles=" + roles["roles"]));
-  }
-
-  // Filter category-Batch
-  function applyFilters() {
-    inputs = document.querySelectorAll(".filterCheckbox:checked");
-    let categories = {
-      categories: []
-    };
-    inputs.forEach(ip => {
-      categories["categories"].push(ip.value);
-    });
-    fetch("/batches", {method: "GET"}).then(() => (window.location.href = "/batches?categories=" + categories["categories"]));
-  }
-
-
-// Back to batches
-function batchBack(){
-    window.location.href="/batches"
+// Filter category-Batch
+function applyFilters() {
+inputs = document.querySelectorAll(".filterCheckbox:checked");
+let categories = {
+    categories: []
+};
+inputs.forEach(ip => {
+    categories["categories"].push(ip.value);
+});
+fetch("/batches", {method: "GET"}).then(() => (window.location.href = "/batches?categories=" + categories["categories"]));
 }
 
 // Get date picked
 function getDate(){
     console.log(document.getElementById('batchStartDate').value)
+}
+
+// Back to batches
+function batchBack(){
+    window.location.href="/batches"
 }
 
 //Enquiry
@@ -139,10 +138,6 @@ function toggleEnquiry(){
     else {
         alert(Boolean(''))
     }
-}
-// Back to enquiries
-function enquiryBack(){
-    window.location.href="/enquiries"
 }
 
 // Search Enquiry
@@ -179,6 +174,79 @@ function editEnquiry(enquiryId){
     })
     .then(() => window.location.href="/enquiries");
 }
+// Back to enquiries
+function enquiryBack(){
+    window.location.href="/enquiries"
+}
+
+//Courses
+//Edit Course
+function editCourse(courseId) {
+courseDescription = document.getElementById("editCourseDescription" + courseId).value;
+if (courseDescription == "") {
+    courseDescription = document.getElementById("editCourseDescription" + courseId).placeholder;
+}
+alert(courseDescription);
+fetch("/courses/" + courseId, {
+    method: 'PUT',
+    body: JSON.stringify({
+    courseCategoryId: document.getElementById("editCourseCategoryId" + courseId).value,
+    courseName: document.getElementById("editCourseName" + courseId).value,
+    courseDuration: document.getElementById("editCourseDuration" + courseId).value,
+    courseStatus: document.getElementById("editCourseStatus" + courseId).value,
+    courseDescription: courseDescription,
+    courseInstructorId: document.getElementById("editcourseInstructorId" + courseId).value,
+    courseMinQualificationId: document.getElementById("editCourseMinQualificationId" + courseId).value,
+    courseBatchSize: document.getElementById("editCourseBatchSize" + courseId).value,
+    courseSyllabus: null,
+    courseUrl: document.getElementById("editCourseUrl" + courseId).value
+    })
+}).then(() => (window.location.href = "/courses"));
+}
+
+//Search Course
+function searchCourse() {
+searchBy = document.getElementById("searchBy").value;
+searchConstraint = document.getElementById("searchConstraint").value;
+
+fetch("/courses/" + searchBy + "/" + searchConstraint, {
+    method: "GET"
+})
+    .then(() => (window.location.href = "/courses/" + searchBy + "/" + searchConstraint));
+}
+
+//Delete Course
+function deleteCourse(courseId) {
+    fetch("/courses/" + courseId, {
+        method: "DELETE"
+})
+    .then(() => (window.location.href = "/courses"));
+}
+
+// Filter Courses
+function applyCourseFilters() {
+inputs = document.querySelectorAll(".filterCheckbox:checked");
+let status = {
+    status: []
+};
+inputs.forEach(ip => {
+    status["status"].push(ip.value);
+});
+if (status["status"] == []) {
+    window.location.href = "/courses";
+}
+fetch("/users", {
+    method: "GET"
+})
+    .then(() => (window.location.href = "/courses?status=" + status["status"]));
+}
+
+// Back to courses
+function courseBack() {
+window.location.href = "/courses";
+}
+
+
 
 //Category
 // Delete Category
@@ -223,7 +291,7 @@ function categoryBack(){
 }
 
 //Qualification
-// Delete Qualification
+//Delete Qualification
 function deleteQualification(qualificationId){
     fetch('/qualification/' + qualificationId, {
         method: 'DELETE'
