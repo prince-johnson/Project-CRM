@@ -175,7 +175,7 @@ def editEnquiry(enquiryId):
 def categories():
     if request.method == 'POST':
         #batchId = "BA" + f"{(len(Batches.query.all())):03}"
-        categoryId = "CA"+ f"{(len(Category.query.all())):03}"
+        categoryId = "CA"+ f"{(len(Category.query.all())+1):03}"
         categoryName = request.form.get('categoryName')
         categoryStatus = bool(request.form.get('categoryStatus'))
         categoryComments = request.form.get('categoryComments')
