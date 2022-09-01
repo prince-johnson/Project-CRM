@@ -8,65 +8,41 @@
                 <div class="logo-container">
                     <img src="../static/images/logo-dark.png" alt="logo">
                 </div>
-                <p>With more lessons, you can begin, improve, or strengthen your skills.</p>
+                <p>With more lessons, you can begin,
+                improve, or strengthen your skills.</p>
             </div>
             <div class="col s12 l6 offest-l2">
                 <ul class="tabs">
-                    <li class="tab col s6">
-                        <a href="#registerUser" class="black-text">Register</a>
-                    </li>
-                    <li class="tab col s6">
+                    <li class="tab col s12">
                         <a href="#loginUser" class="black-text">Login</a>
                     </li>
                 </ul>
-                <div class="col s12" id="registerUser">
-                    <form class="col s12" method="post">
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <i class="material-icons prefix">person_outline</i>
-                                <input id="first_name" type="text" class="validate">
-                                <label for="first_name">First Name</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input id="last_name" type="text" class="validate">
-                                <label for="last_name">Last Name</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">person</i>
-                                <input id="email" type="email" class="validate">
-                                <label for="email">Email</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">fingerprint</i>
-                                <input id="password" type="password" class="validate">
-                                <label for="password">Password</label>
-                            </div>
-                        </div>
-                        <a class="waves-effect waves-light btn orange" href="./admin/dashboard"><i
-                                class="material-icons left">send</i>Submit</a>
-                    </form>
-                </div>
+                <br>
                 <div class="col s12" id="loginUser">
-                    <form class="col s12" method="post">
+                    <form class="col s12">
                         <div class="row">
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">person</i>
-                                <input id="email" type="email" class="validate">
+                                <input id="email" type="email" class="validate" name="email">
                                 <label for="email">Email</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">fingerprint</i>
-                                <input id="password" type="password" class="validate">
+                                <input id="password" type="password" class="validate" name="password">
                                 <label for="password">Password</label>
                             </div>
                         </div>
-                        <a href="#" class="orange-text">Forgot Password?</a><br><br><br>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <a href="#" class="orange-text">Forgot Password?</a><br><br><br>
+                            </div>
+                            <div class="input-field col s6">
+                                <a href="/register" class="orange-text">Don't have an account? <span style="color:#2b6777; font-weight:bold" >Sign Up</span></a><br><br><br>
+                            </div>
+                        </div>
+                        
                         <a class="waves-effect waves-light btn orange" href="./admin/dashboard"><i
                                 class="material-icons left">send</i>Submit</a>
                     </form>

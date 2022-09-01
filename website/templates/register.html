@@ -1,0 +1,99 @@
+<!--{% extends "base.html" %} -->
+{% block title %}Register{% endblock %} 
+{% block content %}
+    <div class="flex-wrapper">
+    <section class="container section" id="userAuth">
+        <div class="row">
+            <div class="col s12 l6">
+                <div class="logo-container">
+                    <img src="../static/images/logo-dark.png" alt="logo">
+                </div>
+                <p>With more lessons, you can begin,
+                    improve, or strengthen your skills.</p>
+            </div>
+            <div class="col s12 l6 offest-l2">
+                <ul class="tabs">
+                    <li class="tab col s12">
+                        <a href="#registerUser" class="black-text">Register</a>
+                    </li>
+                </ul>
+                <br>
+                <div class="col s12" id="registerUser">
+                    <form class="col s12" method="post">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">person</i>
+                                <input id="userName" type="text" class="validate" name="userName">
+                                <label for="userName">First Name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">email</i>
+                                <input id="userEmail" type="email" class="validate" name="userEmail">
+                                <label for="userEmail">Email</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">phone</i>
+                                <input id="userPhone" type="tel" class="validate" name="userPhone">
+                                <label for="userPhone">Phone</label>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">public</i>
+                                <input id="userCountry" type="text" class="validate" name="userCountry">
+                                <label for="userCountry">Country</label>
+                            </div>
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">place</i>
+                                <input id="userState" type="text" class="validate" name="userState">
+                                <label for="userState">State</label>
+                            </div>
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">location_city</i>
+                                <input id="userCity" type="text" class="validate" name="userCity">
+                                <label for="userCity">City</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">fingerprint</i>
+                                <input id="userPassword" type="password" class="validate" name="userPassword">
+                                <label for="userPassword">Password</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <a class="waves-effect waves-light btn orange" href="./admin/dashboard"><i
+                                    class="material-icons left">send</i>Submit</a>
+                            </div>
+                            <div class="input-field col s6">
+                                <a href="/login" class="orange-text">Already have an account? <span style="color:#2b6777; font-weight:bold" >Login</span></a><br><br><br>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section> 
+    <!--footer-->
+    <footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="right-align container align-footer">
+            ©2022 All Rights Reserved, <span style="color:#52ab98">InApp Academy</span>. Privacy & Terms
+
+        </div>
+      </div>
+    </footer>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../js/materialize.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.tabs').tabs();
+    })
+</script>
+{% endblock %}

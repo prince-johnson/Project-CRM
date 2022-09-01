@@ -5,8 +5,9 @@ from os import path
 db = SQLAlchemy() 
 #DB_NAME = "database.db"
 DB_NAME = "chummaveruthe"
-SQL_SERVER_USER_PASS_IP_PORT = 'sa:123@192.168.5.197:1891'
-# SQL_SERVER_USER_PASS_IP_PORT = 'LAPTOP-85QRUTE7\SQLEXPRESS'
+#SQL_SERVER_USER_PASS_IP_PORT = 'sa:123@192.168.5.197:1891' #all
+# SQL_SERVER_USER_PASS_IP_PORT = 'LAPTOP-85QRUTE7\SQLEXPRESS' #prince
+SQL_SERVER_USER_PASS_IP_PORT = 'LAPTOP-R5LS4JCT\SQLEXPRESS' #ajmi
 
 basedir = path.abspath(path.dirname(__file__))
 
@@ -27,6 +28,8 @@ def create_app():
     app.register_blueprint(views, url_prefix='/admin')
     app.register_blueprint(auth, url_prefix='/')
 
+    from .models import Users
+    
     create_database(app)
 
     return app
