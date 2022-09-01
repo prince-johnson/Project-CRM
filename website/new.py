@@ -1,17 +1,19 @@
 from flask import Blueprint, render_template, request, jsonify, url_for, redirect
 from . import db
+
 from .models import Category, Batches, Courses, Enquiries, Users, Qualifications, ActivityLog
+
 import json
 from sqlalchemy import func, Date
 from datetime import date
 
+
+
 views = Blueprint('views', __name__)
 
 categories =[]
-batches =[]
-enquiries = []
 
-#dashboard
+
 @views.route('/dashboard')
 def dashboard():
     users = Users.query.all()
@@ -19,7 +21,6 @@ def dashboard():
     # dates = ActivityLog.query(cast(ActivityLog.time, Date)).distinct().all()
     return render_template('dashboard.html', users=users, dates=dates)
 
-#user
 @views.route('/users')
 def  users():
     users = Users.query.all()
@@ -35,7 +36,6 @@ def  users():
         return render_template('users.html', users=users, listAll=listAll)
     return render_template('users.html', users=users, listAll=True)
 
-#searchuser
 @views.route('/users/<searchBy>/<searchConstraint>')
 def searchUser(searchBy, searchConstraint):
     if searchBy == 'id':
@@ -43,6 +43,9 @@ def searchUser(searchBy, searchConstraint):
     elif searchBy == 'name':
         users = Users.query.filter(Users.userName.like("%"+searchConstraint+"%")).all()
     return render_template('users.html', users=users, listAll=False)
+
+batches =[]
+enquiries = []
 
 #batches
 @views.route('/batches', methods=['GET', 'POST'])
@@ -61,20 +64,23 @@ def batches():
         db.session.commit()
     batches = Batches.query.all()
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
+
     categories = Category.query.with_entities(Category.categoryId, Category.categoryName).distinct().all()
-    if request.args.get('status') :
-        print(request.args.get('status').split(','))
+    if request.args :
+        print(request.args.get('categories').split(','))
         listAll = False
-        batches = Batches.query.filter(Batches.batchStatus.in_((request.args.get('status')).split(','))).all()
-        if len(request.args.get('status').split(',')) == 2:
+        batches = Batches.query.filter(Batches.batchStatus.in_((request.args.get('categories')).split(','))).all()
+        if len(request.args.get('categories').split(',')) == 2:
             listAll = True
-        elif request.args.get('status').split(',') == ['']:
+        elif request.args.get('categories').split(',') == ['']:
             listAll = True
             batches = Batches.query.all()
         return render_template('batches.html', batches=batches[::-1], listAll=listAll, courses=courses, categories=categories)
     return render_template('batches.html', batches=batches[::-1], listAll=True, courses=courses, categories=categories)
 
-#delete batch
+    return render_template('batches.html', batches=batches[::-1], listAll=True, courses=courses)
+
+
 @views.route('/batches/<batchId>', methods=['DELETE'])
 def deleteBatch(batchId):
     batch = Batches.query.get(batchId)
@@ -83,7 +89,6 @@ def deleteBatch(batchId):
         db.session.commit()
     return jsonify({})
 
-#edit batch
 @views.route('/batches/<batchId>', methods=['PUT', 'PATCH'])
 def editBatch(batchId):
     batch = Batches.query.get_or_404(batchId)
@@ -99,7 +104,10 @@ def editBatch(batchId):
     db.session.commit()
     return jsonify({})
 
-#search batch
+
+
+
+
 @views.route('/batches/<searchBy>/<searchConstraint>')
 def searchBatch(searchBy, searchConstraint):
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -113,9 +121,19 @@ def searchBatch(searchBy, searchConstraint):
         searchConstraint = dateList[2] + "-" + f"{(months.index(dateList[0])+1):02}" + "-" + f"{dateList[1][:-1]:02}"
         print(searchConstraint)
         batches = Batches.query.filter(Batches.batchStartDate.like("%"+searchConstraint+"%")).all()
+
     return render_template('batches.html', batches=batches, listAll=False)
 
-#enquiry
+
+
+
+    courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
+    categories = Category.query.with_entities(Category.categoryId, Category.categoryName).distinct().all()
+    return render_template('batches.html', batches=batches[::-1], listAll=False, courses=courses, categories=categories)
+
+    return render_template('batches.html', batches=batches, listAll=False)
+
+
 @views.route('/enquiries', methods=['GET', 'POST'])
 def enquiries():
     if request.method == 'POST':
@@ -134,7 +152,6 @@ def enquiries():
     enquiryStatus = Enquiries.query.with_entities(Enquiries.enquiryStatus).distinct().all()
     return render_template('enquiries.html', enquiries=enquiries[::-1], listAll=True, users=users, courses=courses, enquiryStatus=enquiryStatus)
 
-#delete enquiry
 @views.route('/enquiries/<enquiryId>', methods=['DELETE'])
 def deleteEnquiry(enquiryId):
     enquiry = Enquiries.query.get(enquiryId)
@@ -143,7 +160,6 @@ def deleteEnquiry(enquiryId):
         db.session.commit()
     return jsonify({})
 
-#serach enquiry
 @views.route('/enquiries/<searchBy>/<searchConstraint>')
 def searchEnquiry(searchBy, searchConstraint):
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
@@ -156,7 +172,6 @@ def searchEnquiry(searchBy, searchConstraint):
     
     return render_template('enquiries.html', enquiries=enquiries, courses=courses, listAll=False)
 
-#edit enquiry
 @views.route('/enquiries/<enquiryId>', methods=['PUT', 'PATCH'])
 def editEnquiry(enquiryId):
     enquiry = Enquiries.query.get_or_404(enquiryId)
@@ -169,6 +184,7 @@ def editEnquiry(enquiryId):
     db.session.commit()
     print(value)
     return jsonify({})
+
 
 #categories
 @views.route('/categories', methods=['GET', 'POST'])
@@ -186,7 +202,6 @@ def categories():
     categories=Category.query.all()
     return render_template('categories.html', categories=categories[::-1], listAll=True)
 
-#delete category
 @views.route('/categories/<categoryId>', methods=['DELETE'])
 def deleteCategory(categoryId):
     category = Category.query.get(categoryId)
@@ -195,7 +210,6 @@ def deleteCategory(categoryId):
         db.session.commit()
     return jsonify({})
 
-#search category
 @views.route('/categories/<searchBy>/<searchConstraint>')
 def searchCategory(searchBy, searchConstraint):
     if searchBy == 'id':
@@ -204,7 +218,6 @@ def searchCategory(searchBy, searchConstraint):
         categories = Category.query.filter(Category.categoryName.like("%"+searchConstraint+"%")).all()
     return render_template('categories.html', categories=categories, listAll=False)
 
-#edit category
 @views.route('/categories/<categoryId>', methods=['PUT','PATCH'])
 def editCategory(categoryId):
     category = Category.query.get_or_404(categoryId)
@@ -217,52 +230,7 @@ def editCategory(categoryId):
     db.session.commit()
     return jsonify({})
 
-#qualifications
-@views.route('/qualification', methods=['GET', 'POST'])
-def qualifications():
-    if request.method == 'POST':
-        # qualificationId = qualificationId
-        qualificationName = request.form.get('qualificationName')
-        qualificationStatus = bool(request.form.get('qualificationStatus'))
-        print( qualificationName, qualificationStatus)
-        new_qualification = Qualifications(qualificationName=qualificationName, qualificationStatus=qualificationStatus)
-        db.session.add(new_qualification)
-        db.session.commit()
-    qualifications=Qualifications.query.all()
-    return render_template('qualification.html',qualifications=qualifications[::-1], listAll=True)
 
-#delete qualification
-@views.route('/qualification/<qualificationId>', methods=['DELETE'])
-def deleteQualification(qualificationId):
-    qual = Qualifications.query.get(qualificationId)
-    if qual:
-        db.session.delete(qual)
-        db.session.commit()
-    return jsonify({})
-
-#search qualifiactaion
-@views.route('/qualification/<searchBy>/<searchConstraint>')
-def searchQualification(searchBy, searchConstraint):
-    if searchBy == 'id':
-        qualifications = Qualifications.query.filter(Qualifications.qualificationId.like("%"+searchConstraint+"%")).all()
-    elif searchBy == 'name':
-        qualifications = Qualifications.query.filter(Qualifications.qualificationName.like("%"+searchConstraint+"%")).all()
-    return render_template('qualification.html', qualifications=qualifications, listAll=False)
-
-#edit qualifiaction
-@views.route('/qualification/<qualificationId>', methods=['PUT','PATCH'])
-def editQualification(qualificationId):
-    qual = Qualifications.query.get_or_404(qualificationId)
-    value = json.loads(request.data)
-    qual.qualificationName=value['qualificationName']
-    qual.qualificationStatus=bool(value['qualificationStatus'])
-    db.session.add(qual)
-    print(value)
-    db.session.commit()
-    print(value)
-    return jsonify({})
-
-#courses
 @views.route('/courses', methods=['GET', 'POST'])
 def courses():
     if request.method == 'POST':
@@ -287,7 +255,6 @@ def courses():
     else:
         return render_template('courses.html', courses = Courses.query.all(), categories = Category.query.all(), qualifications = Qualifications.query.all())
 
-#edit courses
 @views.route('/courses/<courseId>', methods=['PUT', 'PATCH'])
 def editCourse(courseId):
     c = Courses.query.get_or_404(courseId)
@@ -317,3 +284,49 @@ def editCourse(courseId):
     db.session.add(c)
     db.session.commit()
     return jsonify({})
+
+
+# #categories code
+# @views.route('/categories', methods=['GET', 'POST'])
+# def categories():
+#     if request.method == 'POST':
+#         #batchId = "BA" + f"{(len(Batches.query.all())):03}"
+#         categoryId = "CA"+ f"{(len(Category.query.all())):03}"
+#         categoryName = request.form.get('categoryName')
+#         categoryStatus = bool(request.form.get('categoryStatus'))
+#         categoryComments = request.form.get('categoryComments')
+#         print(categoryId, categoryName, categoryStatus, categoryComments)
+#         new_category = Category(categoryId=categoryId, categoryName=categoryName, categoryStatus=categoryStatus, categoryComments=categoryComments)
+#         db.session.add(new_category)
+#         db.session.commit()
+#     categories=Category.query.all()
+#     return render_template('categories.html', categories=categories[::-1], listAll=True)
+
+# @views.route('/categories/<categoryId>', methods=['DELETE'])
+# def deleteCategory(categoryId):
+#     category = Category.query.get(categoryId)
+#     if category:
+#         db.session.delete(category)
+#         db.session.commit()
+#     return jsonify({})
+
+# @views.route('/categories/<searchBy>/<searchConstraint>')
+# def searchCategory(searchBy, searchConstraint):
+#     if searchBy == 'id':
+#         categories = Category.query.filter(Category.categoryId.like("%"+searchConstraint+"%")).all()
+#     elif searchBy == 'name':
+#         categories = Category.query.filter(Category.categoryName.like("%"+searchConstraint+"%")).all()
+#     return render_template('categories.html', categories=categories, listAll=False)
+
+# @views.route('/categories/<categoryId>', methods=['PUT','PATCH'])
+# def editCategory(categoryId):
+#     category = Category.query.get_or_404(categoryId)
+#     value = json.loads(request.data)
+#     category.categoryId=value['categoryId']
+#     category.categoryName=value['categoryName']
+#     category.categoryStatus=value['categoryStatus']
+#     category.categoryComments=value['categoryComments']
+#     db.session.add(category)
+#     db.session.commit()
+
+#     return jsonify({})
