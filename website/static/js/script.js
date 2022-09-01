@@ -249,6 +249,17 @@ window.location.href = "/courses";
 
 
 //Category
+// Close/Open category
+function toggleCategory(){
+    toggleSwitch = document.getElementById('categorySwitch')
+    if (toggleSwitch.checked) {
+        alert(Boolean(toggleSwitch.value))
+    } 
+    else {
+        alert(Boolean(''))
+    }
+}
+
 // Delete Category
 function deleteCategory(categoryId){
     fetch('/categories/' + categoryId, {
@@ -291,6 +302,17 @@ function categoryBack(){
 }
 
 //Qualification
+// Close/Open qualification
+function toggleQualification(){
+    toggleSwitch = document.getElementById('qualSwitch')
+    if (toggleSwitch.checked) {
+        alert(Boolean(toggleSwitch.value))
+    } 
+    else {
+        alert(Boolean(''))
+    }
+}
+
 //Delete Qualification
 function deleteQualification(qualificationId){
     fetch('/qualification/' + qualificationId, {
