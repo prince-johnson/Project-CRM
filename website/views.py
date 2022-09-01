@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify, url_for, redirect
 from . import db
-from .models import Category, Batches, Courses, Enquiries, Users, Qualifications, ActivityLog
+from .models import Category, Batches, Courses, Enquiries, Users, Qualifications, ActivityLog, Instructor
 import json
 from sqlalchemy import func, Date
 from datetime import date
@@ -282,10 +282,19 @@ def courses():
                 courseId = courseCategoryId+courseName+str(int(i.courseId[-1])+1)
         course = Courses(courseName=courseName, courseId=courseId, courseCategoryId=courseCategoryId, courseDuration=courseDuration, courseMinQualificationId=courseMinQualification, courseInstructorID=courseInstructorId, courseStatus=courseStatus, courseDescription=courseDescription, courseBatchSize=courseBatchSize, courseVideoLink=courseVideoLink, courseSyllabus=None)
         db.session.add(course)
-        db.session.commit()
-        return render_template('courses.html', courses=Courses.query.all(), categories= Category.query.all(), qualifications= Qualifications.query.all())
-    else:
-        return render_template('courses.html', courses = Courses.query.all(), categories = Category.query.all(), qualifications = Qualifications.query.all())
+        db.session.commit()  
+    if request.args:
+        print(request.args.get('status').split(',')) 
+        listAll = False
+        courses = Courses.query.filter(Courses.courseStatus.in_((request.args.get('status')).split(','))).all()
+        if len(request.args.get('status').split(',')) == 2:
+            listAll = True
+        elif request.args.get('status').split(',') == ['']:
+            listAll = True
+            courses = Courses.query.all()
+        print(courses)
+        return render_template('courses.html', courses = courses[::-1], categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll = listAll)
+    return render_template('courses.html', courses = Courses.query.all(), categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll=True)
 
 #edit courses
 @views.route('/courses/<courseId>', methods=['PUT', 'PATCH'])
@@ -316,4 +325,21 @@ def editCourse(courseId):
     c.courseVideoLink = courseVideoLink
     db.session.add(c)
     db.session.commit()
+    return jsonify({})
+
+@views.route('/courses/<searchBy>/<searchConstraint>')
+def searchCourse(searchBy, searchConstraint):
+    if searchBy == 'id':
+        courses = Courses.query.filter(Courses.courseId.like("%"+searchConstraint+"%")).all()
+    elif searchBy == 'name':
+        courses = Courses.query.filter(Courses.courseName.like("%"+searchConstraint+"%")).all()
+    return render_template('courses.html', courses=courses, categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll=False)
+
+# Delete Course
+@views.route('/courses/<courseId>', methods=['DELETE'])
+def deleteCourse(courseId):
+    course = Courses.query.get(courseId)
+    if course:
+        db.session.delete(course)
+        db.session.commit()
     return jsonify({})
