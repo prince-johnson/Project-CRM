@@ -35,13 +35,14 @@ class CourseEnrollment(db.Model):
     #     self.score = score
 
 class Batches(db.Model):
-    batchId = db.Column(db.String(80), nullable=False, primary_key=True) #primary key
-    batchName = db.Column(db.String(80), nullable=False)
-    batchCourseId = db.Column(db.String(80), db.ForeignKey('courses.courseId'), nullable=False) #foreign key
+    id = db.Column(db.Integer, primary_key=True) #primary key
+    batchId = db.Column(db.String(80), unique=True)
+    batchName = db.Column(db.String(80))
+    batchCourseId = db.Column(db.String(80), db.ForeignKey('courses.courseId')) #foreign key
     batchStatus = db.Column(db.Boolean, default=True)
     batchStrength = db.Column(db.Integer)
-    batchStartDate = db.Column(db.DateTime, nullable=False)
-    batchEndDate = db.Column(db.DateTime, nullable=False)
+    batchStartDate = db.Column(db.Date)
+    batchEndDate = db.Column(db.Date)
 
     enrollments = db.relationship('CourseEnrollment')
     users = db.relationship('UserBatch')
@@ -56,10 +57,12 @@ class Batches(db.Model):
 
 class Enquiries(db.Model):
     enquiryId = db.Column(db.Integer, primary_key=True) #primary key
+    enquiryCode = db.Column(db.String(80), unique=True)
     enquiryUserId = db.Column(db.Integer, db.ForeignKey('users.userId')) #foreign key
     enquiryCourseId = db.Column(db.String(80), db.ForeignKey('courses.courseId')) #foreign key
     enquiryDescription = db.Column(db.String(250))
     enquiryStatus = db.Column(db.Boolean, default=True)
+    enquiryUpdate = db.Column(db.String(80))
 
     # def __init__(self, enquiryId, enquiryUserId, enquiryCourseId, enquiryDescription, enquiryStatus):
     #     self.enquiryId = enquiryId
@@ -69,9 +72,10 @@ class Enquiries(db.Model):
     #     self.enquiryStatus = enquiryStatus
 
 class Courses(db.Model):
-    courseId = db.Column(db.String(80), nullable=False, primary_key=True) #primary key
-    courseName = db.Column(db.String(80), nullable=False)
-    courseCategoryId = db.Column(db.String(80), db.ForeignKey('category.categoryId'), nullable=False) #foreign key
+    id = db.Column(db.Integer, primary_key=True) #primary key
+    courseId = db.Column(db.String(80), unique=True)
+    courseName = db.Column(db.String(80))
+    courseCategoryId = db.Column(db.Integer, db.ForeignKey('category.categoryId')) #foreign key
     courseDuration = db.Column(db.String(80))
     courseDescription = db.Column(db.String(80))
     courseInstructorID = db.Column(db.Integer, db.ForeignKey('instructor.instructorId')) #foreign key
@@ -111,14 +115,17 @@ class ActivityLog(db.Model):
 
 class Users(db.Model):
     userId = db.Column(db.Integer, primary_key=True, autoincrement=True) #primary key
-    userName = db.Column(db.String(80), nullable=False)
-    userPassword = db.Column(db.String(250), nullable=False)
-    userRoleId = db.Column(db.Integer, db.ForeignKey('role.roleId'), nullable=False) #foreign key
-    userEmail = db.Column(db.String(80), nullable=False)
-    userPhone = db.Column(db.String(80), nullable=False)
-    userCountry = db.Column(db.String(80), nullable=False)
-    userState = db.Column(db.String(80), nullable=False)
-    userCity = db.Column(db.String(80), nullable=False)
+    userCode = db.Column(db.String(80), unique=True)
+    userName = db.Column(db.String(80))
+    userPassword = db.Column(db.String(250))
+    userRoleId = db.Column(db.Integer, db.ForeignKey('role.roleId')) #foreign key
+    userEmail = db.Column(db.String(80))
+    userPhone = db.Column(db.String(80))
+    userCountry = db.Column(db.String(80))
+    userState = db.Column(db.String(80))
+    userCity = db.Column(db.String(80))
+    userNew = db.Column(db.Boolean, default=True)
+    userStatus = db.Column(db.Boolean, default=True)
 
     enquiries = db.relationship('Enquiries')
     activityLog = db.relationship('ActivityLog')
@@ -137,9 +144,8 @@ class Users(db.Model):
     #     self.userCity = userCity
 
 class Category(db.Model):
-
-    categoryId = db.Column(db.String(80), primary_key=True) #primary key
-    categoryName = db.Column(db.String(80))
+    categoryId = db.Column(db.Integer,primary_key=True ) #primary key
+    categoryName = db.Column(db.String(80), unique=True)
     categoryStatus = db.Column(db.Boolean, default=True)
     categoryComments = db.Column(db.String(250))
     courses = db.relationship('Courses')
@@ -151,9 +157,10 @@ class Category(db.Model):
     #     self.categoryComments = categoryComments
 
 class Qualifications(db.Model):
-    qualificationId = db.Column(db.Integer, nullable=False, primary_key=True) #primary key
-    qualificationName = db.Column(db.String(80), nullable=False)
+    qualificationId = db.Column(db.Integer, primary_key=True) #primary key
+    qualificationName = db.Column(db.String(80))
     qualificationStatus = db.Column(db.Boolean, default=True)
+    qualificationPriority = db.Column(db.Integer)
     
     courses = db.relationship('Courses')
     users = db.relationship('UserQualification')
@@ -165,7 +172,7 @@ class Qualifications(db.Model):
 
 class Role(db.Model):
     roleId = db.Column(db.Integer, primary_key=True) #primary key
-    roleName = db.Column(db.String(80), nullable=False)
+    roleName = db.Column(db.String(80))
     users = db.relationship('Users')
 
 
@@ -174,8 +181,9 @@ class Role(db.Model):
     #     self.roleName = roleName
 
 class Instructor(db.Model):
-    instructorId = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True) #primary key
-    instructorName = db.Column(db.String(80), nullable=False) 
+    instructorId = db.Column(db.Integer, primary_key=True, autoincrement=True) #primary key
+    instructorCode = db.Column(db.String(80), unique=True)
+    instructorName = db.Column(db.String(80)) 
     instructorEmail = db.Column(db.String(80))
     instructorPhone = db.Column(db.String(80))
     courses = db.relationship('Courses')
