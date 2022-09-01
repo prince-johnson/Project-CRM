@@ -35,6 +35,7 @@ class CourseEnrollment(db.Model):
     #     self.score = score
 
 class Batches(db.Model):
+    id = db.Column(db.String(80), primary_key=True) #primary key
     batchId = db.Column(db.String(80), nullable=False, primary_key=True) #primary key
     batchName = db.Column(db.String(80), nullable=False)
     batchCourseId = db.Column(db.String(80), db.ForeignKey('courses.courseId'), nullable=False) #foreign key
