@@ -85,6 +85,7 @@ class Courses(db.Model):
     courseSyllabus = db.Column(db.LargeBinary)
     courseRating = db.Column(db.Integer)
     courseStatus = db.Column(db.Boolean, default=True)
+    courseImage = db.Column(db.LargeBinary)
 
     batches = db.relationship('Batches')
     enquiries = db.relationship('Enquiries')
