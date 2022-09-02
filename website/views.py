@@ -376,3 +376,7 @@ def deleteCourse(courseId):
         db.session.delete(course)
         db.session.commit()
     return jsonify({})
+
+@views.route('/profile', methods=['GET'])
+def profile():
+    return render_template('profile.html')
