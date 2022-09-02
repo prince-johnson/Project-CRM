@@ -1,3 +1,5 @@
+{% set obj = batches %}
+{% set url_fn = 'views.batches' %}
 {% extends "base.html" %}
 {% block title %}Batches{% endblock %}
 {% block content %}
@@ -115,46 +117,43 @@
     <a href="#modal3" class="filter-btn btn-flat modal-trigger btn-medium waves-effect waves-orange"
         onclick="$('#modal3').modal('open');"><i class="material-icons">filter_list</i></a>
 
-    <div id="modal3" class="modal">
-        <div class="modal-content">
-            <form action="#">
-                <p>
-                    <label>
-                        <input name="checkbox" type="checkbox" class="checkbox-orange" />
-                        <span>Filter 1</span>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input name="checkbox" type="checkbox" class="checkbox-orange" />
-                        <span>Filter 2</span>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input name="checkbox" type="checkbox" class="checkbox-orange" />
-                        <span>Filter 3</span>
-                    </label>
-                </p>
-            </form>
+        <div id="modal3" class="modal">
+            <div class="modal-content">
+                <form action="#">
+                    <h6 class="card-title">Filter by status</h6>
+                    <div class="content-container row">
+                        <p class="col s6">
+                            <label>
+                                <input name="checkbox" type="checkbox" class="filterCheckbox checkbox-orange" value="1"/>
+                                <span>ENABLED</span>
+                            </label>
+                        </p>
+                        <p class="col s6">
+                            <label>
+                                <input name="checkbox" type="checkbox" class="filterCheckbox checkbox-orange" value="0"/>
+                                <span>DISABLED</span>
+                            </label>
+                        </p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="modal-close waves-effect waves-orange btn-flat" onclick="applyBatchFilters()">Apply</a>
+                <a href="#" class="waves-effect waves-orange btn-flat" onclick="clearFilters()">Clear</a>
+            </div>
         </div>
-        <div class="modal-footer">
-            <a href="#" class="modal-close waves-effect waves-orange btn-flat">Apply</a>
-            <a href="#" class="waves-effect waves-orange btn-flat" onclick="clearFilters()">Clear</a>
-        </div>
-    </div>
-    {% if batches|count != 0 %}
-        {% if batches|count == 1 %}
-        <span class="card-subtitle center"><em>Showing {{ batches|count }} result</em></span>
+    {% if batches.items|count != 0 %}
+        {% if batches.items|count == 1 %}
+        <span class="card-subtitle center"><em>Showing {{ batches.items|count }} result</em></span>
         {% else %}
-        <span class="card-subtitle center"><em>Showing {{ batches|count }} results</em></span>
+        <span class="card-subtitle center"><em>Showing {{ batches.items|count }} results</em></span>
         {% endif %}
     {% endif %}
 </div>
-{% if batches|length == 0 %}
+{% if batches.items|length == 0 %}
 <p class="center empty-content">There are no batches to show</p>
 {% else %}
-{% for batch in batches %}
+{% for batch in batches.items %}
 <div class="card">
     <div class="row right">
         <a href="#{{ batch.batchId }}" class="modal-trigger btn-flat green-text waves-effect waves-green"
