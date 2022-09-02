@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,87 +8,91 @@
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/materialize.min.css')}}" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/materialize.min.css')}}"
+        media="screen,projection" />
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+        integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
     <title>Login</title>
 </head>
+
 <body>
-    
-<div class="container">
+
 
 
     <div class="flex-wrapper">
-    <section class="container section" id="userAuth">
-        <div class="row">
-            <div class="col s12 l6">
-                <div class="logo-container">
-                    <img src="../static/images/logo-dark.png" alt="logo">
+        <section class="container section" id="userAuth">
+            <div class="row">
+                <div class="col s12 l6">
+                    <div class="logo-container">
+                        <img src="../static/images/logo-dark.png" alt="logo">
+                    </div>
+                    <p>With more lessons, you can begin,
+                        improve, or strengthen your skills.</p>
                 </div>
-                <p>With more lessons, you can begin,
-                improve, or strengthen your skills.</p>
-            </div>
-            <div class="col s12 l6 offest-l2">
-                <ul class="tabs">
-                    <li class="tab col s12">
-                        <a href="#" class="black-text">Login</a>
-                    </li>
-                </ul>
-                <br>
-                <div class="col s12" id="loginUser">
-                    <form class="col s12" method="post">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">person</i>
-                                <input id="userEmail" type="email" class="validate" name="userEmail">
-                                <label for="userEmail">Email</label>
+                <div class="col s12 l6 offest-l2">
+                    <ul class="tabs">
+                        <li class="tab col s12">
+                            <a href="#" class="black-text">Login</a>
+                        </li>
+                    </ul>
+                    <br>
+                    <div class="col s12" id="loginUser">
+                        <form class="col s12" method="post">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">person</i>
+                                    <input id="userEmail" type="email" class="validate" name="userEmail">
+                                    <label for="userEmail">Email</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">fingerprint</i>
-                                <input id="userPassword" type="password" class="validate" name="userPassword">
-                                <label for="userPassword">Password</label>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">fingerprint</i>
+                                    <input id="userPassword" type="password" class="validate" name="userPassword">
+                                    <label for="userPassword">Password</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <a href="#" class="orange-text">Forgot Password?</a><br><br><br>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <a href="#" class="orange-text">Forgot Password?</a><br><br><br>
+                                </div>
+                                <div class="input-field col s6">
+                                    <a href="/register" class="orange-text">Don't have an account? <span
+                                            style="color:#2b6777; font-weight:bold">Sign Up</span></a><br><br><br>
+                                </div>
                             </div>
-                            <div class="input-field col s6">
-                                <a href="/register" class="orange-text">Don't have an account? <span style="color:#2b6777; font-weight:bold" >Sign Up</span></a><br><br><br>
-                            </div>
-                        </div>
-                        
-                        <button class="waves-effect waves-light btn orange" type="submit" ><i
-                                class="material-icons left">send</i>Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section> 
-    <!--footer-->
-    <footer class="page-footer">
-    <div class="footer-copyright">
-        <div class="right-align container align-footer">
-            ©2022 All Rights Reserved, <span style="color:#52ab98">InApp Academy</span>. Privacy & Terms
 
-        </div>
-      </div>
-    </footer>
-</div>
-</div>
-<script type="text/javascript" src="{{url_for('static', filename='js/materialize.min.js')}}"></script>
+                            <button class="waves-effect waves-light btn orange" type="submit"><i
+                                    class="material-icons left">send</i>Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--footer-->
+        <footer class="page-footer">
+            <div class="footer-copyright">
+                <div class="center container align-footer">
+                    ©2022 All Rights Reserved, <span style="color:#52ab98">InApp Academy</span>. Privacy & Terms
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script type="text/javascript" src="{{url_for('static', filename='js/materialize.min.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.tabs').tabs();
-    })
-</script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.tabs').tabs();
+        })
+    </script>
 </body>
+
 </html>

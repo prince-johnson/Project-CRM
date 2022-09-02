@@ -10,7 +10,7 @@ from functools import wraps
 def admin_required(func):
     @wraps(func)
     def isadmin(*args,**kwargs):
-        if(current_user.role!=1):
+        if(current_user.userRoleId != 2):
             return render_template('warning.html')
         return func(*args,**kwargs)
     return isadmin
@@ -22,17 +22,19 @@ batches =[]
 enquiries = []
 
 #dashboard
-@admin_required
 @views.route('/dashboard')
+@login_required
+@admin_required
 def dashboard():
     users = Users.query.all()
     dates = ActivityLog.query.with_entities(func.cast(ActivityLog.time, Date).label('Date'), func.count(ActivityLog.userId).label('logincount')).group_by(func.cast(ActivityLog.time, Date)).all()
     # dates = ActivityLog.query(cast(ActivityLog.time, Date)).distinct().all()
-    return render_template('dashboard.html', users=users, dates=dates)
+    return render_template('dashboard.html', users=users, dates=dates, user=current_user)
 
 #user
-@admin_required
 @views.route('/users')
+@login_required
+@admin_required
 def  users():
     users = Users.query.all()
     if request.args :
@@ -48,8 +50,9 @@ def  users():
     return render_template('users.html', users=users, listAll=True)
 
 #searchuser
-@admin_required
 @views.route('/users/<searchBy>/<searchConstraint>')
+@login_required
+@admin_required
 def searchUser(searchBy, searchConstraint):
     if searchBy == 'id':
         users = Users.query.filter(Users.userId.like("%"+searchConstraint+"%")).all()
@@ -58,8 +61,9 @@ def searchUser(searchBy, searchConstraint):
     return render_template('users.html', users=users, listAll=False)
 
 #batches
-@admin_required
 @views.route('/batches', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def batches():
     if request.method == 'POST':
         batchId = "BA" + f"{(len(Batches.query.all())):03}"
@@ -89,8 +93,9 @@ def batches():
     return render_template('batches.html', batches=batches[::-1], listAll=True, courses=courses, categories=categories)
 
 #delete batch
-@admin_required
 @views.route('/batches/<batchId>', methods=['DELETE'])
+@login_required
+@admin_required
 def deleteBatch(batchId):
     batch = Batches.query.get(batchId)
     if batch:
@@ -99,8 +104,9 @@ def deleteBatch(batchId):
     return jsonify({})
 
 #edit batch
-@admin_required
 @views.route('/batches/<batchId>', methods=['PUT', 'PATCH'])
+@login_required
+@admin_required
 def editBatch(batchId):
     batch = Batches.query.get_or_404(batchId)
     value = json.loads(request.data)
@@ -116,8 +122,9 @@ def editBatch(batchId):
     return jsonify({})
 
 #search batch
-@admin_required
 @views.route('/batches/<searchBy>/<searchConstraint>')
+@login_required
+@admin_required
 def searchBatch(searchBy, searchConstraint):
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     if searchBy == 'id':
@@ -133,8 +140,9 @@ def searchBatch(searchBy, searchConstraint):
     return render_template('batches.html', batches=batches, listAll=False)
 
 #enquiry
-@admin_required
 @views.route('/enquiries', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def enquiries():
     if request.method == 'POST':
         enquiryId = request.form.get('enquiryId')
@@ -153,8 +161,9 @@ def enquiries():
     return render_template('enquiries.html', enquiries=enquiries[::-1], listAll=True, users=users, courses=courses, enquiryStatus=enquiryStatus)
 
 #delete enquiry
-@admin_required
 @views.route('/enquiries/<enquiryId>', methods=['DELETE'])
+@login_required
+@admin_required
 def deleteEnquiry(enquiryId):
     enquiry = Enquiries.query.get(enquiryId)
     if enquiry:
@@ -163,8 +172,9 @@ def deleteEnquiry(enquiryId):
     return jsonify({})
 
 #serach enquiry
-@admin_required
 @views.route('/enquiries/<searchBy>/<searchConstraint>')
+@login_required
+@admin_required
 def searchEnquiry(searchBy, searchConstraint):
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     if searchBy == 'id':
@@ -177,8 +187,9 @@ def searchEnquiry(searchBy, searchConstraint):
     return render_template('enquiries.html', enquiries=enquiries, courses=courses, listAll=False)
 
 #edit enquiry
-@admin_required
 @views.route('/enquiries/<enquiryId>', methods=['PUT', 'PATCH'])
+@login_required
+@admin_required
 def editEnquiry(enquiryId):
     enquiry = Enquiries.query.get_or_404(enquiryId)
     value = json.loads(request.data)
@@ -192,8 +203,9 @@ def editEnquiry(enquiryId):
     return jsonify({})
 
 #categories
-@admin_required
 @views.route('/categories', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def categories():
     if request.method == 'POST':
         #batchId = "BA" + f"{(len(Batches.query.all())):03}"
@@ -209,8 +221,9 @@ def categories():
     return render_template('categories.html', categories=categories[::-1], listAll=True)
 
 #delete category
-@admin_required
 @views.route('/categories/<categoryId>', methods=['DELETE'])
+@login_required
+@admin_required
 def deleteCategory(categoryId):
     category = Category.query.get(categoryId)
     if category:
@@ -219,8 +232,9 @@ def deleteCategory(categoryId):
     return jsonify({})
 
 #search category
-@admin_required
 @views.route('/categories/<searchBy>/<searchConstraint>')
+@login_required
+@admin_required
 def searchCategory(searchBy, searchConstraint):
     if searchBy == 'id':
         categories = Category.query.filter(Category.categoryId.like("%"+searchConstraint+"%")).all()
@@ -229,8 +243,9 @@ def searchCategory(searchBy, searchConstraint):
     return render_template('categories.html', categories=categories, listAll=False)
 
 #edit category
-@admin_required
 @views.route('/categories/<categoryId>', methods=['PUT','PATCH'])
+@login_required
+@admin_required
 def editCategory(categoryId):
     category = Category.query.get_or_404(categoryId)
     value = json.loads(request.data)
@@ -243,8 +258,9 @@ def editCategory(categoryId):
     return jsonify({})
 
 #qualifications
-@admin_required
 @views.route('/qualification', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def qualifications():
     if request.method == 'POST':
         # qualificationId = qualificationId
@@ -258,8 +274,9 @@ def qualifications():
     return render_template('qualification.html',qualifications=qualifications[::-1], listAll=True)
 
 #delete qualification
-@admin_required
 @views.route('/qualification/<qualificationId>', methods=['DELETE'])
+@login_required
+@admin_required
 def deleteQualification(qualificationId):
     qual = Qualifications.query.get(qualificationId)
     if qual:
@@ -268,8 +285,9 @@ def deleteQualification(qualificationId):
     return jsonify({})
 
 #search qualifiactaion
-@admin_required
 @views.route('/qualification/<searchBy>/<searchConstraint>')
+@login_required
+@admin_required
 def searchQualification(searchBy, searchConstraint):
     if searchBy == 'id':
         qualifications = Qualifications.query.filter(Qualifications.qualificationId.like("%"+searchConstraint+"%")).all()
@@ -279,6 +297,8 @@ def searchQualification(searchBy, searchConstraint):
 
 #edit qualifiaction
 @views.route('/qualification/<qualificationId>', methods=['PUT','PATCH'])
+@login_required
+@admin_required
 def editQualification(qualificationId):
     qual = Qualifications.query.get_or_404(qualificationId)
     value = json.loads(request.data)
@@ -291,8 +311,9 @@ def editQualification(qualificationId):
     return jsonify({})
 
 #courses
-@admin_required
 @views.route('/courses', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def courses():
     if request.method == 'POST':
         courseName = request.form.get('courseName')
@@ -326,8 +347,9 @@ def courses():
     return render_template('courses.html', courses = Courses.query.all(), categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll=True)
 
 #edit courses
-@admin_required
 @views.route('/courses/<courseId>', methods=['PUT', 'PATCH'])
+@login_required
+@admin_required
 def editCourse(courseId):
     c = Courses.query.get_or_404(courseId)
     value = json.loads(request.data)
@@ -358,8 +380,9 @@ def editCourse(courseId):
     return jsonify({})
 
 # Search Course
-@admin_required
 @views.route('/courses/<searchBy>/<searchConstraint>')
+@login_required
+@admin_required
 def searchCourse(searchBy, searchConstraint):
     if searchBy == 'id':
         courses = Courses.query.filter(Courses.courseId.like("%"+searchConstraint+"%")).all()
@@ -368,8 +391,9 @@ def searchCourse(searchBy, searchConstraint):
     return render_template('courses.html', courses=courses, categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll=False)
 
 # Delete Course
-@admin_required
 @views.route('/courses/<courseId>', methods=['DELETE'])
+@login_required
+@admin_required
 def deleteCourse(courseId):
     course = Courses.query.get(courseId)
     if course:
