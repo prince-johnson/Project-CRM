@@ -83,7 +83,6 @@ class Courses(db.Model):
     courseMinQualificationId = db.Column(db.Integer, db.ForeignKey('qualifications.qualificationId')) #foreign key
     courseBatchSize = db.Column(db.Integer)
     courseVideoLink = db.Column(db.String(80))
-    courseSyllabus = db.Column(db.LargeBinary)
     courseRating = db.Column(db.Integer)
     courseStatus = db.Column(db.Boolean, default=True)
     courseImage = db.Column(db.LargeBinary)
