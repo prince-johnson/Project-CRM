@@ -117,7 +117,7 @@ class ActivityLog(db.Model):
 
 class Users(db.Model, UserMixin):
     userId = db.Column(db.Integer, primary_key=True, autoincrement=True) #primary key
-    userCode = db.Column(db.String(80), unique=True)
+    # userCode = db.Column(db.String(80), unique=True)
     userName = db.Column(db.String(80))
     userPassword = db.Column(db.String(250))
     userRoleId = db.Column(db.Integer, db.ForeignKey('role.roleId')) #foreign key
@@ -126,14 +126,17 @@ class Users(db.Model, UserMixin):
     userCountry = db.Column(db.String(80))
     userState = db.Column(db.String(80))
     userCity = db.Column(db.String(80))
-    userNew = db.Column(db.Boolean, default=True)
-    userStatus = db.Column(db.Boolean, default=True)
+    # userNew = db.Column(db.Boolean, default=True)
+    # userStatus = db.Column(db.Boolean, default=True)
 
     enquiries = db.relationship('Enquiries')
     activityLog = db.relationship('ActivityLog')
     enrollments = db.relationship('CourseEnrollment')
     qualifications = db.relationship('UserQualification')
     batches = db.relationship('UserBatch')
+
+    def get_id(self):
+           return (self.userId)
 
     # def __init__(self, userName, userPassword, userRole, userEmail, userPhone, userCountry, userState, userCity):
     #     self.userName = userName
