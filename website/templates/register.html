@@ -16,9 +16,7 @@
     <title>Login</title>
 </head>
 <body>
-    
-<div class="container">
-
+    <div class="container">
 
     <div class="flex-wrapper">
     <section class="container section" id="userAuth">
@@ -28,22 +26,64 @@
                     <img src="../static/images/logo-dark.png" alt="logo">
                 </div>
                 <p>With more lessons, you can begin,
-                improve, or strengthen your skills.</p>
+                    improve, or strengthen your skills.</p>
             </div>
             <div class="col s12 l6 offest-l2">
                 <ul class="tabs">
                     <li class="tab col s12">
-                        <a href="#" class="black-text">Login</a>
+                        <a href="#" class="black-text">Register</a>
                     </li>
                 </ul>
                 <br>
-                <div class="col s12" id="loginUser">
+                <div class="col s12" id="registerUser">
                     <form class="col s12" method="post">
                         <div class="row">
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">person</i>
+                                <input id="userName" type="text" class="validate" name="userName">
+                                <label for="userName">First Name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">email</i>
                                 <input id="userEmail" type="email" class="validate" name="userEmail">
                                 <label for="userEmail">Email</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">phone</i>
+                                <input id="userPhone" type="tel" class="validate" name="userPhone">
+                                <label for="userPhone">Phone</label>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">public</i>
+                                <input id="userCountry" type="text" class="validate" name="userCountry">
+                                <label for="userCountry">Country</label>
+
+
+                                <select name="country" id="country" onchange="setStates();" style="width:100px; font-weight:bold;" >
+                                    <option value="">Select</option>
+                                     /* Country  options here */
+                                   </select>
+                                <select name="state" id="state" style="width:100px; font-weight:bold;" >
+                                   </select>
+
+
+
+
+                            </div>
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">place</i>
+                                <input id="userState" type="text" class="validate" name="userState">
+                                <label for="userState">State</label>
+                            </div>
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">location_city</i>
+                                <input id="userCity" type="text" class="validate" name="userCity">
+                                <label for="userCity">City</label>
                             </div>
                         </div>
                         <div class="row">
@@ -55,15 +95,14 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
-                                <a href="#" class="orange-text">Forgot Password?</a><br><br><br>
+                                <button class="waves-effect waves-light btn orange" type="submit"><i
+                                    class="material-icons left">send</i>Submit</button>
                             </div>
                             <div class="input-field col s6">
-                                <a href="/register" class="orange-text">Don't have an account? <span style="color:#2b6777; font-weight:bold" >Sign Up</span></a><br><br><br>
+                                <a href="/" class="orange-text">Already have an account? <span style="color:#2b6777; font-weight:bold" >Login</span></a><br><br><br>
                             </div>
                         </div>
                         
-                        <button class="waves-effect waves-light btn orange" type="submit" ><i
-                                class="material-icons left">send</i>Submit</button>
                     </form>
                 </div>
             </div>
