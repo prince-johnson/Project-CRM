@@ -1,11 +1,14 @@
+from tkinter.tix import ROW
 from flask import Blueprint, render_template, request, jsonify, url_for, redirect
 from . import db
 from .models import Category, Batches, Courses, Enquiries, Users, Qualifications, ActivityLog, Instructor
 import json
-from sqlalchemy import func, Date
+from sqlalchemy import func, Date, desc
 from datetime import date
 from flask_login import login_user, login_required, logout_user, current_user
 from functools import wraps
+
+ROWS_PER_PAGE = 10
 
 def admin_required(func):
     @wraps(func)
@@ -26,10 +29,11 @@ enquiries = []
 @login_required
 @admin_required
 def dashboard():
-    users = Users.query.all()
-    dates = ActivityLog.query.with_entities(func.cast(ActivityLog.time, Date).label('Date'), func.count(ActivityLog.userId).label('logincount')).group_by(func.cast(ActivityLog.time, Date)).all()
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
+    obj, dates = ActivityLog.query.with_entities(func.cast(ActivityLog.time, Date).label('Date'), func.count(ActivityLog.userId).label('logincount')).group_by(func.cast(ActivityLog.time, Date)).order_by('Date').paginate(page=page, per_page=ROWS_PER_PAGE)
     # dates = ActivityLog.query(cast(ActivityLog.time, Date)).distinct().all()
-    return render_template('dashboard.html', users=users, dates=dates, user=current_user)
+    return render_template('dashboard.html', obj=obj,dates=dates, user=current_user)
 
 #user
 @views.route('/users')
@@ -65,6 +69,8 @@ def searchUser(searchBy, searchConstraint):
 @login_required
 @admin_required
 def batches():
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
         batchId = "BA" + f"{(len(Batches.query.all())):03}"
         batchName = request.form.get('batchName')
@@ -89,7 +95,7 @@ def batches():
         elif request.args.get('status').split(',') == ['']:
             listAll = True
             batches = Batches.query.all()
-        return render_template('batches.html', batches=batches[::-1], listAll=listAll, courses=courses, categories=categories)
+        return render_template('batches.html', batches=batches[::-1], listAll=listAll, courses=courses, categories=categories, page=page, per_page=ROWS_PER_PAGE)
     return render_template('batches.html', batches=batches[::-1], listAll=True, courses=courses, categories=categories)
 
 #delete batch
