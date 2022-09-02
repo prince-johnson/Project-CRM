@@ -432,7 +432,22 @@ function BuildChart(labels, values, chartTitle) {
     console.log(values);
     
     var chart = BuildChart(labels, values, "Login Count of users");
-      
+
+
+//Pagination
+$(document).ready(function() {
+    $('#page').materializePagination({
+        align: 'center',
+        lastPage:  10,
+        firstPage:  1,
+        useUrlParameter: false,
+        perPage:7,
+        onClickCallback: function(requestedPage){
+            console.log('Requested page from #pagination-long: '+ requestedPage);
+        }
+    }); 
+  });
+
 
 
 
@@ -477,3 +492,4 @@ function applyUserEnquiryFilters() {
 function enquiryBack(){
     window.location.href="/user/enquiries"
 }
+

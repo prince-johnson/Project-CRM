@@ -1,0 +1,73 @@
+{% extends "base.html" %} 
+{% block title %}User Profile{% endblock %} 
+{% block content %}
+
+<div class="flex-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col s12" id="registerUser">
+                <form class="col s12" method="post">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">person_outline</i>
+                            <i class="material-icons teal-text right">edit</i>
+                            <input id="first_name" type="text" class="materialize-textarea">
+                            <label for="first_name">First Name</label>
+                            
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons teal-text right">edit</i>
+                            <input id="last_name" type="text" class="materialize-textarea">
+                            <label for="last_name">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">person</i>
+                            <i class="material-icons teal-text right">edit</i>
+                            <input id="email" type="email" class="materialize-textarea">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <i class="material-icons prefix">language</i>
+                            <i class="material-icons teal-text right">edit</i>
+                            <input id="country" type="text" class="materialize-textarea">
+                            <label for="country">Country</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <i class="material-icons prefix">language</i>
+                            <i class="material-icons teal-text right">edit</i>
+                            <input id="state" type="text" class="materialize-textarea">
+                            <label for="state">Email</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <i class="material-icons prefix">language</i>
+                            <i class="material-icons teal-text right">edit</i>
+                            <input id="city" type="text" class="materialize-textarea">
+                            <label for="city">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">phone</i>
+                            <i class="material-icons teal-text right">edit</i>
+                            <input id="phone" type="password" class="materialize-textarea">
+                            <label for="phone">Phone</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">school</i>
+                            <i class="material-icons teal-text right">edit</i>
+                            <input id="qualification" type="text" class="materialize-textarea">
+                            <label for="qualification">Qualification</label>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
