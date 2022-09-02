@@ -1,6 +1,23 @@
-<!--{% extends "base.html" %} -->
-{% block title %}Register{% endblock %} 
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/materialize.min.css')}}" media="screen,projection" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+
+    <title>Login</title>
+</head>
+<body>
+    <div class="container">
+
     <div class="flex-wrapper">
     <section class="container section" id="userAuth">
         <div class="row">
@@ -14,7 +31,7 @@
             <div class="col s12 l6 offest-l2">
                 <ul class="tabs">
                     <li class="tab col s12">
-                        <a href="#registerUser" class="black-text">Register</a>
+                        <a href="#" class="black-text">Register</a>
                     </li>
                 </ul>
                 <br>
@@ -45,6 +62,18 @@
                                 <i class="material-icons prefix">public</i>
                                 <input id="userCountry" type="text" class="validate" name="userCountry">
                                 <label for="userCountry">Country</label>
+
+
+                                <select name="country" id="country" onchange="setStates();" style="width:100px; font-weight:bold;" >
+                                    <option value="">Select</option>
+                                     /* Country  options here */
+                                   </select>
+                                <select name="state" id="state" style="width:100px; font-weight:bold;" >
+                                   </select>
+
+
+
+
                             </div>
                             <div class="input-field col s4">
                                 <i class="material-icons prefix">place</i>
@@ -66,11 +95,11 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
-                                <a class="waves-effect waves-light btn orange" href="./admin/dashboard"><i
-                                    class="material-icons left">send</i>Submit</a>
+                                <button class="waves-effect waves-light btn orange" type="submit"><i
+                                    class="material-icons left">send</i>Submit</button>
                             </div>
                             <div class="input-field col s6">
-                                <a href="/login" class="orange-text">Already have an account? <span style="color:#2b6777; font-weight:bold" >Login</span></a><br><br><br>
+                                <a href="/" class="orange-text">Already have an account? <span style="color:#2b6777; font-weight:bold" >Login</span></a><br><br><br>
                             </div>
                         </div>
                         
@@ -89,11 +118,15 @@
       </div>
     </footer>
 </div>
+</div>
+<script type="text/javascript" src="{{url_for('static', filename='js/materialize.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="../../js/materialize.js"></script>
 <script>
     $(document).ready(function () {
         $('.tabs').tabs();
     })
 </script>
-{% endblock %}
+</body>
+</html>

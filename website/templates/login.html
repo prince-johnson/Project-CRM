@@ -1,6 +1,25 @@
-<!--{% extends "base.html" %} -->
-{% block title %}Login{% endblock %} 
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/materialize.min.css')}}" media="screen,projection" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+
+    <title>Login</title>
+</head>
+<body>
+    
+<div class="container">
+
+
     <div class="flex-wrapper">
     <section class="container section" id="userAuth">
         <div class="row">
@@ -14,24 +33,24 @@
             <div class="col s12 l6 offest-l2">
                 <ul class="tabs">
                     <li class="tab col s12">
-                        <a href="#loginUser" class="black-text">Login</a>
+                        <a href="#" class="black-text">Login</a>
                     </li>
                 </ul>
                 <br>
                 <div class="col s12" id="loginUser">
-                    <form class="col s12">
+                    <form class="col s12" method="post">
                         <div class="row">
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">person</i>
-                                <input id="email" type="email" class="validate" name="email">
-                                <label for="email">Email</label>
+                                <input id="userEmail" type="email" class="validate" name="userEmail">
+                                <label for="userEmail">Email</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">fingerprint</i>
-                                <input id="password" type="password" class="validate" name="password">
-                                <label for="password">Password</label>
+                                <input id="userPassword" type="password" class="validate" name="userPassword">
+                                <label for="userPassword">Password</label>
                             </div>
                         </div>
                         <div class="row">
@@ -43,8 +62,8 @@
                             </div>
                         </div>
                         
-                        <a class="waves-effect waves-light btn orange" href="./admin/dashboard"><i
-                                class="material-icons left">send</i>Submit</a>
+                        <button class="waves-effect waves-light btn orange" type="submit" ><i
+                                class="material-icons left">send</i>Submit</button>
                     </form>
                 </div>
             </div>
@@ -60,11 +79,15 @@
       </div>
     </footer>
 </div>
+</div>
+<script type="text/javascript" src="{{url_for('static', filename='js/materialize.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="../../js/materialize.js"></script>
 <script>
     $(document).ready(function () {
         $('.tabs').tabs();
     })
 </script>
-{% endblock %}
+</body>
+</html>
