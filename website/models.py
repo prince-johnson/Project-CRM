@@ -1,4 +1,5 @@
 from . import db
+from flask_login import UserMixin
 
 class UserBatch(db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary key
@@ -84,6 +85,7 @@ class Courses(db.Model):
     courseVideoLink = db.Column(db.String(80))
     courseRating = db.Column(db.Integer)
     courseStatus = db.Column(db.Boolean, default=True)
+    courseImage = db.Column(db.LargeBinary)
 
     batches = db.relationship('Batches')
     enquiries = db.relationship('Enquiries')
@@ -112,9 +114,9 @@ class ActivityLog(db.Model):
     #     self.userId = userId
     #     self.time = time
 
-class Users(db.Model):
+class Users(db.Model, UserMixin):
     userId = db.Column(db.Integer, primary_key=True, autoincrement=True) #primary key
-    userCode = db.Column(db.String(80), unique=True)
+    # userCode = db.Column(db.String(80), unique=True)
     userName = db.Column(db.String(80))
     userPassword = db.Column(db.String(250))
     userRoleId = db.Column(db.Integer, db.ForeignKey('role.roleId')) #foreign key
@@ -123,14 +125,17 @@ class Users(db.Model):
     userCountry = db.Column(db.String(80))
     userState = db.Column(db.String(80))
     userCity = db.Column(db.String(80))
-    userNew = db.Column(db.Boolean, default=True)
-    userStatus = db.Column(db.Boolean, default=True)
+    # userNew = db.Column(db.Boolean, default=True)
+    # userStatus = db.Column(db.Boolean, default=True)
 
     enquiries = db.relationship('Enquiries')
     activityLog = db.relationship('ActivityLog')
     enrollments = db.relationship('CourseEnrollment')
     qualifications = db.relationship('UserQualification')
     batches = db.relationship('UserBatch')
+
+    def get_id(self):
+           return (self.userId)
 
     # def __init__(self, userName, userPassword, userRole, userEmail, userPhone, userCountry, userState, userCity):
     #     self.userName = userName
