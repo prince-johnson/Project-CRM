@@ -160,16 +160,16 @@ def enquiries():
     enquiryStatus = Enquiries.query.with_entities(Enquiries.enquiryStatus).distinct().all()
     return render_template('enquiries.html', enquiries=enquiries[::-1], listAll=True, users=users, courses=courses, enquiryStatus=enquiryStatus)
 
-#delete enquiry
-@views.route('/enquiries/<enquiryId>', methods=['DELETE'])
-@login_required
-@admin_required
-def deleteEnquiry(enquiryId):
-    enquiry = Enquiries.query.get(enquiryId)
-    if enquiry:
-        db.session.delete(enquiry)
-        db.session.commit()
-    return jsonify({})
+# #delete enquiry
+# @views.route('/enquiries/<enquiryId>', methods=['DELETE'])
+# @login_required
+# @admin_required
+# def deleteEnquiry(enquiryId):
+#     enquiry = Enquiries.query.get(enquiryId)
+#     if enquiry:
+#         db.session.delete(enquiry)
+#         db.session.commit()
+#     return jsonify({})
 
 #serach enquiry
 @views.route('/enquiries/<searchBy>/<searchConstraint>')
