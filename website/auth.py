@@ -22,9 +22,10 @@ def login():
                 new_log = ActivityLog(userId=userId)
                 db.session.add(new_log)
                 db.session.commit()
-                if user.userRoleId == 2:
+                # roleId = 1 for admin, 2 for user
+                if user.userRoleId == 1:
                     return redirect(url_for('views.dashboard'))
-                elif user.userRoleId == 1:
+                elif user.userRoleId == 2:
                     return redirect(url_for('userviews.dashboard'))
 
             else:
@@ -37,7 +38,7 @@ def login():
 @auth.route('/register' , methods=['GET','POST'])
 def register():
     if request.method == "POST":
-        userRoleId = 1
+        userRoleId = 2 # 1- for admin, 2- for user
         userEmail = request.form.get('userEmail')
         userName = request.form.get('userName')
         userPassword = request.form.get('userPassword')
@@ -45,7 +46,7 @@ def register():
         userPhone = request.form.get('userPhone')
         userState = request.form.get('userState')
         userCity = request.form.get('userCity')
-        # userNew = 1
+        userNew = 1
         # userCode = "CRM" + f"{len(Users.query.all()):03}"
         
         user = Users.query.filter_by(userEmail=userEmail).first()
@@ -54,9 +55,9 @@ def register():
         elif len(userPassword) < 7:
             print('Password must be atleast 7 characters')
         else:
-            userCode = "USER0" + f"{len(Users.query.all())}+1" 
+            userCode = "USER0" + f"{len(Users.query.all())+1}" 
             print(userCode)
-            new_user = Users(userCode=userCode, userRoleId=userRoleId,userEmail=userEmail, userPhone=userPhone, userName = userName, userPassword = generate_password_hash(userPassword, method = 'sha256'), userCity=userCity, userCountry=userCountry, userState = userState)
+            new_user = Users(userCode=userCode, userRoleId=userRoleId,userEmail=userEmail, userPhone=userPhone, userName = userName, userPassword = generate_password_hash(userPassword, method = 'sha256'), userCity=userCity, userCountry=userCountry, userState = userState, userNew = userNew)
             db.session.add(new_user)
             db.session.commit()
             print('Account created!')

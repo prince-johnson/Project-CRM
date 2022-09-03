@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request,  jsonify, url_for, redire
 
 from website import views
 from . import db
-from .models import Category, Batches, Courses, Enquiries, Users, Qualifications, ActivityLog, Instructor
+from .models import Category, Batches, CourseEnrollment, Courses, Enquiries, Users, Qualifications, ActivityLog, Instructor
 import json
 #from sqlalchemy import func, Date
 from datetime import date
@@ -11,7 +11,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 userviews = Blueprint('userviews', __name__)
 
 userEnquiries = []
-
+ROWS_PER_PAGE = 5
 #enquiry
 @userviews.route('/enquiries', methods=['GET', 'POST'])
 def userEnquiries():
@@ -49,4 +49,34 @@ def userSearchEnquiry(searchBy, searchConstraint):
 
 
 
-#@userviews.route('/')
+@userviews.route('/enrolledCourses')
+def enrolledCourses():
+    course_instructor = dict()
+    courseIds = []
+    courses = []
+    category_name = dict()
+    enrollments = CourseEnrollment.query.filter_by(userId=6).all()
+    for enrollment in enrollments:
+        courseIds.append(enrollment.courseId)
+    for courseId in courseIds:
+        course = Courses.query.filter_by(id=courseId).first()
+        courses.append(course)
+        result = Category.query.filter_by(categoryId=course.courseCategoryId).first()
+        category_name[course.courseCategoryId] = result.categoryName
+    for course in courses:
+        instructor = Instructor.query.filter_by(instructorId=course.courseInstructorID).first()
+        course_instructor[instructor.instructorId] = instructor.instructorName
+    return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor)
+
+@userviews.route('/enrolledCourses/<searchBy>/<searchConstraint>')
+def userSearchEnrolledCourses(searchBy, searchConstraint):
+    #user_id = current_user.userId
+    user_id = 6
+    page = request.args.get('page', 1, type=int)
+    courses = Courses.query.with_entities(Courses.id, Courses.courseName).distinct().order_by(Courses.id).paginate(page=page, per_page=ROWS_PER_PAGE)
+    if searchBy == 'id':
+        pass
+    elif searchBy == 'name':
+        c = Courses.query.filter(Courses.courseName.like("%"+searchConstraint+"%")).order_by(Courses.id).paginate(page=page, per_page=ROWS_PER_PAGE)
+        
+    return render_template('/enrolledCourses.html', user=current_user, courses=c)
