@@ -22,7 +22,11 @@ def login():
                 new_log = ActivityLog(userId=userId)
                 db.session.add(new_log)
                 db.session.commit()
-                return redirect(url_for('views.dashboard'))
+                if user.userRoleId == 2:
+                    return redirect(url_for('views.dashboard'))
+                elif user.userRoleId == 1:
+                    return redirect(url_for('userviews.dashboard'))
+
             else:
                 print("Incorrect password")
         else:
