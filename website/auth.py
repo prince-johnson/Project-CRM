@@ -54,7 +54,9 @@ def register():
         elif len(userPassword) < 7:
             print('Password must be atleast 7 characters')
         else:
-            new_user = Users(userRoleId=userRoleId,userEmail=userEmail, userPhone=userPhone, userName = userName, userPassword = generate_password_hash(userPassword, method = 'sha256'), userCity=userCity, userCountry=userCountry, userState = userState)
+            userCode = "USER0" + f"{len(Users.query.all())}+1" 
+            print(userCode)
+            new_user = Users(userCode=userCode, userRoleId=userRoleId,userEmail=userEmail, userPhone=userPhone, userName = userName, userPassword = generate_password_hash(userPassword, method = 'sha256'), userCity=userCity, userCountry=userCountry, userState = userState)
             db.session.add(new_user)
             db.session.commit()
             print('Account created!')
