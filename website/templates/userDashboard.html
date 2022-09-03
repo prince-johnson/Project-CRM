@@ -1,0 +1,131 @@
+{% set obj = courses %}
+{% set url_fn = 'userviews.dashboard' %}
+{% extends "userBase.html" %}
+{% block title %}Enquiries{% endblock %}
+{% block content %}
+{% if not listAll %}
+<div class="back col s3">
+    <button class="back-btn btn-flat btn-medium waves-effect waves-orange" onClick="userDashBack()">
+        <i class="material-icons">arrow_back</i>
+    </button>
+</div>
+{% endif %}
+<div class="buttons col s9">
+    <a href="#modal1" id="searchBtn" class="btn waves-effect waves-light orange"
+        onclick="$('#modal1').modal('open');">Search
+        <i class="material-icons white-text ">search</i>
+    </a>
+
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <div class="search-bar row">
+                <div class="input-field col s3">
+                    <select name="searchBy" id="searchBy">
+                        <option value='id' selected>Course Code</option>
+                        <option value='name' selected>Course Name</option>
+                    </select>
+                    <label>Search By</label>
+                </div>
+                <div class="input-field col s9">
+                    <i class="material-icons prefix black-text">search</i>
+                    <input name="searchConstraint" id="searchConstraint" type="text" class="validate">
+                    <label for="searchConstraint">Search course</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-close btn-flat waves-effect waves-orange" type="submit" name="action"
+                    onClick="userSearchCourse('')">Search
+                    <i class="material-icons right">search</i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {% if courses.items|count != 0 %}
+    {% if courses.items|count == 1 %}
+    <span class="card-subtitle center"><em>Showing {{ courses.items|count }} result</em></span>
+    {% else %}
+    <span class="card-subtitle center"><em>Showing {{ courses.items|count }} results</em></span>
+    {% endif %}
+    {% endif %}
+</div>
+{% if courses.items|length == 0 %}
+<p class="center empty-content">There are no courses to show</p>
+{% else %}
+{% for course in courses.items %}
+<div class="card">
+    <div class="row">
+        <div class="col s10">
+            <h1 class="card-title">
+                {{ course.courseName }}
+            </h1>
+            <span class="card-subtitle"><em>CourseId : {{ course.courseId }}</em></span>
+            <p class="card-subtitle"><em>Course Name : {{ course.courseName }}</em></p>
+            <p>
+                <strong>Category </strong> : {{ course.courseCategoryId }}
+            </p>
+            <p>
+                <strong>Course Duration</strong> : {{ course.courseDuration }}
+            </p>
+            <p>
+                <strong>course Description</strong> : {{ course.courseDescription }}
+            </p>
+            <p>
+                <strong>Instructor</strong> : {{ course.courseInstructorID }}
+            </p>
+            <p>
+                <strong>Min. Qualification</strong> : {{ course.courseMinQualificationId }}
+            </p>
+            <p>
+                <strong>Batch Size</strong> : {{ course.courseBatchSize }}
+            </p>
+            <p>
+                <url>Video Link</url> : {{ course.courseVideoLink }}
+            </p>
+            <p>
+                <a href="">Downlaod Syllabus</a>
+            </p>
+        </div>
+        <div class="col s2">
+            <a id="#userEnquire{{ course.courseId }}"
+                class="userEnquireBtn modal-trigger waves-effect waves-light orange btn right" onclick="$('#userEnquire{{ course.courseId }}').modal('open');"><i
+                    class="material-icons right">query_stats</i>Enquire</a>
+
+            <div id="userEnquire{{ course.courseId }}" class="modal">
+                <div class="modal-content">
+                    <form action="" method="post">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <select name="enquiryUserId" id="enquiryUserId" readonly="readonly">  
+                                    <option value='{{ user.userId }}' selected>{{ user.userId }}</option>
+                                </select>
+                                <label>Enquiry UserId</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <select name="enquiryCourseId" id="enquiryCourseId" readonly="readonly">
+                                    <option value='{{ course.courseId }}' selected>{{course.courseId }} - {{ course.courseName}}</option>
+                                </select>
+                                <label>Enquiry CourseId</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea id="enquiryDescription" name="enquiryDescription" class="materialize-textarea"></textarea>
+                                <label for="enquiryDescription">Enter an enquiry</label>
+                            </div>
+                        </div>
+          
+                        <div class="modal-footer">
+                            <button class="modal-close btn-flat waves-effect waves-orange" type="submit" name="action">Submit
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}
