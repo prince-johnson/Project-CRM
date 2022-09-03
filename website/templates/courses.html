@@ -1,3 +1,5 @@
+{% set obj = courses %}
+{% set url_fn = 'views.courses' %}
 {% extends "base.html" %}
 {% block title %}Courses{% endblock %}
 {% block content %}
@@ -161,18 +163,18 @@
             <a href="#" class="waves-effect waves-orange btn-flat" onClick="clearFilters()">Clear</a>
         </div>
     </div>
-    {% if courses|count != 0 %}
-        {% if courses|count == 1 %}
-        <span class="card-subtitle center"><em>Showing {{ courses|count }} result</em></span>
+    {% if courses.items|count != 0 %}
+        {% if courses.items|count == 1 %}
+        <span class="card-subtitle center"><em>Showing {{ courses.items|count }} result</em></span>
         {% else %}
-        <span class="card-subtitle center"><em>Showing {{ courses|count }} results</em></span>
+        <span class="card-subtitle center"><em>Showing {{ courses.items|count }} results</em></span>
         {% endif %}
     {% endif %}
 </div>
-{% if courses|length == 0 %}
+{% if courses.items|length == 0 %}
 <p class="center empty-content">There are no courses to show</p>
 {% else %}
-{% for course in courses %}
+{% for course in courses.items %}
 <div class="card">
     <div class="row right">
         <a href="#{{ course.courseId }}" class="modal-trigger btn-flat green-text waves-effect waves-green"

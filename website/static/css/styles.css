@@ -4,6 +4,10 @@
     --black: #2b6777;
     --grey: #F2F2F2;
     --orange-low: #c8d8e4;
+    --green: #2ECC71;
+    --red: #E74C3C;
+    --green-low: #2ECC7180;
+    --red-low: #E74C3C80;
 }
 
 * {
@@ -63,7 +67,19 @@ body {
     /*Custom Text Color While Active*/
     background-color: var(--orange-low);
     /*Custom Background Color While Active*/
-  }
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+.success { 
+    background-color: var(--green);
+}
+
+.error {
+    background-color: var(--red);
+}
 
 .tabs .indicator {
     background-color:var(--orange);
@@ -178,6 +194,12 @@ body {
     border-bottom: 2px solid var(--orange);
 }
 
+#modal6 {
+    width: 60%;
+    height: 60%;
+    background-color: var(--white);
+}
+
 .modal-content, .modal-footer { 
     background-color: var(--white) !important;
 }
@@ -208,3 +230,4 @@ body {
     width: 80%;
     height: 50vh;
 }
+

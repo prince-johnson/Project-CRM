@@ -7,10 +7,10 @@
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/materialize.min.css')}}" media="screen,projection" />
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-    
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -84,32 +84,9 @@
             </a>
         </div>
     </nav>
+  
+    <!--Alert message -->
 
-    <!--Alert messeges-->
-    <!--
-
- 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-        {% if category == 'error'%}
-        <div class = "alert alert-danger alter-dismissable fade show" role="alert">
-            {{ message }}
-            <button type = "button" class="close" data-dismiss="alert">
-                <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class = "alert alert-success alter-dismissable fade show" role="alert">
-            {{ message }}
-            <button type = "button" class="close" data-dismiss="alert">
-                <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        {% endif %}
-        {% endfor %}
-    {% endif %}
-    {% endwith %}
-   -->
     <!-- Content -->
     <div class="content-container">
         {% block content %} {% endblock %}
@@ -118,13 +95,15 @@
     <!-- Pagination code -->
     <div class="bottom-container center">
         <ul class="pagination">
-            <li class="{% if obj.page == 1 %}disabled{% endif %}"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-            <li class="active"><a href="#!">1</a></li>
-            <li class="waves-effect"><a href="#!">2</a></li>
-            <li class="waves-effect"><a href="#!">3</a></li>
-            <li class="waves-effect"><a href="#!">4</a></li>
-            <li class="waves-effect"><a href="#!">5</a></li>
-            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            <li class="{% if obj.page == 1 %}disabled{% endif %} waves-effect"><a href="{{ url_for(url_fn, page=obj.prev_num) }}"><i class="material-icons">chevron_left</i></a></li>
+            {% for page_num in obj.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    <li class="{% if obj.page == page_num %}active black{% endif %}"><a href="{{ url_for(url_fn, page=page_num) }}">{{ page_num }}</a></li>
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
+            <li class="{% if obj.page == obj.pages %}disabled{% endif %} waves-effect"><a href="{{ url_for(url_fn, page=obj.next_num) }}"><i class="material-icons">chevron_right</i></a></li>
           </ul>
     </div>
 
