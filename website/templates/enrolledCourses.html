@@ -1,0 +1,92 @@
+<!-- User views this page for viewing the current user's enrolled courses -->
+{% extends "userBase.html" %}
+{% block title %}Courses{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Enrolled Courses</h1>
+            <div class="buttons col s9 right">
+                <a href="#modal1" id="searchBtn" class="btn waves-effect waves-light orange"
+                    onclick="$('#modal1').modal('open');">Search
+                    <i class="material-icons white-text ">search</i>
+                </a>
+
+                <div id="modal1" class="modal">
+                    <div class="modal-content">
+                        <div class="search-bar row">
+                            <div class="input-field col s3">
+                                <select name="searchBy" id="searchBy">
+                                    <option value='id' selected>Id</option>
+                                    <option value='name'>Name</option>
+                                </select>
+                                <label>Search By</label>
+                            </div>
+                            <div class="input-field col s9">
+                                <i class="material-icons prefix black-text">search</i>
+                                <input name="searchConstraint" id="searchConstraint" type="text" class="validate">
+                                <label for="searchConstraint">Search Course</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="modal-close btn-flat waves-effect waves-orange" type="submit" name="action"
+                                onClick="searchCourse()">Search
+                                <i class="material-icons right">search</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <a href="#modal3" class="filter-btn btn-flat modal-trigger btn-medium waves-effect waves-orange"
+                    onclick="$('#modal3').modal('open');"><i class="material-icons">filter_list</i></a>
+
+                {% if courses.items|count != 0 %}
+                {% if courses.items|count == 1 %}
+                <span class="card-subtitle center"><em>Showing {{ courses.items|count }} result</em></span>
+                {% else %}
+                <span class="card-subtitle center"><em>Showing {{ courses.items|count }} results</em></span>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<! --------------- Course Cards ------------------->
+
+
+{% for course in courses %}
+<div class="card">
+    <div class="row">
+        <div class="col s10">
+            <h1 class="card-title">
+                {{ course.courseName }}
+            </h1>
+            <span class="card-subtitle"><em>CourseId : {{ course.courseId }}</em></span>
+            <p class="card-subtitle"><em>Course Name : {{ course.courseName }}</em></p>
+            <p>
+                <strong>Category </strong> : {{ category_name[course.courseCategoryId] }}
+            </p>
+            <p>
+                <strong>Course Duration</strong> : {{ course.courseDuration }} Months
+            </p>
+            <p>
+                <strong>course Description</strong> : {{ course.courseDescription }}
+            </p>
+            <p>
+                <strong>Instructor</strong> : {{ course_instructor[course.courseInstructorID] }}
+            </p>
+            <p>
+                <url>Video Link</url> : {{ course.courseVideoLink }}
+            </p>
+            <p>
+                <a href="">Downlaod Syllabus</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
