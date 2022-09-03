@@ -1,9 +1,10 @@
 from . import db
+from flask_login import UserMixin
 
 class UserBatch(db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary key
     userId = db.Column(db.Integer, db.ForeignKey('users.userId')) #foreign key
-    batchId = db.Column(db.String(80), db.ForeignKey('batches.batchId')) #foreign key
+    batchId = db.Column(db.Integer, db.ForeignKey('batches.id')) #foreign key
 
     # def __init__(self, userId, batchId):
     #     self.userId = userId
@@ -22,8 +23,8 @@ class UserQualification(db.Model):
 class CourseEnrollment(db.Model):
     id = db.Column(db.Integer, primary_key=True) #primary key
     userId = db.Column(db.Integer, db.ForeignKey('users.userId')) #foreign key
-    courseId = db.Column(db.String(80), db.ForeignKey('courses.courseId')) #foreign key
-    batchId = db.Column(db.String(80), db.ForeignKey('batches.batchId')) #foreign key
+    courseId = db.Column(db.Integer, db.ForeignKey('courses.id')) #foreign key
+    batchId = db.Column(db.Integer, db.ForeignKey('batches.id')) #foreign key
     enrollStatus = db.Column(db.String(80))
     score = db.Column(db.Integer)
 
@@ -59,7 +60,7 @@ class Enquiries(db.Model):
     enquiryId = db.Column(db.Integer, primary_key=True) #primary key
     enquiryCode = db.Column(db.String(80), unique=True)
     enquiryUserId = db.Column(db.Integer, db.ForeignKey('users.userId')) #foreign key
-    enquiryCourseId = db.Column(db.String(80), db.ForeignKey('courses.courseId')) #foreign key
+    enquiryCourseId = db.Column(db.Integer, db.ForeignKey('courses.id')) #foreign key
     enquiryDescription = db.Column(db.String(250))
     enquiryStatus = db.Column(db.Boolean, default=True)
     enquiryUpdate = db.Column(db.String(80))
@@ -75,16 +76,16 @@ class Courses(db.Model):
     id = db.Column(db.Integer, primary_key=True) #primary key
     courseId = db.Column(db.String(80), unique=True)
     courseName = db.Column(db.String(80))
-    courseCategoryId = db.Column(db.String(80), db.ForeignKey('category.categoryId')) #foreign key
+    courseCategoryId = db.Column(db.Integer, db.ForeignKey('category.categoryId')) #foreign key
     courseDuration = db.Column(db.String(80))
     courseDescription = db.Column(db.String(80))
     courseInstructorID = db.Column(db.Integer, db.ForeignKey('instructor.instructorId')) #foreign key
     courseMinQualificationId = db.Column(db.Integer, db.ForeignKey('qualifications.qualificationId')) #foreign key
     courseBatchSize = db.Column(db.Integer)
     courseVideoLink = db.Column(db.String(80))
-    courseSyllabus = db.Column(db.LargeBinary)
     courseRating = db.Column(db.Integer)
     courseStatus = db.Column(db.Boolean, default=True)
+    courseImage = db.Column(db.LargeBinary)
 
     batches = db.relationship('Batches')
     enquiries = db.relationship('Enquiries')
@@ -113,9 +114,9 @@ class ActivityLog(db.Model):
     #     self.userId = userId
     #     self.time = time
 
-class Users(db.Model):
+class Users(db.Model, UserMixin):
     userId = db.Column(db.Integer, primary_key=True, autoincrement=True) #primary key
-    userCode = db.Column(db.String(80), unique=True)
+    # userCode = db.Column(db.String(80), unique=True)
     userName = db.Column(db.String(80))
     userPassword = db.Column(db.String(250))
     userRoleId = db.Column(db.Integer, db.ForeignKey('role.roleId')) #foreign key
@@ -124,14 +125,17 @@ class Users(db.Model):
     userCountry = db.Column(db.String(80))
     userState = db.Column(db.String(80))
     userCity = db.Column(db.String(80))
-    userNew = db.Column(db.Boolean, default=True)
-    userStatus = db.Column(db.Boolean, default=True)
+    # userNew = db.Column(db.Boolean, default=True)
+    # userStatus = db.Column(db.Boolean, default=True)
 
     enquiries = db.relationship('Enquiries')
     activityLog = db.relationship('ActivityLog')
     enrollments = db.relationship('CourseEnrollment')
     qualifications = db.relationship('UserQualification')
     batches = db.relationship('UserBatch')
+
+    def get_id(self):
+           return (self.userId)
 
     # def __init__(self, userName, userPassword, userRole, userEmail, userPhone, userCountry, userState, userCity):
     #     self.userName = userName
@@ -144,8 +148,7 @@ class Users(db.Model):
     #     self.userCity = userCity
 
 class Category(db.Model):
-    id = db.Column(db.Integer, primary_key=True) #primary key
-    categoryId = db.Column(db.String(80), primary_key=True) #primary key
+    categoryId = db.Column(db.Integer,primary_key=True ) #primary key
     categoryName = db.Column(db.String(80), unique=True)
     categoryStatus = db.Column(db.Boolean, default=True)
     categoryComments = db.Column(db.String(250))

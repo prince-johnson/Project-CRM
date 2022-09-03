@@ -8,6 +8,7 @@
     </button>
 </div>
 {% endif %}
+<div id="paginationid" class="pagination">
 
 <!--search category-->
 <div class="buttons col s9">
@@ -118,9 +119,20 @@
     </div>
     {% endif %}
 </div>
+{% if categories|count != 0 %}
+{% if categories|count == 1 %}
+<span class="card-subtitle center"><em>Showing {{ categories|count }} result</em></span>
+
+{% else %}
+<span class="card-subtitle center"><em>Showing {{ categories|count }} results</em></span>
+{% endif %}
+
+{% endif %}
+
+
 <!--card-->
 {% for category in categories %}
-    <div class="card">
+    <div class="card" id="page">
         <div class="row right">
             <a href="#{{ category.categoryId }}" class="modal-close btn-flat green-text waves-effect waves-green" onclick="$('#{{ category.categoryId }}').modal('open');">Edit
                 <i class="material-icons green-text right">edit</i>
@@ -195,4 +207,15 @@
         </p>
     </div>
 {% endfor %}
+<!--pagination-->
+    <ul class="pagination">
+        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+        <li class="active teal lighten-2"><a href="#!">1</a></li>
+        <li class="waves-effect"><a href="#!">2</a></li>
+        <li class="waves-effect"><a href="#!">3</a></li>
+        <li class="waves-effect"><a href="#!">4</a></li>
+        <li class="waves-effect"><a href="#!">5</a></li>
+        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
+</div>
 {% endblock %}

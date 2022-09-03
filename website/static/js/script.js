@@ -153,7 +153,7 @@ function searchEnquiry(date){
     fetch('/enquiries/' + searchBy + '/' + searchConstraint, {
         method: 'GET'
     })
-    .then(() => window.location.href="/enquiries/" + searchBy + '/' + searchConstraint);
+    .then(() => window.location.href="/admin/enquiries/" + searchBy + '/' + searchConstraint);
 }
 
 //edit enquiry
@@ -172,11 +172,11 @@ function editEnquiry(enquiryId){
             enquiryStatus: document.getElementById('editenquiryStatus' + enquiryId).value,
         })
     })
-    .then(() => window.location.href="/enquiries");
+    .then(() => window.location.href="/admin/enquiries");
 }
 // Back to enquiries
 function enquiryBack(){
-    window.location.href="/enquiries"
+    window.location.href="/admin/enquiries"
 }
 
 //Courses
@@ -432,4 +432,64 @@ function BuildChart(labels, values, chartTitle) {
     console.log(values);
     
     var chart = BuildChart(labels, values, "Login Count of users");
-      
+
+
+//Pagination
+$(document).ready(function() {
+    $('#page').materializePagination({
+        align: 'center',
+        lastPage:  10,
+        firstPage:  1,
+        useUrlParameter: false,
+        perPage:7,
+        onClickCallback: function(requestedPage){
+            console.log('Requested page from #pagination-long: '+ requestedPage);
+        }
+    }); 
+  });
+
+
+
+
+
+//USER-SIDE
+
+// Search Enquiry
+function userSearchEnquiry(date){
+    if (date != 'date'){
+        searchBy = document.getElementById('searchBy').value
+        searchConstraint = document.getElementById('searchConstraint').value
+    }
+    else{
+        searchBy = 'date'
+        searchConstraint = document.getElementById('branchStartDateSearch').value
+    }
+    fetch('/enquiries/' + searchBy + '/' + searchConstraint, {
+        method: 'GET'
+    })
+    .then(() => window.location.href="/user/enquiries/" + searchBy + '/' + searchConstraint);
+}
+
+// Filter Courses
+function applyUserEnquiryFilters() {
+    inputs = document.querySelectorAll(".filterCheckbox:checked");
+    let status = {
+        status: []
+    };
+    inputs.forEach(ip => {
+        status["status"].push(ip.value);
+    });
+    if (status["status"] == []) {
+        window.location.href = "/user/enquiries/";
+    }
+    fetch("/user", {
+        method: "GET"
+    })
+        .then(() => (window.location.href = "/user/enquiries?status=" + status["status"]));
+    }
+
+// Back to enquiries
+function enquiryBack(){
+    window.location.href="/user/enquiries"
+}
+
