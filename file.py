@@ -148,15 +148,6 @@ def read_csv(filename):
 #                         #print("Updated!", course_id, category_id)
 #                         #print(category_id)
 
-                        
-                        
-                
-                            
-                    
-                        
-
-                    
-            
 #         #print("Category id set for courses!")
 # sql_category_id_courses()
 

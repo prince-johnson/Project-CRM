@@ -4,7 +4,7 @@ from flask_login import UserMixin
 class UserBatch(db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary key
     userId = db.Column(db.Integer, db.ForeignKey('users.userId')) #foreign key
-    batchId = db.Column(db.String(80), db.ForeignKey('batches.batchId')) #foreign key
+    batchId = db.Column(db.Integer, db.ForeignKey('batches.id')) #foreign key
 
     # def __init__(self, userId, batchId):
     #     self.userId = userId
@@ -23,8 +23,8 @@ class UserQualification(db.Model):
 class CourseEnrollment(db.Model):
     id = db.Column(db.Integer, primary_key=True) #primary key
     userId = db.Column(db.Integer, db.ForeignKey('users.userId')) #foreign key
-    courseId = db.Column(db.String(80), db.ForeignKey('courses.courseId')) #foreign key
-    batchId = db.Column(db.String(80), db.ForeignKey('batches.batchId')) #foreign key
+    courseId = db.Column(db.Integer, db.ForeignKey('courses.id')) #foreign key
+    batchId = db.Column(db.Integer, db.ForeignKey('batches.id')) #foreign key
     enrollStatus = db.Column(db.String(80))
     score = db.Column(db.Integer)
 
@@ -60,7 +60,7 @@ class Enquiries(db.Model):
     enquiryId = db.Column(db.Integer, primary_key=True) #primary key
     # enquiryCode = db.Column(db.String(80), unique=True, primary_key=True)
     enquiryUserId = db.Column(db.Integer, db.ForeignKey('users.userId')) #foreign key
-    enquiryCourseId = db.Column(db.String(80), db.ForeignKey('courses.courseId')) #foreign key
+    enquiryCourseId = db.Column(db.Integer, db.ForeignKey('courses.id')) #foreign key
     enquiryDescription = db.Column(db.String(250))
     enquiryStatus = db.Column(db.Boolean, default=True)
     # enquiryUpdate = db.Column(db.String(80))
