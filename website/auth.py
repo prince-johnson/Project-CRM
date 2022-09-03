@@ -54,7 +54,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             print('Account created!')
-            return redirect(url_for(views.dashboard))
+            return redirect(url_for('views.dashboard'))
     return render_template("register.html", user = current_user)
 
 
