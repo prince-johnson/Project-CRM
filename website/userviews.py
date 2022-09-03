@@ -43,6 +43,6 @@ def userSearchEnquiry(searchBy, searchConstraint):
     elif searchBy == 'name':
         userEnquiries = Enquiries.query.filter(Enquiries.enquiryCourseId.like("%"+searchConstraint+"%")).all()
     
-    return render_template('/enquiries.html', userEnquiries=userEnquiries[::-1], courses=courses, listAll=False, user=current_user)
+    return render_template('/userEnquiries.html', userEnquiries=userEnquiries[::-1], courses=courses, listAll=False, user=current_user)
 
 

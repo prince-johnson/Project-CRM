@@ -480,7 +480,7 @@ function applyUserEnquiryFilters() {
         status["status"].push(ip.value);
     });
     if (status["status"] == []) {
-        window.location.href = "/user/enquiries/";
+        window.location.href = "/user/enquiries";
     }
     fetch("/user", {
         method: "GET"
