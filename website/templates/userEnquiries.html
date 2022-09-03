@@ -82,7 +82,7 @@
                     <div class="input-field col s4">
                         <select name="enquiryStatus" id="userEnquiryStatus">
                             {% for enquiry in userEnquiryStatus %}
-                            <option value="{{ enquiry.userEnquiryStatus }}" selected>{{enquiry.enquiryStatus }}</option>
+                            <option value="{{ enquiry.enquiryStatus }}" selected>{{enquiry.enquiryStatus }}</option>
                             {% endfor %}
                         </select>
                         <label>Enquiry Status</label>
@@ -171,31 +171,30 @@
                             </select>
                             <label>Enquiry CourseId</label>
                         </div>
-                        <div class="input-field col s6">
-                            <select name="userEnquiryStatus" id="editUserEnquiryStatus{{ enquiry.userEnquiryId }}" >
-                                
-                                <option value="True" selected>True</option>
-                                <option value="">False</option>
-    
-                            </select>
-                            <label>Enquiry Status</label>
-                        </div>
+                    <div class="input-field col s4">
+                        <select name="enquiryStatus" id="enquiryStatus">
+                            {% for enquiry in enquiryStatus %}
+                            <option value="{{ enquiry.enquiryStatus }}" selected>{{enquiry.enquiryStatus }}</option>
+                            {% endfor %}
+                        </select>
+                        <label>Enquiry Status</label>
+                    </div>
             
                     </div>
                     <div class="modal-footer">
-                        <button class="modal-close btn-flat waves-effect waves-orange" onClick="editEnquiry('{{ enquiry.userEnquiryId }}')">Submit
+                        <button class="modal-close btn-flat waves-effect waves-orange" onClick="editEnquiry('{{ enquiry.enquiryId }}')">Submit
                             <i class="material-icons right">send</i>
                         </button>
                     </div>
                 </form>
             </div>
         </div>
-        {% if enquiry.users|count != 0 %}
+        <!-- {% if enquiry.users|count != 0 %}
         <a class="btn-flat red-text waves-effect waves-red tooltipped" data-position="top"
             data-tooltip="There are no enquiries. This can be deleted." onClick="deleteEnquiry('{{ enquiry.userEnquiryId }}')">Delete
             <i class="material-icons red-text right">delete</i>
         </a>
-        {% endif %}
+        {% endif %} -->
     </div>
     <div class="row">
         <div class="col s10">
@@ -213,7 +212,7 @@
                 <label>
                   DISABLED
                   {% if enquiry.enquiryStatus %}
-                  <input id="enquirySwitch" name='enquiryClose' type="checkbox" onClick="toggleEnquiry()" value="ENABLED" checked disabled>
+                  <input id="enquirySwitch" name='enquiryClose' type="checkbox" onClick="toggleEnquiry()" value="DISABLED" checked disabled>
                   {% else %}
                   <input id="enquirySwitch" name='enquiryClose' type="checkbox" onClick="toggleEnquiry()" value="ENABLED" disabled>
                   {% endif %}
