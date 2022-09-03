@@ -7,7 +7,7 @@ db = SQLAlchemy()
 #DB_NAME = "database.db"
 
 
-#DB_NAME = "chummaveruthe"
+# DB_NAME = "chummaveruthe"
 #DB_NAME = "CMS"
 
 DB_NAME = "ProjectCRM"

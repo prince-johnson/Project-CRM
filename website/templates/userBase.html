@@ -38,11 +38,15 @@
                     </div>
                 </li>
                 <li>
-                    <a class="waves-effect" href="/admin/courses"><i class="material-icons black-text">local_library</i>Courses
+                    <a class="waves-effect" href="/user/"><i class="material-icons black-text">dashboard</i>Dashboard
                     </a>
                 </li>
                 <li>
-                    <a class="waves-effect" href="/admin/enquiries"><i
+                    <a class="waves-effect" href="/user/courses"><i class="material-icons black-text">local_library</i>My Courses
+                    </a>
+                </li>
+                <li>
+                    <a class="waves-effect" href="/user/enquiries"><i
                             class="material-icons black-text">query_stats</i>Enquiries
                     </a>
                 </li>
@@ -91,6 +95,21 @@
     <!-- Content -->
     <div class="content-container">
         {% block content %} {% endblock %}
+    </div>
+
+    <!-- Pagination code -->
+    <div class="bottom-container center">
+        <ul class="pagination">
+            <li class="{% if obj.page == 1 %}disabled{% endif %} waves-effect"><a href="{{ url_for(url_fn, page=obj.prev_num) }}"><i class="material-icons">chevron_left</i></a></li>
+            {% for page_num in obj.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    <li class="{% if obj.page == page_num %}active black{% endif %}"><a href="{{ url_for(url_fn, page=page_num) }}">{{ page_num }}</a></li>
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
+            <li class="{% if obj.page == obj.pages %}disabled{% endif %} waves-effect"><a href="{{ url_for(url_fn, page=obj.next_num) }}"><i class="material-icons">chevron_right</i></a></li>
+          </ul>
     </div>
 
     <!--JavaScript at end of body for optimized loading-->

@@ -211,16 +211,19 @@ body {
     margin-bottom: 300px !important;
 
 }
+
 .flex-wrapper {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
     justify-content: space-between;
-  }
-  .page-footer .footer-copyright {
+}
+
+.page-footer .footer-copyright {
     color: rgba(110, 110, 110, 0.8) !important;
     background-color: transparent !important;
 }
+
 .align-footer{
     padding-left: 1em;
 }
@@ -231,3 +234,6 @@ body {
     height: 50vh;
 }
 
+.userEnquireBtn {
+    margin-top: 2em !important;
+}

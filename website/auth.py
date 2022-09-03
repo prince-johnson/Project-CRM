@@ -22,9 +22,9 @@ def login():
                 new_log = ActivityLog(userId=userId)
                 db.session.add(new_log)
                 db.session.commit()
-                if user.userRoleId == 2:
+                if user.userRoleId == 1:
                     return redirect(url_for('views.dashboard'))
-                elif user.userRoleId == 1:
+                elif user.userRoleId == 2:
                     return redirect(url_for('userviews.dashboard'))
 
             else:
@@ -37,7 +37,7 @@ def login():
 @auth.route('/register' , methods=['GET','POST'])
 def register():
     if request.method == "POST":
-        userRoleId = 1
+        userRoleId = 2
         userEmail = request.form.get('userEmail')
         userName = request.form.get('userName')
         userPassword = request.form.get('userPassword')
