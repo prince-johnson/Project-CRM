@@ -36,8 +36,8 @@ class CourseEnrollment(db.Model):
     #     self.score = score
 
 class Batches(db.Model):
-    # id = db.Column(db.Integer, primary_key=True) #primary key
-    batchId = db.Column(db.String(80), unique=True, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True) #primary key
+    batchId = db.Column(db.String(80), unique=True)
     batchName = db.Column(db.String(80))
     batchCourseId = db.Column(db.String(80), db.ForeignKey('courses.courseId')) #foreign key
     batchStatus = db.Column(db.Boolean, default=True)
@@ -116,7 +116,7 @@ class ActivityLog(db.Model):
 
 class Users(db.Model, UserMixin):
     userId = db.Column(db.Integer, primary_key=True, autoincrement=True) #primary key
-    # userCode = db.Column(db.String(80), unique=True)
+    userCode = db.Column(db.String(80), unique=True)
     userName = db.Column(db.String(80))
     userPassword = db.Column(db.String(250))
     userRoleId = db.Column(db.Integer, db.ForeignKey('role.roleId')) #foreign key

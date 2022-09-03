@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template, request,  jsonify, url_for, redirect
+
+from website import views
 from . import db
 from .models import Category, Batches, Courses, Enquiries, Users, Qualifications, ActivityLog, Instructor
 import json
@@ -46,3 +48,5 @@ def userSearchEnquiry(searchBy, searchConstraint):
     return render_template('/userEnquiries.html', userEnquiries=userEnquiries[::-1], courses=courses, listAll=False, user=current_user)
 
 
+
+#@userviews.route('/')
