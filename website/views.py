@@ -13,7 +13,7 @@ ROWS_PER_PAGE = 5
 def admin_required(func):
     @wraps(func)
     def isadmin(*args,**kwargs):
-        if(current_user.userRoleId != 2):
+        if(current_user.userRoleId != 1):
             return render_template('warning.html')
         return func(*args,**kwargs)
     return isadmin

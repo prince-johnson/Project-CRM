@@ -454,6 +454,23 @@ $(document).ready(function () {
 
 //USER-SIDE
 
+// Search Courses
+function userSearchCourse() {
+    searchBy = document.getElementById("searchBy").value;
+    searchConstraint = document.getElementById("searchConstraint").value;
+    alert(searchBy+","+searchConstraint)
+    fetch("/user/" + searchBy + "/" + searchConstraint, {
+        method: "GET"
+    })
+        .then(() => (window.location.href = "/user/" + searchBy + "/" + searchConstraint));
+}
+
+// Back to dashboard
+function userDashBack() {
+    window.location.href = "/user/"
+}
+
+
 // Search Enquiry
 function userSearchEnquiry(date) {
     if (date != 'date') {
