@@ -1,5 +1,5 @@
 from tkinter.tix import ROW
-from flask import Blueprint, render_template, request, jsonify, url_for, redirect
+from flask import Blueprint, render_template, request, jsonify, url_for, redirect, flash
 from . import db
 from .models import Category, Batches, Courses, Enquiries, Users, Qualifications, ActivityLog, Instructor
 import json
@@ -8,7 +8,7 @@ from datetime import date
 from flask_login import login_user, login_required, logout_user, current_user
 from functools import wraps
 
-ROWS_PER_PAGE = 10
+ROWS_PER_PAGE = 5
 
 def admin_required(func):
     @wraps(func)
@@ -31,37 +31,52 @@ enquiries = []
 def dashboard():
     # Set the pagination configuration
     page = request.args.get('page', 1, type=int)
-    obj, dates = ActivityLog.query.with_entities(func.cast(ActivityLog.time, Date).label('Date'), func.count(ActivityLog.userId).label('logincount')).group_by(func.cast(ActivityLog.time, Date)).order_by('Date').paginate(page=page, per_page=ROWS_PER_PAGE)
+    dates = ActivityLog.query.with_entities(func.cast(ActivityLog.time, Date).label('Date'), func.count(ActivityLog.userId).label('logincount')).group_by(func.cast(ActivityLog.time, Date)).order_by('Date').paginate(page=page, per_page=ROWS_PER_PAGE)
     # dates = ActivityLog.query(cast(ActivityLog.time, Date)).distinct().all()
-    return render_template('dashboard.html', obj=obj,dates=dates, user=current_user)
+    return render_template('dashboard.html', obj=dates,dates=dates, user=current_user, url_fn='views.dashboard')
 
 #user
-@views.route('/users')
+@views.route('/users', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def  users():
-    users = Users.query.all()
-    if request.args :
+    page = request.args.get('page', 1, type=int)
+    users = Users.query.order_by(Users.userId).paginate(page=page, per_page=ROWS_PER_PAGE)
+    if request.method == 'POST':
+        userName = request.form.get('userName')
+        userPassword = 'password'
+        userEmail = request.form.get('userEmail')
+        userRoleId = request.form.get('userRole')
+        userPhone = request.form.get('userPhone')
+        userCountry = request.form.get('userCountry')
+        userState = request.form.get('userState')
+        userCity = request.form.get('userCity')
+        new_user = Users(userName=userName, userEmail=userEmail, userPassword=userPassword, userRoleId=userRoleId, userPhone=userPhone, userCountry=userCountry, userState=userState, userCity=userCity)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('User added!', category='success')
+    if request.args.get('roles') :
         print(request.args.get('roles').split(','))
         listAll = False
-        users = Users.query.filter(Users.userRoleId.in_(request.args.get('roles').split(','))).all()
+        users = Users.query.filter(Users.userRoleId.in_(request.args.get('roles').split(','))).order_by(Users.userId).paginate(page=page, per_page=ROWS_PER_PAGE)
         if len(request.args.get('roles').split(',')) == 2:
             listAll = True
         elif request.args.get('roles').split(',') == ['']:
             listAll = True
-            users = Users.query.all()
+            users = Users.query.order_by(userId).paginate(page=page, per_page=ROWS_PER_PAGE)
         return render_template('users.html', users=users, listAll=listAll)
     return render_template('users.html', users=users, listAll=True)
 
-#searchuser
+# Search user
 @views.route('/users/<searchBy>/<searchConstraint>')
 @login_required
 @admin_required
 def searchUser(searchBy, searchConstraint):
+    page = request.args.get('page', 1, type=int)
     if searchBy == 'id':
-        users = Users.query.filter(Users.userId.like("%"+searchConstraint+"%")).all()
+        users = Users.query.filter(Users.userId.like("%"+searchConstraint+"%")).order_by(Users.userId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
-        users = Users.query.filter(Users.userName.like("%"+searchConstraint+"%")).all()
+        users = Users.query.filter(Users.userName.like("%"+searchConstraint+"%")).order_by(Users.userId).paginate(page=page, per_page=ROWS_PER_PAGE)
     return render_template('users.html', users=users, listAll=False)
 
 #batches
@@ -83,20 +98,20 @@ def batches():
         new_batch = Batches(batchId=batchId,batchName=batchName,batchStrength=batchStrength,batchCourseId=batchCourseId,batchStatus=batchStatus,batchStartDate=batchStartDate,batchEndDate=batchEndDate)
         db.session.add(new_batch)
         db.session.commit()
-    batches = Batches.query.all()
+    batches = Batches.query.order_by(Batches.batchId).paginate(page=page, per_page=ROWS_PER_PAGE)
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     categories = Category.query.with_entities(Category.categoryId, Category.categoryName).distinct().all()
     if request.args.get('status') :
         print(request.args.get('status').split(','))
         listAll = False
-        batches = Batches.query.filter(Batches.batchStatus.in_((request.args.get('status')).split(','))).all()
+        batches = Batches.query.filter(Batches.batchStatus.in_((request.args.get('status')).split(','))).order_by(Batches.batchId).paginate(page=page, per_page=ROWS_PER_PAGE)
         if len(request.args.get('status').split(',')) == 2:
             listAll = True
         elif request.args.get('status').split(',') == ['']:
             listAll = True
-            batches = Batches.query.all()
-        return render_template('batches.html', batches=batches[::-1], listAll=listAll, courses=courses, categories=categories, page=page, per_page=ROWS_PER_PAGE)
-    return render_template('batches.html', batches=batches[::-1], listAll=True, courses=courses, categories=categories)
+            batches = Batches.query.order_by(Batches.batchId).paginate(page=page, per_page=ROWS_PER_PAGE)
+        return render_template('batches.html', batches=batches, listAll=listAll, courses=courses, categories=categories)
+    return render_template('batches.html', batches=batches, listAll=True, courses=courses, categories=categories)
 
 #delete batch
 @views.route('/batches/<batchId>', methods=['DELETE'])
@@ -132,17 +147,19 @@ def editBatch(batchId):
 @login_required
 @admin_required
 def searchBatch(searchBy, searchConstraint):
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     if searchBy == 'id':
-        batches = Batches.query.filter(Batches.batchId.like("%"+searchConstraint+"%")).all()
+        batches = Batches.query.filter(Batches.batchId.like("%"+searchConstraint+"%")).order_by(Batches.batchId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
-        batches = Batches.query.filter(Batches.batchName.like("%"+searchConstraint+"%")).all()
+        batches = Batches.query.filter(Batches.batchName.like("%"+searchConstraint+"%")).order_by(Batches.batchId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'date':
         dateList = searchConstraint.split()
         print(dateList)
         searchConstraint = dateList[2] + "-" + f"{(months.index(dateList[0])+1):02}" + "-" + f"{dateList[1][:-1]:02}"
         print(searchConstraint)
-        batches = Batches.query.filter(Batches.batchStartDate.like("%"+searchConstraint+"%")).all()
+        batches = Batches.query.filter(Batches.batchStartDate.like("%"+searchConstraint+"%")).order_by(Batches.batchId).paginate(page=page, per_page=ROWS_PER_PAGE)
     return render_template('batches.html', batches=batches, listAll=False)
 
 #enquiry
@@ -150,6 +167,8 @@ def searchBatch(searchBy, searchConstraint):
 @login_required
 @admin_required
 def enquiries():
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
         enquiryId = request.form.get('enquiryId')
         enquiryUserId = request.form.get('enquiryUserId')
@@ -160,11 +179,11 @@ def enquiries():
         new_enquiry = Enquiries(enquiryId=enquiryId, enquiryUserId=enquiryUserId, enquiryCourseId=enquiryCourseId, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription)
         db.session.add(new_enquiry)
         db.session.commit()
-    enquiries=Enquiries.query.all()
+    enquiries=Enquiries.query.order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     users = Users.query.with_entities(Users.userId).distinct().all()
     enquiryStatus = Enquiries.query.with_entities(Enquiries.enquiryStatus).distinct().all()
-    return render_template('enquiries.html', enquiries=enquiries[::-1], listAll=True, users=users, courses=courses, enquiryStatus=enquiryStatus)
+    return render_template('enquiries.html', enquiries=enquiries, listAll=True, users=users, courses=courses, enquiryStatus=enquiryStatus)
 
 # #delete enquiry
 # @views.route('/enquiries/<enquiryId>', methods=['DELETE'])
@@ -182,17 +201,19 @@ def enquiries():
 @login_required
 @admin_required
 def searchEnquiry(searchBy, searchConstraint):
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     if searchBy == 'id':
-        enquiries = Enquiries.query.filter(Enquiries.enquiryId.like("%"+searchConstraint+"%")).all()
+        enquiries = Enquiries.query.filter(Enquiries.enquiryCode.like("%"+searchConstraint+"%")).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'uid':
-        enquiries = Enquiries.query.filter(Enquiries.enquiryUserId.like("%"+searchConstraint+"%")).all()
+        enquiries = Enquiries.query.filter(Enquiries.enquiryUserId.like("%"+searchConstraint+"%")).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
-        enquiries = Enquiries.query.filter(Enquiries.enquiryCourseId.like("%"+searchConstraint+"%")).all()
+        enquiries = Enquiries.query.filter(Enquiries.enquiryCourseId.like("%"+searchConstraint+"%")).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     
     return render_template('enquiries.html', enquiries=enquiries, courses=courses, listAll=False)
 
-#edit enquiry
+# Edit enquiry
 @views.route('/enquiries/<enquiryId>', methods=['PUT', 'PATCH'])
 @login_required
 @admin_required
@@ -213,6 +234,8 @@ def editEnquiry(enquiryId):
 @login_required
 @admin_required
 def categories():
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
         #batchId = "BA" + f"{(len(Batches.query.all())):03}"
         categoryId = "CA"+ f"{(len(Category.query.all())+1):03}"
@@ -223,8 +246,8 @@ def categories():
         new_category = Category(categoryId=categoryId, categoryName=categoryName, categoryStatus=categoryStatus, categoryComments=categoryComments)
         db.session.add(new_category)
         db.session.commit()
-    categories=Category.query.all()
-    return render_template('categories.html', categories=categories[::-1], listAll=True)
+    categories=Category.query.order_by(Category.categoryId).paginate(page=page, per_page=ROWS_PER_PAGE)
+    return render_template('categories.html', categories=categories, listAll=True)
 
 #delete category
 @views.route('/categories/<categoryId>', methods=['DELETE'])
@@ -242,10 +265,12 @@ def deleteCategory(categoryId):
 @login_required
 @admin_required
 def searchCategory(searchBy, searchConstraint):
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
     if searchBy == 'id':
-        categories = Category.query.filter(Category.categoryId.like("%"+searchConstraint+"%")).all()
+        categories = Category.query.filter(Category.categoryId.like("%"+searchConstraint+"%")).order_by(Category.categoryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
-        categories = Category.query.filter(Category.categoryName.like("%"+searchConstraint+"%")).all()
+        categories = Category.query.filter(Category.categoryName.like("%"+searchConstraint+"%")).order_by(Category.categoryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     return render_template('categories.html', categories=categories, listAll=False)
 
 #edit category
@@ -268,6 +293,8 @@ def editCategory(categoryId):
 @login_required
 @admin_required
 def qualifications():
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
         # qualificationId = qualificationId
         qualificationName = request.form.get('qualificationName')
@@ -276,8 +303,8 @@ def qualifications():
         new_qualification = Qualifications(qualificationName=qualificationName, qualificationStatus=qualificationStatus)
         db.session.add(new_qualification)
         db.session.commit()
-    qualifications=Qualifications.query.all()
-    return render_template('qualification.html',qualifications=qualifications[::-1], listAll=True)
+    qualifications=Qualifications.query.order_by(Qualifications.qualificationId).paginate(page=page, per_page=ROWS_PER_PAGE)
+    return render_template('qualification.html',qualifications=qualifications, listAll=True)
 
 #delete qualification
 @views.route('/qualification/<qualificationId>', methods=['DELETE'])
@@ -295,10 +322,12 @@ def deleteQualification(qualificationId):
 @login_required
 @admin_required
 def searchQualification(searchBy, searchConstraint):
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
     if searchBy == 'id':
-        qualifications = Qualifications.query.filter(Qualifications.qualificationId.like("%"+searchConstraint+"%")).all()
+        qualifications = Qualifications.query.filter(Qualifications.qualificationId.like("%"+searchConstraint+"%")).order_by(Qualifications.qualificationId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
-        qualifications = Qualifications.query.filter(Qualifications.qualificationName.like("%"+searchConstraint+"%")).all()
+        qualifications = Qualifications.query.filter(Qualifications.qualificationName.like("%"+searchConstraint+"%")).order_by(Qualifications.qualificationId).paginate(page=page, per_page=ROWS_PER_PAGE)
     return render_template('qualification.html', qualifications=qualifications, listAll=False)
 
 #edit qualifiaction

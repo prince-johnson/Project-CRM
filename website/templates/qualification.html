@@ -1,3 +1,5 @@
+{% set obj = qualifications %}
+{% set url_fn = 'views.qualifications' %}
 {% extends "base.html" %} 
 {% block title %}Qualifications{% endblock %} 
 {% block content %}
@@ -120,7 +122,7 @@
     </div>
 </div>
 <!--card-->
-{% for qual in qualifications %}
+{% for qual in qualifications.items %}
     <div class="card">
         <div class="row right">
             <a href="#{{ qual.qualificationId }}" class="modal-close btn-flat green-text waves-effect waves-green" onclick="$('#{{ qual.qualificationId }}').modal('open');">Edit

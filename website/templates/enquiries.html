@@ -1,13 +1,15 @@
+{% set obj = enquiries %}
+{% set url_fn = 'views.enquiries' %}
 {% extends "base.html" %}
 {% block title %}Enquiries{% endblock %}
 {% block content %}
-    {% if not listAll %}
-    <div class="back col s3">
-        <button class="back-btn btn-flat btn-medium waves-effect waves-orange" onClick="enquiryBack()">
-            <i class="material-icons">arrow_back</i>
-        </button>
-    </div>
-    {% endif %}
+{% if not listAll %}
+<div class="back col s3">
+    <button class="back-btn btn-flat btn-medium waves-effect waves-orange" onClick="enquiryBack()">
+        <i class="material-icons">arrow_back</i>
+    </button>
+</div>
+{% endif %}
 
 
 <div class="buttons col s9">
@@ -147,18 +149,18 @@
             <a href="#" class="waves-effect waves-orange btn-flat" onclick="clearFilters()">Clear</a>
         </div>
     </div>
-    {% if enquiries|count != 0 %}
-        {% if enquiries|count == 1 %}
-        <span class="card-subtitle center"><em>Showing {{ enquiries|count }} result</em></span>
+    {% if enquiries.items|count != 0 %}
+        {% if enquiries.items|count == 1 %}
+        <span class="card-subtitle center"><em>Showing {{ enquiries.items|count }} result</em></span>
         {% else %}
-        <span class="card-subtitle center"><em>Showing {{ enquiries|count }} results</em></span>
+        <span class="card-subtitle center"><em>Showing {{ enquiries.items|count }} results</em></span>
         {% endif %}
     {% endif %}
 </div>
-{% if enquiries|length == 0 %}
+{% if enquiries.items|length == 0 %}
 <p class="center empty-content">There are no enquiries to show</p>
 {% else %}
-{% for enquiry in enquiries %}
+{% for enquiry in enquiries.items %}
 <div class="card">
     <div class="row right">
         <a href="#{{ enquiry.enquiryId }}" class="modal-trigger btn-flat green-text waves-effect waves-green"

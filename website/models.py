@@ -36,8 +36,8 @@ class CourseEnrollment(db.Model):
     #     self.score = score
 
 class Batches(db.Model):
-    id = db.Column(db.Integer, primary_key=True) #primary key
-    batchId = db.Column(db.String(80), unique=True)
+    # id = db.Column(db.Integer, primary_key=True) #primary key
+    batchId = db.Column(db.String(80), unique=True, primary_key=True)
     batchName = db.Column(db.String(80))
     batchCourseId = db.Column(db.String(80), db.ForeignKey('courses.courseId')) #foreign key
     batchStatus = db.Column(db.Boolean, default=True)
@@ -58,12 +58,12 @@ class Batches(db.Model):
 
 class Enquiries(db.Model):
     enquiryId = db.Column(db.Integer, primary_key=True) #primary key
-    enquiryCode = db.Column(db.String(80), unique=True)
+    # enquiryCode = db.Column(db.String(80), unique=True, primary_key=True)
     enquiryUserId = db.Column(db.Integer, db.ForeignKey('users.userId')) #foreign key
     enquiryCourseId = db.Column(db.Integer, db.ForeignKey('courses.id')) #foreign key
     enquiryDescription = db.Column(db.String(250))
     enquiryStatus = db.Column(db.Boolean, default=True)
-    enquiryUpdate = db.Column(db.String(80))
+    # enquiryUpdate = db.Column(db.String(80))
 
     # def __init__(self, enquiryId, enquiryUserId, enquiryCourseId, enquiryDescription, enquiryStatus):
     #     self.enquiryId = enquiryId
@@ -164,7 +164,7 @@ class Qualifications(db.Model):
     qualificationId = db.Column(db.Integer, primary_key=True) #primary key
     qualificationName = db.Column(db.String(80))
     qualificationStatus = db.Column(db.Boolean, default=True)
-    qualificationPriority = db.Column(db.Integer)
+    # qualificationPriority = db.Column(db.Integer)
     
     courses = db.relationship('Courses')
     users = db.relationship('UserQualification')

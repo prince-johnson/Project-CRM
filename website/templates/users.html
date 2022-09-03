@@ -1,3 +1,5 @@
+{% set obj = users %}
+{% set url_fn = 'views.users' %}
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
@@ -49,37 +51,39 @@
             <form action="" method="post">
                 <div class="row">
                     <div class="input-field col s6">
-                        <textarea name="batchName" id="batchName" class="materialize-textarea"></textarea>
-                        <label for="batchName">Enter the batch name</label>
+                        <input name="userName" type="text" id="userName" class="validate"></input>
+                        <label for="userName">First name</label>
                     </div>
                     <div class="input-field col s6">
-                        <textarea name="batchStrength" id="batchStrength" class="materialize-textarea"></textarea>
-                        <label for="batchStrength">Enter the batch strength</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s6">
-                        <select name="batchCourseId" id="batchCourseId">
-                            {% for course in courses %}
-                            <option value='{{ course.courseId }}'>{{course.courseId }} - {{ course.courseName}}</option>
-                            {% endfor %}
-                        </select>
-                        <label>Batch CourseId</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <select name="BatchStatus" id="batchStatus">
-                            <option value='1'>ENABLED</option>
-                            <option value=''>DISABLED</option>
-                        </select>
-                        <label>Batch Status</label>
+                        <input id="userEmail" type="email" class="validate" name="userEmail">
+                        <label for="userEmail">Email</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s6">
-                        <input type="text" name="batchStartDate" id="batchStartDate" class="datepicker materialize-textarea" placeholder="Pick batch start date"></input>
+                        <select name="userRole" id="userRole">
+                            <option value='1'>User</option>
+                            <option value="2">Admin</option>
+                        </select>
+                        <label>Role</label>
                     </div>
                     <div class="input-field col s6">
-                        <input type="text" name="batchEndDate" id="batchEndDate" class="datepicker materialize-textarea" placeholder="Pick batch end date"></input>
+                        <input id="userPhone" type="tel" class="validate" name="userPhone">
+                        <label for="userPhone">Phone</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s4">
+                        <input id="userCountry" type="text" class="validate" name="userCountry">
+                        <label for="userCountry">Country</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input id="userState" type="text" class="validate" name="userState">
+                        <label for="userState">State</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input id="userCity" type="text" class="validate" name="userCity">
+                        <label for="userEmail">City</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -120,18 +124,18 @@
             <a href="#" class="waves-effect waves-orange btn-flat" onclick="clearFilters()">Clear</a>
         </div>
     </div>
-    {% if users|count != 0 %}
-        {% if users|count == 1 %}
-        <span class="card-subtitle center"><em>Showing {{ users|count }} result</em></span>
+    {% if users.items|count != 0 %}
+        {% if users.items|count == 1 %}
+        <span class="card-subtitle center"><em>Showing {{ users.items|count }} result</em></span>
         {% else %}
-        <span class="card-subtitle center"><em>Showing {{ users|count }} results</em></span>
+        <span class="card-subtitle center"><em>Showing {{ users.items|count }} results</em></span>
         {% endif %}
     {% endif %}
 </div>
-{% if users|length == 0 %}
+{% if users.items|count == 0 %}
 <p class="center empty-content">There are no users to show</p>
 {% else %}
-{% for user in users %}
+{% for user in users.items %}
 <div class="card">
     <div class="row right">
         

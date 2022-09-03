@@ -1,3 +1,5 @@
+{% set obj = categories %}
+{% set url_fn = 'views.categories' %}
 {% extends "base.html" %} 
 {% block title %}Categories{% endblock %} 
 {% block content %}
@@ -119,19 +121,19 @@
     </div>
     {% endif %}
 </div>
-{% if categories|count != 0 %}
-{% if categories|count == 1 %}
-<span class="card-subtitle center"><em>Showing {{ categories|count }} result</em></span>
+{% if categories.items|count != 0 %}
+{% if categories.items|count == 1 %}
+<span class="card-subtitle center"><em>Showing {{ categories.items|count }} result</em></span>
 
 {% else %}
-<span class="card-subtitle center"><em>Showing {{ categories|count }} results</em></span>
+<span class="card-subtitle center"><em>Showing {{ categories.items|count }} results</em></span>
 {% endif %}
 
 {% endif %}
 
 
 <!--card-->
-{% for category in categories %}
+{% for category in categories.items %}
     <div class="card" id="page">
         <div class="row right">
             <a href="#{{ category.categoryId }}" class="modal-close btn-flat green-text waves-effect waves-green" onclick="$('#{{ category.categoryId }}').modal('open');">Edit
@@ -207,15 +209,4 @@
         </p>
     </div>
 {% endfor %}
-<!--pagination-->
-    <ul class="pagination">
-        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-        <li class="active teal lighten-2"><a href="#!">1</a></li>
-        <li class="waves-effect"><a href="#!">2</a></li>
-        <li class="waves-effect"><a href="#!">3</a></li>
-        <li class="waves-effect"><a href="#!">4</a></li>
-        <li class="waves-effect"><a href="#!">5</a></li>
-        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-    </ul>
-</div>
 {% endblock %}
