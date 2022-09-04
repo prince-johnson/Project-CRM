@@ -1,7 +1,8 @@
-{% extends "base.html" %} 
+{% set obj = profile %}
+{% set url_fn = 'userviews.profile' %}
+{% extends "userBase.html" %} 
 {% block title %}User Profile{% endblock %} 
 {% block content %}
-
 <div class="flex-wrapper">
     <div class="container">
         <div class="row">
@@ -67,7 +68,67 @@
                 </form>
             </div>
         </div>
+        <!-- {% for user_all in Users %}
+        <div class="card">
+            <div class="row right">
+   
+                <div id="{{ enquiry.enquiryId }}" class="modal">
+                    <div class="modal-content">
+                        <form action="">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea name="userEnquiryDescription" id="editUserEnquiryDescription{{ enquiry.enquiryId }}" class="materialize-textarea" placeholder="{{ enquiry.enquiryDescription }}" ></textarea>
+                                    <label for="userEnquiryDescription">Enquiry Description</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <select name="userEnquiryUserId" id="editUserEnquiryUserId{{ enquiry.enquiryId }}" disabled>
+                                        <option value="{{ enquiry.enquiryUserId }}" selected>{{enquiry.enquiryUserId }}</option>
+                                    </select>
+                                    <label>Enquiry UserId</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <select name="userEnquiryCourseId" id="editUserEnquiryCourseId{{ enquiry.enquiryId }}" disabled>
+                                        <option value="{{ enquiry.enquiryCourseId }}" selected>{{enquiry.enquiryCourseId }}</option>
+                                    </select>
+                                    <label>Enquiry CourseId</label>
+                                </div>
+                            <div class="input-field col s4">
+                                <select name="enquiryStatus" id="enquiryStatus">
+                                    {% for enquiry in enquiryStatus %}
+                                    <option value="{{ enquiry.enquiryStatus }}" selected>{{enquiry.enquiryStatus }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label>Enquiry Status</label>
+                            </div>
+                    
+                            </div>
+                            <div class="modal-footer">
+                                <button class="modal-close btn-flat waves-effect waves-orange" onClick="editEnquiry('{{ enquiry.enquiryId }}')">Submit
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col s10">
+                    <h1 class="card-title">
+                        User Id : {{ user_all.userId }}
+                    </h1>
+                    <p class="card-subtitle"><em>User Email : {{ user_all.userEmail }}</em></p>
+                    <p class="card-subtitle"><em>User Phone : {{ user_all.userPhone }}</em></p>
+                    <p class="card-subtitle"><em>User Country : {{ user_all.userCountry }}</em></p>
+                    <p class="card-subtitle"><em>User State : {{ user_all.userState }}</em></p>
+                    <p class="card-subtitle"><em>User City : {{ user_all.userCity }}</em></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %} -->
     </div>
 </div>
-{% endfor %}
+
 {% endblock %}

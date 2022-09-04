@@ -63,6 +63,7 @@ def userSearchCourse(searchBy, searchConstraint):
 @login_required
 @user_required
 def userEnquiries():
+    user=current_user
     if request.method == 'POST':
         userEnquiryId = request.form.get('enquiryId')
         print(userEnquiryId)
@@ -129,3 +130,10 @@ def userSearchEnrolledCourses(searchBy, searchConstraint):
         return render_template('/enrolledCourses.html', user=current_user, courses=courses)
         
     return render_template('/enrolledCourses.html', user=current_user, courses=courses)
+
+
+@userviews.route('/profile')
+@login_required
+@user_required
+def profile():
+    return render_template('profile.html',obj=Users)
