@@ -249,3 +249,7 @@ body {
     visibility: visible;
     color: #E74C3C;
 }
+
+.errorCard {
+    background-color: var(--red);
+}
