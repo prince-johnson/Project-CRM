@@ -85,7 +85,8 @@ class Courses(db.Model):
     courseVideoLink = db.Column(db.String(80))
     courseRating = db.Column(db.Integer)
     courseStatus = db.Column(db.Boolean, default=True)
-    # courseImage = db.Column(db.LargeBinary)
+
+    #courseImage = db.Column(db.LargeBinary)
 
     batches = db.relationship('Batches')
     enquiries = db.relationship('Enquiries')

@@ -29,6 +29,9 @@ def login():
                 new_log = ActivityLog(userId=userId)
                 db.session.add(new_log)
                 db.session.commit()
+
+                # roleId = 1 for admin, 2 for user
+
                 if user.userRoleId == 1:
                     return redirect(url_for('views.dashboard'))
                 elif user.userRoleId == 2:
@@ -44,7 +47,8 @@ def login():
 @auth.route('/register' , methods=['GET','POST'])
 def register():
     if request.method == "POST":
-        userRoleId = 2
+
+        userRoleId = 2 # 1- for admin, 2- for user
         userCode = f"USER0{len(Users.query.all())+1}"
         userEmail = request.form.get('userEmail')
         userName = request.form.get('userName')
@@ -65,6 +69,7 @@ def register():
             userCode = "USER0" + f"{Users.userId}" 
             print(userCode)
             new_user = Users(userCode=userCode, userRoleId=userRoleId,userEmail=userEmail, userPhone=userPhone, userName = userName, userPassword = generate_password_hash(userPassword, method = 'sha256'), userCity=userCity, userCountry=userCountry, userState = userState, userNew=userNew, userStatus=userStatus)
+
             db.session.add(new_user)
             db.session.commit()
             print('Account created!')
