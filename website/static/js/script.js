@@ -84,10 +84,10 @@ function editBatch(batchId) {
 
 // Delete Batch
 function deleteBatch(batchId) {
-    fetch('/batches/' + batchId, {
+    fetch('/admin/batches/' + batchId, {
         method: 'DELETE'
     })
-        .then(() => window.location.href = "/admin/batches");
+    .then(() => window.location.href = "/admin/batches");
 }
 
 // Search Batch
