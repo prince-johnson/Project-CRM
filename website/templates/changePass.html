@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,19 +10,16 @@
     <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/materialize.min.css')}}"
         media="screen,projection" />
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
-        integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-    <title>Login</title>
+    <title>Change Password</title>
 </head>
-
 <body>
-
-
-
+    <div class="back col s3">
+        <button class="back-btn btn-flat btn-medium waves-effect waves-orange" onClick="changeBack()">
+            <i class="material-icons">arrow_back</i>
+        </button>
+    </div>
     <div class="flex-wrapper">
         <section class="container section" id="userAuth">
             <div class="row">
@@ -37,37 +33,44 @@
                 <div class="col s12 l6 offest-l2">
                     <ul class="tabs">
                         <li class="tab col s12">
-                            <a href="#" class="black-text">Login</a>
+                            <a href="#" class="black-text">Change Password</a>
                         </li>
                     </ul>
                     <br>
                     <div class="col s12" id="loginUser">
-                        <form class="col s12" method="post">
+                        <form id="changeform" class="col s12" novalidate>
                             <div class="row">
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">person</i>
                                     <input id="userEmail" type="email" class="validate" name="userEmail">
                                     <label for="userEmail">Email</label>
                                 </div>
+                                <small id="errname" class="error right">This field must not be empty!</small>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">fingerprint</i>
-                                    <input id="userPassword" type="password" class="validate" name="userPassword">
-                                    <label for="userPassword">Password</label>
+                                    <input id="userPass1" type="password" class="validate" name="userPass1">
+                                    <label for="userPass1">New Password</label>
                                 </div>
+                                <small id="errname" class="error right">This field must not be empty!</small>
                             </div>
                             <div class="row">
-                                <div class="input-field col s6">
-                                    <a href="/changepassword" class="orange-text">Forgot Password?</a><br><br><br>
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">fingerprint</i>
+                                    <input id="userPass2" type="password" class="validate" name="userPass2">
+                                    <label for="userPass2">Confirm Password</label>
                                 </div>
+                                <small id="errname" class="error right">This field must not be empty!</small>
+                            </div>
+                            <div class="row">
                                 <div class="input-field col s6">
                                     <a href="/register" class="orange-text">Don't have an account? <span
                                             style="color:#2b6777; font-weight:bold">Sign Up</span></a><br><br><br>
                                 </div>
                             </div>
 
-                            <button class="waves-effect waves-light btn orange" type="submit"><i
+                            <button class="waves-effect waves-light btn orange" onClick="changePass()" ><i
                                     class="material-icons left">send</i>Submit</button>
                         </form>
                     </div>
@@ -84,15 +87,8 @@
         </footer>
     </div>
 
-    <script type="text/javascript" src="{{url_for('static', filename='js/materialize.min.js')}}"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.tabs').tabs();
-        })
-    </script>
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="{{url_for('static', filename='js/materialize.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
 </body>
-
 </html>

@@ -73,14 +73,6 @@ body {
     pointer-events: none;
 }
 
-.success { 
-    background-color: var(--green);
-}
-
-.error {
-    background-color: var(--red);
-}
-
 .tabs .indicator {
     background-color:var(--orange);
 }
@@ -236,4 +228,24 @@ body {
 
 .userEnquireBtn {
     margin-top: 2em !important;
+}
+
+.input-field.success i.fa-check-circle {
+    color: #2ECC71;
+    visibility: visible;
+}
+
+.input-field.err i.fa-exclamation-circle {
+    color: #E74C3C;
+    visibility: visible;
+}
+
+.error {
+    margin: 1%;
+    visibility: hidden;
+}
+
+.input-field.err .error {
+    visibility: visible;
+    color: #E74C3C;
 }
