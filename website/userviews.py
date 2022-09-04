@@ -73,10 +73,10 @@ def userSearchEnrolledCourses(searchBy, searchConstraint):
     #user_id = current_user.userId
     user_id = 6
     page = request.args.get('page', 1, type=int)
-    courses = Courses.query.with_entities(Courses.id, Courses.courseName).distinct().order_by(Courses.id).paginate(page=page, per_page=ROWS_PER_PAGE)
+    courses = Courses.query.with_entities(Courses.id, Courses.courseName).all()
     if searchBy == 'id':
         pass
     elif searchBy == 'name':
-        c = Courses.query.filter(Courses.courseName.like("%"+searchConstraint+"%")).order_by(Courses.id).paginate(page=page, per_page=ROWS_PER_PAGE)
+        return render_template('/enrolledCourses.html', user=current_user, courses=courses)
         
-    return render_template('/enrolledCourses.html', user=current_user, courses=c)
+    return render_template('/enrolledCourses.html', user=current_user, courses=courses)
