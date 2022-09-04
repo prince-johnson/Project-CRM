@@ -125,8 +125,8 @@ class Users(db.Model, UserMixin):
     userCountry = db.Column(db.String(80))
     userState = db.Column(db.String(80))
     userCity = db.Column(db.String(80))
-    # userNew = db.Column(db.Boolean, default=True)
-    # userStatus = db.Column(db.Boolean, default=True)
+    userNew = db.Column(db.Boolean, default=True)
+    userStatus = db.Column(db.Boolean, default=True)
 
     enquiries = db.relationship('Enquiries')
     activityLog = db.relationship('ActivityLog')

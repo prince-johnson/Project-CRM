@@ -79,7 +79,7 @@ def userEnquiries():
     return render_template('/userEnquiries.html', userEnquiries=userEnquiries[::-1], listAll=True, user=current_user, courses=courses, userEnquiryStatus=userEnquiryStatus)
 
 
-#serach enquiry 
+#search enquiry 
 @userviews.route('/enquiries/<searchBy>/<searchConstraint>')
 @login_required
 @user_required

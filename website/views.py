@@ -43,6 +43,8 @@ def  users():
     page = request.args.get('page', 1, type=int)
     users = Users.query.order_by(Users.userId).paginate(page=page, per_page=ROWS_PER_PAGE)
     if request.method == 'POST':
+        last_user = Users.query.order_by(Users.userId.desc()).first()
+        userCode = f"USER{last_user.userId+1}"
         userName = request.form.get('userName')
         userPassword = 'password'
         userEmail = request.form.get('userEmail')
@@ -51,7 +53,9 @@ def  users():
         userCountry = request.form.get('userCountry')
         userState = request.form.get('userState')
         userCity = request.form.get('userCity')
-        new_user = Users(userName=userName, userEmail=userEmail, userPassword=userPassword, userRoleId=userRoleId, userPhone=userPhone, userCountry=userCountry, userState=userState, userCity=userCity)
+        userNew = 0
+        userStatus = 1
+        new_user = Users(userCode=userCode, userName=userName, userEmail=userEmail, userPassword=userPassword, userRoleId=userRoleId, userPhone=userPhone, userCountry=userCountry, userState=userState, userCity=userCity, userNew=userNew, userStatus=userStatus)
         db.session.add(new_user)
         db.session.commit()
         flash('User added!', category='success')
