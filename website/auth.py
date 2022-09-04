@@ -41,7 +41,6 @@ def login():
                 err_res = "Invalid E-mail or password"
                 print(err_res)
                 err = True
-                flash(err)
                 return render_template("login.html", user=current_user, err = err, err_res = err_res)
         else:
             err_res = "Email does not exist!"

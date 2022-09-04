@@ -77,7 +77,9 @@
       
         {% if err %}
         <div style="padding-right: 25%; padding-left: 25%">
-            <div style="backdrop-filter: blur(14px);" class="flash error card center " title="Invalid username or password"><pre style="position: relative; color: white;">{{ err_res }}</pre></div>
+
+            <div class="flash errorCard card center " title="Invalid username or password"><pre style="position: relative; color: white;">{{ err_res }}</pre></div>
+
         </div>
         {% endif %}
         <!--footer-->
