@@ -28,11 +28,17 @@ def login():
                     return redirect(url_for('userviews.dashboard'))
 
             else:
-                print("Incorrect password")
+                err_res = "Invalid E-mail or password"
+                err = True
+                flash(err)
+                return render_template("login.html", user=current_user, err = err, err_res = err_res)
         else:
-            print("Email does not exist!")
+            err_res = "Email does not exist!"
+            err = True
+            flash(err)
+            return render_template("login.html", user=current_user, err = err, err_res = err_res)
         
-    return render_template("login.html", user=current_user)
+    return render_template("login.html", user=current_user, err=False, err_res="")
 
 @auth.route('/register' , methods=['GET','POST'])
 def register():
