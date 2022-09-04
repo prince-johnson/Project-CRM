@@ -34,13 +34,17 @@ def dashboard():
     page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
         enquiryId = len(Enquiries.query.all()) + 1
+        course_id_code = {}
+        
+
         enquiryUserId = request.form.get('enquiryUserId')
         enquiryCourseId = request.form.get('enquiryCourseId')
+        course = Courses.query.filter_by(courseId=enquiryCourseId).first()
         enquiryStatus = 1
         enquiryUpdate = 'ENQUIRED'
         enquiryDescription = request.form.get('enquiryDescription')
-        print(enquiryId, enquiryUserId, enquiryCourseId, enquiryStatus, enquiryUpdate, enquiryDescription)
-        new_enquiry = Enquiries(enquiryId=enquiryId, enquiryUserId=enquiryUserId, enquiryCourseId=enquiryCourseId, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription)
+        print(enquiryUserId, enquiryCourseId, enquiryStatus, enquiryUpdate, enquiryDescription)
+        new_enquiry = Enquiries(enquiryId=enquiryId, enquiryUserId=enquiryUserId, enquiryCourseId=course.id, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription)
         db.session.add(new_enquiry)
         db.session.commit()
     courses = Courses.query.filter_by(courseStatus = 1).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
@@ -100,12 +104,14 @@ def userSearchEnquiry(searchBy, searchConstraint):
 
 @userviews.route('/enrolledCourses')
 def enrolledCourses():
+    page = request.args.get('page', 1, type=int)
     course_instructor = dict()
     courseIds = []
     courses = []
     category_name = dict()
-    enrollments = CourseEnrollment.query.filter_by(userId=6).all()
-    for enrollment in enrollments:
+    enrollments = CourseEnrollment.query.filter_by(userId=6).paginate(page=page, per_page=ROWS_PER_PAGE)
+    print(type(enrollments))
+    for enrollment in enrollments.items:
         courseIds.append(enrollment.courseId)
     for courseId in courseIds:
         course = Courses.query.filter_by(id=courseId).first()
@@ -115,7 +121,8 @@ def enrolledCourses():
     for course in courses:
         instructor = Instructor.query.filter_by(instructorId=course.courseInstructorID).first()
         course_instructor[instructor.instructorId] = instructor.instructorName
-    return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor)
+    #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
+    return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments)
 
 @userviews.route('/enrolledCourses/<searchBy>/<searchConstraint>')
 def userSearchEnrolledCourses(searchBy, searchConstraint):
