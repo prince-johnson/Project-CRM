@@ -126,13 +126,39 @@ def enrolledCourses():
 
 @userviews.route('/enrolledCourses/<searchBy>/<searchConstraint>')
 def userSearchEnrolledCourses(searchBy, searchConstraint):
-    #user_id = current_user.userId
-    user_id = 6
     page = request.args.get('page', 1, type=int)
-    courses = Courses.query.with_entities(Courses.id, Courses.courseName).all()
+    course_instructor = dict()
+    courseIds = []
+    courses = []
+    category_name = dict()
+    enrollments = CourseEnrollment.query.filter_by(userId=6).paginate(page=page, per_page=ROWS_PER_PAGE)
+    print(type(enrollments))
     if searchBy == 'id':
-        pass
+        for enrollment in enrollments.items:
+            courseIds.append(enrollment.courseId)
+        for courseId in courseIds:
+            if courseId == searchConstraint:
+                course = Courses.query.filter_by(id=courseId).first()
+                courses.append(course)
+                result = Category.query.filter_by(categoryId=course.courseCategoryId).first()
+                category_name[course.courseCategoryId] = result.categoryName   
+        for course in courses:
+            instructor = Instructor.query.filter_by(instructorId=course.courseInstructorID).first()
+            course_instructor[instructor.instructorId] = instructor.instructorName
+        #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
+    
     elif searchBy == 'name':
-        return render_template('/enrolledCourses.html', user=current_user, courses=courses)
-        
-    return render_template('/enrolledCourses.html', user=current_user, courses=courses)
+        for enrollment in enrollments.items:
+            courseIds.append(enrollment.courseId)
+        for courseId in courseIds:
+            course = Courses.query.filter_by(id=courseId).first()
+            if course.courseName == searchConstraint:
+                courses.append(course)
+                result = Category.query.filter_by(categoryId=course.courseCategoryId).first()
+                category_name[course.courseCategoryId] = result.categoryName   
+        for course in courses:
+            instructor = Instructor.query.filter_by(instructorId=course.courseInstructorID).first()
+            course_instructor[instructor.instructorId] = instructor.instructorName
+        #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
+
+    return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments)
