@@ -69,17 +69,22 @@ def register():
         user = Users.query.filter_by(userEmail=userEmail).first()
         if user:
             print("Email already exists")
+            err_res = "Email already exists"
+            err = True
+            flash(err)
+            return render_template("register.html", user=current_user, err = err, err_res = err_res)
+            
         elif len(userPassword) < 7:
             print('Password must be atleast 7 characters')
         else:
-            userCode = "USER0" + f"{Users.userId}" 
+            #userCode = "USER0" + f"{Users.userId}" 
             print(userCode)
             new_user = Users(userCode=userCode, userRoleId=userRoleId,userEmail=userEmail, userPhone=userPhone, userName = userName, userPassword = generate_password_hash(userPassword, method = 'sha256'), userCity=userCity, userCountry=userCountry, userState = userState, userNew=userNew, userStatus=userStatus)
 
             db.session.add(new_user)
             db.session.commit()
             print('Account created!')
-            return redirect(url_for('views.dashboard'))
+            return redirect(url_for('userviews.dashboard'))
     return render_template("register.html", user = current_user)
 
 @auth.route('/changepassword' , methods=['GET','POST'])
