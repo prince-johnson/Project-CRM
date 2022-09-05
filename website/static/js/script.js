@@ -605,3 +605,14 @@ function checkInputs(email, pswd1, pswd2) {
 
     return success;
 }
+
+// user enrolledcourse search
+// Search Courses
+function userEnrollSearchCourse() {
+    searchBy = document.getElementById("searchBy").value;
+    searchConstraint = document.getElementById("searchConstraint").value;
+    fetch("/user/enrolledCourses/" + searchBy + "/" + searchConstraint, {
+        method: "GET"
+    })
+        .then(() => (window.location.href = "/user/enrolledCourses/" + searchBy + "/" + searchConstraint));
+}
