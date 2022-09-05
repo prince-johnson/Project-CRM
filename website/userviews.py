@@ -71,7 +71,19 @@ def userSearchCourse(searchBy, searchConstraint):
         courses = Courses.query.filter(and_(Courses.courseId.like("%"+searchConstraint+"%"), Courses.courseStatus == 1)).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
         courses = Courses.query.filter(and_(Courses.courseName.like("%"+searchConstraint+"%"), Courses.courseStatus == 1)).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    return render_template('userDashboard.html', courses=courses, listAll=False, user=current_user)
+    category_id_name = dict()
+    category_ = Category.query.all()
+    for c in category_:
+        category_id_name[c.categoryId] = c.categoryName
+    teachers = Instructor.query.all()
+    teacher_id_name = dict()
+    for t in teachers:
+        teacher_id_name[t.instructorId] = t.instructorName 
+    minQuali = Qualifications.query.all()
+    min_quali_id_name = dict()
+    for i in minQuali:
+        min_quali_id_name[i.qualificationId]=i.qualificationName
+    return render_template('userDashboard.html', courses=courses, instructor_id_name = teacher_id_name, category_id_name = category_id_name,min_quali_id_name=min_quali_id_name, listAll=False, user=current_user)
 
 #enquiry
 @userviews.route('/enquiries', methods=['GET', 'POST'])
