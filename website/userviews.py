@@ -1,3 +1,4 @@
+from unicodedata import category
 from flask import Blueprint, render_template, request,  jsonify, url_for, redirect
 
 from website import views
@@ -34,9 +35,6 @@ def dashboard():
     page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
         enquiryId = len(Enquiries.query.all()) + 1
-        course_id_code = {}
-        
-
         enquiryUserId = request.form.get('enquiryUserId')
         enquiryCourseId = request.form.get('enquiryCourseId')
         course = Courses.query.filter_by(courseId=enquiryCourseId).first()
@@ -48,7 +46,20 @@ def dashboard():
         db.session.add(new_enquiry)
         db.session.commit()
     courses = Courses.query.filter_by(courseStatus = 1).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    return render_template('userDashboard.html', courses=courses, listAll=True, user=current_user)
+    category_id_name = dict()
+    category_ = Category.query.all()
+    for c in category_:
+        category_id_name[c.categoryId] = c.categoryName
+    teachers = Instructor.query.all()
+    teacher_id_name = dict()
+    for t in teachers:
+        teacher_id_name[t.instructorId] = t.instructorName 
+    minQuali = Qualifications.query.all()
+    min_quali_id_name = dict()
+    for i in minQuali:
+        min_quali_id_name[i.qualificationId]=i.qualificationName
+
+    return render_template('userDashboard.html', courses=courses, instructor_id_name = teacher_id_name, category_id_name = category_id_name,min_quali_id_name=min_quali_id_name, listAll=True, user=current_user)
 
 @userviews.route('/<searchBy>/<searchConstraint>')
 @login_required
