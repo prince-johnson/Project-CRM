@@ -96,9 +96,17 @@ def userEnquiries():
     user = current_user
     userEnquiries=Enquiries.query.filter_by(enquiryUserId=user.userId).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
+    #enquiry_course=Enquiries.query.filter_by(enquiryCourseId=courses.userId)
+    course_id_names = dict()
+    course_obj = Courses.query.all()
+    for i in course_obj:
+        course_id_names[i.id] = i.courseName
+    print(userEnquiries)
+    #print(courses)
+    #print(enquiry_course)
     #users = Users.query.with_entities(Users.userId).distinct().all()
     userEnquiryStatus = Enquiries.query.with_entities(Enquiries.enquiryStatus).distinct().all()
-    return render_template('/userEnquiries.html', userEnquiries=userEnquiries, listAll=True, user=current_user, courses=courses, userEnquiryStatus=userEnquiryStatus)
+    return render_template('/userEnquiries.html', userEnquiries=userEnquiries, listAll=True, user=current_user, courses=courses, userEnquiryStatus=userEnquiryStatus, course_id_names =course_id_names)
 
 
 #search enquiry 
@@ -106,14 +114,28 @@ def userEnquiries():
 @login_required
 @user_required
 def userSearchEnquiry(searchBy, searchConstraint):
-    print('foo')
+    page = request.args.get('page', 1, type=int)
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
+    course_id_names = dict()
+    course_obj = Courses.query.all()
+    for i in course_obj:
+        course_id_names[i.id] = i.courseName
     if searchBy == 'id':
-        userEnquiries = Enquiries.query.filter(Enquiries.enquiryId.like("%"+searchConstraint+"%")).all()
+        userEnquiries = Enquiries.query.filter(Enquiries.enquiryCode.like("%"+searchConstraint+"%")).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
-        userEnquiries = Enquiries.query.filter(Enquiries.enquiryCourseId.like("%"+searchConstraint+"%")).all()
+        
+        
+        userEnquiries = Enquiries.query.filter_by(enquiryUserId = current_user.userId).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
+        for i in userEnquiries.items:
+            if i.enquiryCourseId in course_id_names.keys():
+                courses = i
+                found = True
+        if not found:
+            course = []
+        
+            
     
-    return render_template('/userEnquiries.html', userEnquiries=userEnquiries[::-1], courses=courses, listAll=False, user=current_user)
+    return render_template('/userEnquiries.html', userEnquiries=userEnquiries, courses=courses, listAll=False,course_id_names = course_id_names, user=current_user)
 
 
 
