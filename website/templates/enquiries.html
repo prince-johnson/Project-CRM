@@ -87,7 +87,7 @@
                     <div class="input-field col s4">
                         <select name="enquiryCourseId" id="enquiryCourseId">
                             {% for course in courses %}
-                            <option value='{{ course.courseId }}'>{{course.courseId }} - {{ course.courseName}}</option>
+                            <option value='{{ course.id }}'>{{course.courseId }} - {{ course.courseName}}</option>
                             {% endfor %}
                         </select>
                         <label>Enquiry CourseId</label>
@@ -102,9 +102,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12">
+                    <div class="input-field col s6">
                         <textarea id="enquiryDescription" name="enquiryDescription" class="materialize-textarea"></textarea>
                         <label for="enquiryDescription">Enter an enquiry</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <textarea id="enquiryUpdate" name="enquiryUpdate" class="materialize-textarea"></textarea>
+                        <label for="enquiryUpdate">Enquiry Update</label>
                     </div>
                 </div>
   
