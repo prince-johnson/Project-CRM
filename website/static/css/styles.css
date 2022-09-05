@@ -249,3 +249,22 @@ body {
     visibility: visible;
     color: #E74C3C;
 }
+
+/*Profile*/
+.parent {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  #img1 {
+    position: relative;
+    top: 5%;
+    left: 0;
+    border: 1px;
+  }
+  #img2 {
+    position: absolute;
+    top: 25px;
+    left: 45%;
+    border: 1px solid;
+  }
