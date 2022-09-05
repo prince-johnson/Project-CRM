@@ -1,59 +1,145 @@
-{% extends "base.html" %} 
-{% block title %}User Profile{% endblock %} 
-{% block content %}
+<!DOCTYPE html>
+<html>
 
-<div class="flex-wrapper">
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/materialize.min.css')}}" media="screen,projection" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-wrapper black">
+            <!-- Sidebar -->
+            <a href="#" class="brand-logo center">
+                <img class="brand-logo center" id="logo" src="{{url_for('static', filename='images/logo.png')}}" alt="Logo" />
+            </a>
+            <ul id="slide-out" class="sidenav">
+                <li>
+                    <div class="user-view">
+                        <div class="background">
+                            <img id="sidenav-bg" src="{{url_for('static', filename='images/background.png')}}" />
+                        </div>
+                        <a href="#user"><img class="circle" src="{{url_for('static', filename='images/user.png')}}" /></a>
+                        <a href="#name"><span class="white-text name">John Doe</span></a>
+                        <a href="#email">
+                            <span class="white-text email">jdandturk@gmail.com</span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <a class="waves-effect" href="/user/"><i class="material-icons black-text">dashboard</i>Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a class="waves-effect" href="/user/courses"><i class="material-icons black-text">local_library</i>My Courses
+                    </a>
+                </li>
+                <li>
+                    <a class="waves-effect" href="/user/enquiries"><i
+                            class="material-icons black-text">query_stats</i>Enquiries
+                    </a>
+                </li>
+                <div class="footer-container">
+                    <div class="bottom">
+                        <div class="divider"></div>
+                        <button class="logout-button btn-large black waves-effect">
+                            <li>
+                                <a class="white-text" href="/"><i class="material-icons white-text">logout</i>Logout
+                                </a>
+                            </li>
+                        </button>
+                    </div>
+                </div>
+            </ul>
+            <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large">
+                <i class="material-icons">menu</i>
+            </a>
+        </div>
+    </nav>
+
+<div class="flex-wrapper ">
     <div class="container">
-        <div class="row">
-            <div class="col s12" id="registerUser">
-                <form class="col s12" method="post">
+        <div class="card grey lighten-5 " style=" margin-top: 5em;">
+            <div class="col s12" id="registerUser" style="margin-top: 2em;">
+                <!-- <form class="col s12" method="get"> -->
                     <div class="row">
+                        <div class="col s12 center" >
+                            <div class="parent">
+                                <img id="img1" src="{{url_for('static', filename='images/background.png')}}" style="height: 200px;width: 100%; opacity: 0.7;"/>
+                                <img id="img2" class="circle" src="{{url_for('static', filename='images/user.png')}}" style="height: 150px;width: 150px;"/>
+                            </div>
+                            <div>
+                                <h1 class="card-title">
+                                    <i class="material-icons prefix">person_outline</i> Name : {{ user_all.userName }} <br>
+                                    <i class="material-icons prefix">email</i> Email : {{ user_all.userEmail }}
+                                </h1>
+                            </div>
+                        </div>
+                            <div class="col s10">
+
+                                <p class="card-subtitle"><em><i class="material-icons prefix tiny">phone</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Phone Number</b>  :  {{ user_all.userPhone }}</em></p>
+                                <p class="card-subtitle"><em><i class="material-icons prefix tiny">public </i>&nbsp;&nbsp;&nbsp;<b> Country</b> : {{ user_all.userCountry }}</em></p>
+                                <p class="card-subtitle"><em><i class="material-icons prefix tiny">place </i>&nbsp;&nbsp;&nbsp;<b> State </b> {{ user_all.userState }}</em></p>
+                                <p class="card-subtitle"><em><i class="material-icons prefix tiny">location_city </i>&nbsp;&nbsp;&nbsp;<b> City </b> {{ user_all.userCity }}</em></p>
+                                <p class="card-subtitle"><em><i class="material-icons prefix tiny">school </i>&nbsp;&nbsp;&nbsp;<b> Qualification</b> :{% for qual in user_qualifications %} {{ qual }} {% endfor %}</em></p>
+                            </div>
+                    
+                            
+
+                        <!--
                         <div class="input-field col s6">
                             <i class="material-icons prefix">person_outline</i>
                             <i class="material-icons teal-text right">edit</i>
-                            <input id="first_name" type="text" class="materialize-textarea">
-                            <label for="first_name">First Name</label>
-                            
+                            <p>{{ user_all.userName }}</p>
+                             <input id="first_name" type="text" class="materialize-textarea" placeholder="{{ user_all.userName }}"> 
+                            <label for="first_name">First Name</label>          
+
                         </div>
                         <div class="input-field col s6">
-                            <i class="material-icons teal-text right">edit</i>
-                            <input id="last_name" type="text" class="materialize-textarea">
-                            <label for="last_name">Last Name</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
                             <i class="material-icons prefix">person</i>
                             <i class="material-icons teal-text right">edit</i>
-                            <input id="email" type="email" class="materialize-textarea">
+                            <input id="email" type="email" class="materialize-textarea" placeholder="{{ user_all.userEmail }}">
                             <label for="email">Email</label>
                         </div>
+
                     </div>
+                    <p>{{ user_all.userCountry }}</p>
                     <div class="row">
                         <div class="input-field col s4">
-                            <i class="material-icons prefix">language</i>
+                            <i class="material-icons prefix">public</i>
                             <i class="material-icons teal-text right">edit</i>
-                            <input id="country" type="text" class="materialize-textarea">
+                            <input id="country" type="text" class="materialize-textarea" placeholder="{{ user_all.userCountry }}">
                             <label for="country">Country</label>
                         </div>
                         <div class="input-field col s4">
-                            <i class="material-icons prefix">language</i>
+                            <i class="material-icons prefix">place</i>
                             <i class="material-icons teal-text right">edit</i>
-                            <input id="state" type="text" class="materialize-textarea">
-                            <label for="state">Email</label>
+                            <input id="state" type="text" class="materialize-textarea" placeholder="{{ user_all.userState }}">
+                            <label for="state">State</label>
                         </div>
                         <div class="input-field col s4">
-                            <i class="material-icons prefix">language</i>
+                            <i class="material-icons prefix">location_city</i>
                             <i class="material-icons teal-text right">edit</i>
-                            <input id="city" type="text" class="materialize-textarea">
-                            <label for="city">Email</label>
+                            <input id="city" type="text" class="materialize-textarea" placeholder="{{ user_all.userCity }}">
+                            <label for="city">City</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
                             <i class="material-icons prefix">phone</i>
                             <i class="material-icons teal-text right">edit</i>
-                            <input id="phone" type="password" class="materialize-textarea">
+                            <input id="phone" type="tel" class="materialize-textarea" placeholder="{{ user_all.userPhone }}">
                             <label for="phone">Phone</label>
                         </div>
                         <div class="input-field col s6">
@@ -64,10 +150,94 @@
                         </div>
                     </div>
                     
-                </form>
+                </form> -->
             </div>
         </div>
+        <!-- {% for user_all in Users %}
+        <div class="card">
+            <div class="row right">
+   
+                <div id="{{ enquiry.enquiryId }}" class="modal">
+                    <div class="modal-content">
+                        <form action="">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea name="userEnquiryDescription" id="editUserEnquiryDescription{{ enquiry.enquiryId }}" class="materialize-textarea" placeholder="{{ enquiry.enquiryDescription }}" ></textarea>
+                                    <label for="userEnquiryDescription">Enquiry Description</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <select name="userEnquiryUserId" id="editUserEnquiryUserId{{ enquiry.enquiryId }}" disabled>
+                                        <option value="{{ enquiry.enquiryUserId }}" selected>{{enquiry.enquiryUserId }}</option>
+                                    </select>
+                                    <label>Enquiry UserId</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <select name="userEnquiryCourseId" id="editUserEnquiryCourseId{{ enquiry.enquiryId }}" disabled>
+                                        <option value="{{ enquiry.enquiryCourseId }}" selected>{{enquiry.enquiryCourseId }}</option>
+                                    </select>
+                                    <label>Enquiry CourseId</label>
+                                </div>
+                            <div class="input-field col s4">
+                                <select name="enquiryStatus" id="enquiryStatus">
+                                    {% for enquiry in enquiryStatus %}
+                                    <option value="{{ enquiry.enquiryStatus }}" selected>{{enquiry.enquiryStatus }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label>Enquiry Status</label>
+                            </div>
+                    
+                            </div>
+                            <div class="modal-footer">
+                                <button class="modal-close btn-flat waves-effect waves-orange" onClick="editEnquiry('{{ enquiry.enquiryId }}')">Submit
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col s10">
+                    <h1 class="card-title">
+                        User Id : {{ user_all.userId }}
+                    </h1>
+
+                    <p class="card-subtitle"><em>User Email : {{ user_all.userEmail }}</em></p>
+                    <p class="card-subtitle"><em>User Phone : {{ user_all.userPhone }}</em></p>
+                    <p class="card-subtitle"><em>User Country : {{ user_all.userCountry }}</em></p>
+                    <p class="card-subtitle"><em>User State : {{ user_all.userState }}</em></p>
+                    <p class="card-subtitle"><em>User City : {{ user_all.userCity }}</em></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %} -->
     </div>
 </div>
-{% endfor %}
-{% endblock %}
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="{{url_for('static', filename='js/materialize.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
+
+    <script>
+        // Modal Trigger
+        $(document).ready(function () {
+            $('.modal').modal();
+        });
+
+        // Tooltips
+        $(document).ready(function(){
+            $('.tooltipped').tooltip();
+        });
+
+        // Datepickers
+        $(document).ready(function(){
+            $('.datepicker').datepicker();
+        });
+    </script>
+
+</body>
+
+</html>

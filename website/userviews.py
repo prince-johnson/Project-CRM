@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request,  jsonify, url_for, redire
 
 from website import views
 from . import db
-from .models import Category, Batches, CourseEnrollment, Courses, Enquiries, Users, Qualifications, ActivityLog, Instructor
+from .models import Category, Batches, CourseEnrollment, Courses, Enquiries, Users, Qualifications, ActivityLog, Instructor,UserQualification
 import json
 from sqlalchemy import and_
 from datetime import date
@@ -78,6 +78,7 @@ def userSearchCourse(searchBy, searchConstraint):
 @login_required
 @user_required
 def userEnquiries():
+    user=current_user
     # Set the pagination configuration
     page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
@@ -177,4 +178,30 @@ def userSearchEnrolledCourses(searchBy, searchConstraint):
             course_instructor[instructor.instructorId] = instructor.instructorName
         #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
 
-    return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments, listAll=False)
+        return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments, listAll=False)
+        
+    return render_template('/enrolledCourses.html', user=current_user, courses=courses)
+
+
+@userviews.route('/profile')
+@login_required
+@user_required
+def profile():
+    user_all=[]
+    # #userCode = f"USER{last_user.userId+1}"
+    # userName = request.form.get('userName')
+    # userPassword = 'password'
+    # userEmail = request.form.get('userEmail')
+    # #userRoleId = request.form.get('userRole')
+    # userPhone = request.form.get('userPhone')
+    # userCountry = request.form.get('userCountry')
+    # userState = request.form.get('userState')
+    # userCity = request.form.get('userCity')
+    user_all = Users.query.filter_by(userId=current_user.userId).first()
+    user_qualification=Qualifications.query.with_entities(Qualifications.qualificationName).filter(Qualifications.qualificationId.in_(UserQualification.query.with_entities(UserQualification.qualificationId).filter_by(userId = current_user.userId))).all()
+    # user_qualification = Qualifications.query.get(user_qualificationId)
+    # user_quali_name = Qualifications.query.with_entities(Qualifications.qualificationName).filter_by(qualificationId =user_qualifications)
+    print(user_qualification)
+    return render_template('profile.html', user_all=user_all,user=current_user,user_qualifications=user_qualification)
+
+        
