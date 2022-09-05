@@ -284,7 +284,7 @@ def searchCategory(searchBy, searchConstraint):
 def editCategory(categoryId):
     category = Category.query.get_or_404(categoryId)
     value = json.loads(request.data)
-    category.categoryId=value['categoryId']
+    category.categoryId=int(value['categoryId'])
     category.categoryName=value['categoryName']
     category.categoryStatus=value['categoryStatus']
     category.categoryComments=value['categoryComments']
