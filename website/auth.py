@@ -76,6 +76,11 @@ def register():
             
         elif len(userPassword) < 7:
             print('Password must be atleast 7 characters')
+            
+            err_res = "Password must be atleast 7 characters"
+            err = True
+            flash(err)
+            return render_template("register.html", user=current_user, err = err, err_res = err_res)
         else:
             #userCode = "USER0" + f"{Users.userId}" 
             print(userCode)
