@@ -67,6 +67,8 @@ def userSearchCourse(searchBy, searchConstraint):
 @login_required
 @user_required
 def userEnquiries():
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
         userEnquiryId = request.form.get('enquiryId')
         print(userEnquiryId)
@@ -79,11 +81,12 @@ def userEnquiries():
         db.session.add(new_enquiry)
         db.session.commit()
     #print(userEnquiryId, userEnquiryUserId, userEnquiryCourseId, userEnquiryDescription, userEnquiryStatus)
-    userEnquiries=Enquiries.query.filter_by(enquiryUserId=user.userId)
+    user = current_user
+    userEnquiries=Enquiries.query.filter_by(enquiryUserId=user.userId).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     #users = Users.query.with_entities(Users.userId).distinct().all()
     userEnquiryStatus = Enquiries.query.with_entities(Enquiries.enquiryStatus).distinct().all()
-    return render_template('/userEnquiries.html', userEnquiries=userEnquiries[::-1], listAll=True, user=current_user, courses=courses, userEnquiryStatus=userEnquiryStatus)
+    return render_template('/userEnquiries.html', userEnquiries=userEnquiries, listAll=True, user=current_user, courses=courses, userEnquiryStatus=userEnquiryStatus)
 
 
 #search enquiry 
@@ -103,13 +106,15 @@ def userSearchEnquiry(searchBy, searchConstraint):
 
 
 @userviews.route('/enrolledCourses')
+@login_required
+@user_required
 def enrolledCourses():
     page = request.args.get('page', 1, type=int)
     course_instructor = dict()
     courseIds = []
     courses = []
     category_name = dict()
-    enrollments = CourseEnrollment.query.filter_by(userId=6).paginate(page=page, per_page=ROWS_PER_PAGE)
+    enrollments = CourseEnrollment.query.filter_by(userId=current_user.userId).order_by(CourseEnrollment.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
     print(type(enrollments))
     for enrollment in enrollments.items:
         courseIds.append(enrollment.courseId)
@@ -122,7 +127,7 @@ def enrolledCourses():
         instructor = Instructor.query.filter_by(instructorId=course.courseInstructorID).first()
         course_instructor[instructor.instructorId] = instructor.instructorName
     #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
-    return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments)
+    return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments, listAll=True)
 
 @userviews.route('/enrolledCourses/<searchBy>/<searchConstraint>')
 def userSearchEnrolledCourses(searchBy, searchConstraint):
@@ -161,4 +166,4 @@ def userSearchEnrolledCourses(searchBy, searchConstraint):
             course_instructor[instructor.instructorId] = instructor.instructorName
         #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
 
-    return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments)
+    return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments, listAll=False)
