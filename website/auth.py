@@ -55,7 +55,7 @@ def register():
     if request.method == "POST":
 
         userRoleId = 2 # 1- for admin, 2- for user
-        userCode = f"USER0{len(Users.query.all())+1}"
+        userCode = f"USER0{len(Users.query.all())+2}"
         userEmail = request.form.get('userEmail')
         userName = request.form.get('userName')
         userPassword = request.form.get('userPassword')
