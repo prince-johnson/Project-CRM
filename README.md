@@ -12,8 +12,8 @@ It can be used to administer courses with user registration and login that is p
 This project contains following featurs:
 
 - Course Management
-- User Management with trainee, instructor and admin roles
-- User can enquire any course and entroll based on the qualification
+- User Management with trainee and admin roles
+- User can enquire any course and enroll based on the qualification
 - Admin can see the activity log
 
 
@@ -24,7 +24,6 @@ pip install pyodbc
 pip install flask
 pip install flask-login
 pip install flask-sqlalchmy
-pip install flask-bootstrap
 
 ```
 
