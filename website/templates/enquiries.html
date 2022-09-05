@@ -121,34 +121,29 @@
     <a href="#modal3" class="filter-btn btn-flat modal-trigger btn-medium waves-effect waves-orange"
         onclick="$('#modal3').modal('open');"><i class="material-icons">filter_list</i></a>
 
-    <div id="modal3" class="modal">
-        <div class="modal-content">
-            <form action="#">
-                <p>
-                    <label>
-                        <input name="checkbox" type="checkbox" class="checkbox-orange" />
-                        <span>Filter 1</span>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input name="checkbox" type="checkbox" class="checkbox-orange" />
-                        <span>Filter 2</span>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input name="checkbox" type="checkbox" class="checkbox-orange" />
-                        <span>Filter 3</span>
-                    </label>
-                </p>
-            </form>
+        <div id="modal3" class="modal">
+            <div class="modal-content">
+                <h6 class="card-title">Filter by status</h6>
+                <div class="content-container row">
+                    <p class="col s6">
+                        <label>
+                            <input name="checkbox" type="checkbox" class="filterCheckbox checkbox-orange" value="1"/>
+                            <span>ENABLED</span>
+                        </label>
+                    </p>
+                    <p class="col s6">
+                        <label>
+                            <input name="checkbox" type="checkbox" class="filterCheckbox checkbox-orange" value="0"/>
+                            <span>DISABLED</span>
+                        </label>
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="modal-close waves-effect waves-orange btn-flat" onClick="applyUserEnquiryFilters()">Apply</a>
+                <a href="#" class="waves-effect waves-orange btn-flat" onClick="clearFilters()">Clear</a>
+            </div>
         </div>
-        <div class="modal-footer">
-            <a href="#" class="modal-close waves-effect waves-orange btn-flat">Apply</a>
-            <a href="#" class="waves-effect waves-orange btn-flat" onclick="clearFilters()">Clear</a>
-        </div>
-    </div>
     {% if enquiries.items|count != 0 %}
         {% if enquiries.items|count == 1 %}
         <span class="card-subtitle center"><em>Showing {{ enquiries.items|count }} result</em></span>

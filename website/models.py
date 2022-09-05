@@ -58,12 +58,12 @@ class Batches(db.Model):
 
 class Enquiries(db.Model):
     enquiryId = db.Column(db.Integer, primary_key=True, autoincrement=True) #primary key
-    # enquiryCode = db.Column(db.String(80), unique=True, primary_key=True)
+    enquiryCode = db.Column(db.String(80), unique=True, primary_key=True)
     enquiryUserId = db.Column(db.Integer, db.ForeignKey('users.userId')) #foreign key
     enquiryCourseId = db.Column(db.Integer, db.ForeignKey('courses.id')) #foreign key
     enquiryDescription = db.Column(db.String(250))
     enquiryStatus = db.Column(db.Boolean, default=True)
-    # enquiryUpdate = db.Column(db.String(80))
+    enquiryUpdate = db.Column(db.String(80))
 
     # def __init__(self, enquiryId, enquiryUserId, enquiryCourseId, enquiryDescription, enquiryStatus):
     #     self.enquiryId = enquiryId

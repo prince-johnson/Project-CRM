@@ -7,16 +7,19 @@ db = SQLAlchemy()
 #DB_NAME = "database.db"
 
 
-# DB_NAME = "chummaveruthe"
+#DB_NAME = "chummaveruthe"
 #DB_NAME = "CMS"
 
 DB_NAME = "ProjectCRM-2"
 
+
 SQL_SERVER_USER_PASS_IP_PORT = 'sa:123@192.168.5.197:1891'
 #SQL_SERVER_USER_PASS_IP_PORT = 'DESKTOP-5AA8MOJ\MSSQLSERVER01'
+
 # SQL_SERVER_USER_PASS_IP_PORT = 'LAPTOP-85QRUTE7\SQLEXPRESS' #prince
 
 #SQL_SERVER_USER_PASS_IP_PORT = 'LAPTOP-R5LS4JCT\SQLEXPRESS' #ajmi
+#SQL_SERVER_USER_PASS_IP_PORT = 'DESKTOP-CJEOG7N\SQLEXPRESS' #ajmi
 
 
 basedir = path.abspath(path.dirname(__file__))
