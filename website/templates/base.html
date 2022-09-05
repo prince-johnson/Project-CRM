@@ -31,9 +31,9 @@
                             <img id="sidenav-bg" src="{{url_for('static', filename='images/background.png')}}" />
                         </div>
                         <a href="#user"><img class="circle" src="{{url_for('static', filename='images/user.png')}}" /></a>
-                        <a href="#name"><span class="white-text name">John Doe</span></a>
+                        <a href="#name"><span class="white-text name">{{ user.userName }}</span></a>
                         <a href="#email">
-                            <span class="white-text email">jdandturk@gmail.com</span>
+                            <span class="white-text email">{{ user.userEmail }}</span>
                         </a>
                     </div>
                 </li>

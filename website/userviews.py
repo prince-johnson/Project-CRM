@@ -34,13 +34,17 @@ def dashboard():
     page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
         enquiryId = len(Enquiries.query.all()) + 1
+        course_id_code = {}
+        
+
         enquiryUserId = request.form.get('enquiryUserId')
         enquiryCourseId = request.form.get('enquiryCourseId')
+        course = Courses.query.filter_by(courseId=enquiryCourseId).first()
         enquiryStatus = 1
         enquiryUpdate = 'ENQUIRED'
         enquiryDescription = request.form.get('enquiryDescription')
-        print(enquiryId, enquiryUserId, enquiryCourseId, enquiryStatus, enquiryUpdate, enquiryDescription)
-        new_enquiry = Enquiries(enquiryId=enquiryId, enquiryUserId=enquiryUserId, enquiryCourseId=enquiryCourseId, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription)
+        print(enquiryUserId, enquiryCourseId, enquiryStatus, enquiryUpdate, enquiryDescription)
+        new_enquiry = Enquiries(enquiryId=enquiryId, enquiryUserId=enquiryUserId, enquiryCourseId=course.id, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription)
         db.session.add(new_enquiry)
         db.session.commit()
     courses = Courses.query.filter_by(courseStatus = 1).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
@@ -64,6 +68,8 @@ def userSearchCourse(searchBy, searchConstraint):
 @user_required
 def userEnquiries():
     user=current_user
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
         userEnquiryId = request.form.get('enquiryId')
         print(userEnquiryId)
@@ -76,11 +82,12 @@ def userEnquiries():
         db.session.add(new_enquiry)
         db.session.commit()
     #print(userEnquiryId, userEnquiryUserId, userEnquiryCourseId, userEnquiryDescription, userEnquiryStatus)
-    userEnquiries=Enquiries.query.filter_by(enquiryUserId=user.userId)
+    user = current_user
+    userEnquiries=Enquiries.query.filter_by(enquiryUserId=user.userId).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     #users = Users.query.with_entities(Users.userId).distinct().all()
     userEnquiryStatus = Enquiries.query.with_entities(Enquiries.enquiryStatus).distinct().all()
-    return render_template('/userEnquiries.html', userEnquiries=userEnquiries[::-1], listAll=True, user=current_user, courses=courses, userEnquiryStatus=userEnquiryStatus)
+    return render_template('/userEnquiries.html', userEnquiries=userEnquiries, listAll=True, user=current_user, courses=courses, userEnquiryStatus=userEnquiryStatus)
 
 
 #search enquiry 
@@ -100,13 +107,17 @@ def userSearchEnquiry(searchBy, searchConstraint):
 
 
 @userviews.route('/enrolledCourses')
+@login_required
+@user_required
 def enrolledCourses():
+    page = request.args.get('page', 1, type=int)
     course_instructor = dict()
     courseIds = []
     courses = []
     category_name = dict()
-    enrollments = CourseEnrollment.query.filter_by(userId=6).all()
-    for enrollment in enrollments:
+    enrollments = CourseEnrollment.query.filter_by(userId=current_user.userId).order_by(CourseEnrollment.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
+    print(type(enrollments))
+    for enrollment in enrollments.items:
         courseIds.append(enrollment.courseId)
     for courseId in courseIds:
         course = Courses.query.filter_by(id=courseId).first()
@@ -116,18 +127,47 @@ def enrolledCourses():
     for course in courses:
         instructor = Instructor.query.filter_by(instructorId=course.courseInstructorID).first()
         course_instructor[instructor.instructorId] = instructor.instructorName
-    return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor)
+    #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
+    return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments, listAll=True)
 
 @userviews.route('/enrolledCourses/<searchBy>/<searchConstraint>')
 def userSearchEnrolledCourses(searchBy, searchConstraint):
-    #user_id = current_user.userId
-    user_id = 6
     page = request.args.get('page', 1, type=int)
-    courses = Courses.query.with_entities(Courses.id, Courses.courseName).all()
+    course_instructor = dict()
+    courseIds = []
+    courses = []
+    category_name = dict()
+    enrollments = CourseEnrollment.query.filter_by(userId=6).paginate(page=page, per_page=ROWS_PER_PAGE)
+    print(type(enrollments))
     if searchBy == 'id':
-        pass
+        for enrollment in enrollments.items:
+            courseIds.append(enrollment.courseId)
+        for courseId in courseIds:
+            if courseId == searchConstraint:
+                course = Courses.query.filter_by(id=courseId).first()
+                courses.append(course)
+                result = Category.query.filter_by(categoryId=course.courseCategoryId).first()
+                category_name[course.courseCategoryId] = result.categoryName   
+        for course in courses:
+            instructor = Instructor.query.filter_by(instructorId=course.courseInstructorID).first()
+            course_instructor[instructor.instructorId] = instructor.instructorName
+        #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
+    
     elif searchBy == 'name':
-        return render_template('/enrolledCourses.html', user=current_user, courses=courses)
+        for enrollment in enrollments.items:
+            courseIds.append(enrollment.courseId)
+        for courseId in courseIds:
+            course = Courses.query.filter_by(id=courseId).first()
+            if course.courseName == searchConstraint:
+                courses.append(course)
+                result = Category.query.filter_by(categoryId=course.courseCategoryId).first()
+                category_name[course.courseCategoryId] = result.categoryName   
+        for course in courses:
+            instructor = Instructor.query.filter_by(instructorId=course.courseInstructorID).first()
+            course_instructor[instructor.instructorId] = instructor.instructorName
+        #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
+
+        return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments, listAll=False)
         
     return render_template('/enrolledCourses.html', user=current_user, courses=courses)
 
@@ -152,3 +192,5 @@ def profile():
     # user_quali_name = Qualifications.query.with_entities(Qualifications.qualificationName).filter_by(qualificationId =user_qualifications)
     print(user_qualification)
     return render_template('profile.html', user_all=user_all,user=current_user,user_qualifications=user_qualification)
+
+        

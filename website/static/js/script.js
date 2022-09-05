@@ -84,10 +84,10 @@ function editBatch(batchId) {
 
 // Delete Batch
 function deleteBatch(batchId) {
-    fetch('/batches/' + batchId, {
+    fetch('/admin/batches/' + batchId, {
         method: 'DELETE'
     })
-        .then(() => window.location.href = "/admin/batches");
+    .then(() => window.location.href = "/admin/batches");
 }
 
 // Search Batch
@@ -458,7 +458,6 @@ $(document).ready(function () {
 function userSearchCourse() {
     searchBy = document.getElementById("searchBy").value;
     searchConstraint = document.getElementById("searchConstraint").value;
-    alert(searchBy+","+searchConstraint)
     fetch("/user/" + searchBy + "/" + searchConstraint, {
         method: "GET"
     })
@@ -508,6 +507,11 @@ function applyUserEnquiryFilters() {
 // Back to enquiries
 function userEnquiryBack() {
     window.location.href = "/user/enquiries"
+}
+
+// Back to my courses
+function userCourseBack() {
+    window.location.href = "/user/enrolledCourses"
 }
 
 // Back to login

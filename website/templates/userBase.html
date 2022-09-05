@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <link href="https://vjs.zencdn.net/7.20.2/video-js.css" rel="stylesheet" />
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -31,9 +32,9 @@
                             <img id="sidenav-bg" src="{{url_for('static', filename='images/background.png')}}" />
                         </div>
                         <a href="#user"><img class="circle" src="{{url_for('static', filename='images/user.png')}}" /></a>
-                        <a href="#name"><span class="white-text name">John Doe</span></a>
+                        <a href="#name"><span class="white-text name">{{ user.userName }}</span></a>
                         <a href="#email">
-                            <span class="white-text email">jdandturk@gmail.com</span>
+                            <span class="white-text email">{{ user.userEmail }}</span>
                         </a>
                     </div>
                 </li>
@@ -42,7 +43,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="waves-effect" href="/user/courses"><i class="material-icons black-text">local_library</i>My Courses
+                    <a class="waves-effect" href="/user/enrolledCourses"><i class="material-icons black-text">local_library</i>My Courses
                     </a>
                 </li>
                 <li>
@@ -115,6 +116,7 @@
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript" src="{{url_for('static', filename='js/materialize.min.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
+    <script src="https://vjs.zencdn.net/7.20.2/video.min.js"></script>
 
     <script>
         // Modal Trigger

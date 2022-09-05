@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [ProjectCRM]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Database [ProjectCRM]    Script Date: 05-09-2022 08:40:10 ******/
 CREATE DATABASE [ProjectCRM]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -80,7 +80,7 @@ ALTER DATABASE [ProjectCRM] SET QUERY_STORE = OFF
 GO
 USE [ProjectCRM]
 GO
-/****** Object:  Table [dbo].[activity_log]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Table [dbo].[activity_log]    Script Date: 05-09-2022 08:40:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -95,7 +95,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[batches]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Table [dbo].[batches]    Script Date: 05-09-2022 08:40:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -115,7 +115,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[category]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Table [dbo].[category]    Script Date: 05-09-2022 08:40:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -131,7 +131,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[course_enrollment]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Table [dbo].[course_enrollment]    Script Date: 05-09-2022 08:40:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -139,17 +139,17 @@ GO
 CREATE TABLE [dbo].[course_enrollment](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[userId] [int] NULL,
-	[courseId] [varchar](80) NULL,
-	[batchId] [varchar](80) NULL,
-	[enrollStatus] [varchar](80) NULL,
+	[courseId] [int] NULL,
+	[batchId] [int] NULL,
+	[enrollStatus] [varchar](20) NULL,
 	[score] [int] NULL,
-PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_course_enrollment] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[courses]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Table [dbo].[courses]    Script Date: 05-09-2022 08:40:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -173,7 +173,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[enquiries]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Table [dbo].[enquiries]    Script Date: 05-09-2022 08:40:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -182,17 +182,17 @@ CREATE TABLE [dbo].[enquiries](
 	[enquiryId] [int] IDENTITY(1,1) NOT NULL,
 	[enquiryCode] [varchar](80) NULL,
 	[enquiryUserId] [int] NULL,
-	[enquiryCourseId] [varchar](80) NULL,
+	[enquiryCourseId] [int] NULL,
 	[enquiryDescription] [varchar](250) NULL,
 	[enquiryStatus] [bit] NULL,
 	[enquiryUpdate] [varchar](80) NULL,
-PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Enquiries] PRIMARY KEY CLUSTERED 
 (
 	[enquiryId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+)WITH (PAD_INDEX = ON, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 1, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[instructor]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Table [dbo].[instructor]    Script Date: 05-09-2022 08:40:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -209,7 +209,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[qualifications]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Table [dbo].[qualifications]    Script Date: 05-09-2022 08:40:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -225,7 +225,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[role]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Table [dbo].[role]    Script Date: 05-09-2022 08:40:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -239,7 +239,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[user_batch]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Table [dbo].[user_batch]    Script Date: 05-09-2022 08:40:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -247,14 +247,10 @@ GO
 CREATE TABLE [dbo].[user_batch](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[userId] [int] NULL,
-	[batchId] [varchar](80) NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+	[batchId] [int] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[user_qualification]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Table [dbo].[user_qualification]    Script Date: 05-09-2022 08:40:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -269,7 +265,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[users]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Table [dbo].[users]    Script Date: 05-09-2022 08:40:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -293,6 +289,242 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+SET IDENTITY_INSERT [dbo].[activity_log] ON 
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (1, 432, CAST(N'2022-08-28T00:07:12.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (2, 1652, CAST(N'2022-09-02T01:33:46.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (3, 82, CAST(N'2022-09-01T17:15:31.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (4, 908, CAST(N'2022-08-29T20:57:15.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (5, 1159, CAST(N'2022-08-30T11:33:42.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (6, 553, CAST(N'2022-08-30T20:10:01.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (7, 24, CAST(N'2022-09-02T12:12:51.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (8, 1007, CAST(N'2022-08-31T13:37:32.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (9, 63, CAST(N'2022-08-28T00:01:03.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (10, 820, CAST(N'2022-09-01T11:42:21.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (11, 1217, CAST(N'2022-08-29T21:05:30.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (12, 4, CAST(N'2022-08-28T00:00:04.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (13, 381, CAST(N'2022-08-31T04:18:48.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (14, 1455, CAST(N'2022-08-28T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (15, 679, CAST(N'2022-08-31T20:44:59.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (16, 1337, CAST(N'2022-09-02T13:43:05.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (17, 98, CAST(N'2022-09-01T23:11:47.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (18, 688, CAST(N'2022-08-28T00:15:41.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (19, 107, CAST(N'2022-08-30T20:48:33.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (20, 1211, CAST(N'2022-08-28T00:01:22.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (21, 285, CAST(N'2022-08-28T14:03:10.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (22, 1284, CAST(N'2022-08-30T16:34:34.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (23, 755, CAST(N'2022-08-29T11:27:52.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (24, 6, CAST(N'2022-09-02T08:20:53.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (25, 1003, CAST(N'2022-08-28T00:05:12.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (26, 708, CAST(N'2022-08-28T07:37:53.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (27, 7, CAST(N'2022-09-02T14:50:39.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (28, 410, CAST(N'2022-08-28T00:01:27.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (29, 930, CAST(N'2022-08-31T01:22:28.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (30, 38, CAST(N'2022-08-28T00:01:37.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (31, 821, CAST(N'2022-08-31T09:45:48.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (32, 1194, CAST(N'2022-08-28T12:26:15.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (33, 1084, CAST(N'2022-08-30T17:41:41.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (34, 797, CAST(N'2022-08-28T01:00:17.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (35, 165, CAST(N'2022-09-01T06:27:33.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (36, 1396, CAST(N'2022-08-29T18:40:29.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (37, 904, CAST(N'2022-08-30T15:33:24.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (38, 152, CAST(N'2022-08-29T11:02:49.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (39, 862, CAST(N'2022-09-02T22:12:24.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (40, 602, CAST(N'2022-09-01T18:17:48.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (41, 6, CAST(N'2022-09-02T12:18:57.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (42, 113, CAST(N'2022-09-02T09:40:11.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (43, 1179, CAST(N'2022-09-01T18:51:34.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (44, 1344, CAST(N'2022-08-29T16:17:44.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (45, 522, CAST(N'2022-08-28T00:02:21.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (46, 1113, CAST(N'2022-09-02T11:22:24.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (47, 1106, CAST(N'2022-08-30T10:14:30.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (48, 1350, CAST(N'2022-08-31T12:04:45.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (49, 251, CAST(N'2022-08-31T06:22:00.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (50, 1532, CAST(N'2022-08-28T02:45:14.000' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (51, 1691, CAST(N'2022-09-03T18:54:45.290' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (52, 1691, CAST(N'2022-09-03T19:23:27.083' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (53, 1691, CAST(N'2022-09-03T19:26:50.283' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (54, 1691, CAST(N'2022-09-03T19:31:38.973' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (55, 1691, CAST(N'2022-09-03T19:35:33.133' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (56, 1692, CAST(N'2022-09-03T20:04:23.820' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (57, 1692, CAST(N'2022-09-03T20:17:45.850' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (58, 1692, CAST(N'2022-09-03T20:51:51.343' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (59, 1692, CAST(N'2022-09-04T13:39:29.980' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (60, 1692, CAST(N'2022-09-04T21:10:56.710' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (61, 1698, CAST(N'2022-09-04T22:14:49.733' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (62, 1698, CAST(N'2022-09-04T22:23:12.667' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (63, 1698, CAST(N'2022-09-04T23:31:34.397' AS DateTime))
+GO
+INSERT [dbo].[activity_log] ([id], [userId], [time]) VALUES (64, 1698, CAST(N'2022-09-05T01:19:31.860' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[activity_log] OFF
+GO
+SET IDENTITY_INSERT [dbo].[batches] ON 
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (1, N'BA000', N'LAV', N'CR035', 1, 20, CAST(N'2020-01-04' AS Date), CAST(N'2020-06-02' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (2, N'BA001', N'SNA', N'CR016', 1, 25, CAST(N'2021-01-11' AS Date), CAST(N'2021-06-10' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (3, N'BA002', N'GLE', N'CR012', 1, 20, CAST(N'2020-01-08' AS Date), CAST(N'2020-06-06' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (4, N'BA003', N'SWE', N'CR003', 1, 25, CAST(N'2021-07-24' AS Date), CAST(N'2021-12-21' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (5, N'BA004', N'ASM', N'CR017', 1, 20, CAST(N'2021-01-24' AS Date), CAST(N'2021-06-23' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (6, N'BA005', N'URD', N'CR008', 1, 25, CAST(N'2020-04-05' AS Date), CAST(N'2020-09-02' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (7, N'BA006', N'BUL', N'CR036', 1, 20, CAST(N'2020-08-15' AS Date), CAST(N'2021-01-12' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (8, N'BA007', N'COR', N'CR013', 1, 25, CAST(N'2021-03-27' AS Date), CAST(N'2021-08-24' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (9, N'BA008', N'GUJ', N'CR009', 1, 20, CAST(N'2021-11-22' AS Date), CAST(N'2022-04-21' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (10, N'BA009', N'FIN', N'CR023', 1, 25, CAST(N'2020-12-26' AS Date), CAST(N'2021-05-25' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (11, N'BA010', N'DUT', N'CR040', 1, 20, CAST(N'2021-09-30' AS Date), CAST(N'2022-02-27' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (12, N'BA011', N'MLG', N'CR004', 1, 25, CAST(N'2021-04-14' AS Date), CAST(N'2021-09-11' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (13, N'BA012', N'LAO', N'CR031', 1, 20, CAST(N'2020-01-05' AS Date), CAST(N'2020-06-03' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (14, N'BA013', N'KAS', N'CR000', 1, 25, CAST(N'2021-02-10' AS Date), CAST(N'2021-07-10' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (15, N'BA014', N'ARG', N'CR019', 1, 20, CAST(N'2021-02-22' AS Date), CAST(N'2021-07-22' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (16, N'BA015', N'THA', N'CR037', 1, 25, CAST(N'2020-02-06' AS Date), CAST(N'2020-07-05' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (17, N'BA016', N'BAM', N'CR014', 1, 20, CAST(N'2021-05-03' AS Date), CAST(N'2021-09-30' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (18, N'BA017', N'TAT', N'CR010', 1, 25, CAST(N'2021-05-26' AS Date), CAST(N'2021-10-23' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (19, N'BA018', N'ORI', N'CR005', 1, 20, CAST(N'2020-03-10' AS Date), CAST(N'2020-08-07' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (20, N'BA019', N'AAR', N'CR001', 1, 25, CAST(N'2021-12-14' AS Date), CAST(N'2022-05-13' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (21, N'BA020', N'ZUL', N'CR006', 1, 20, CAST(N'2021-08-29' AS Date), CAST(N'2022-01-26' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (22, N'BA021', N'ENG', N'CR041', 1, 25, CAST(N'2021-08-29' AS Date), CAST(N'2022-01-26' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (23, N'BA022', N'LIN', N'CR024', 1, 20, CAST(N'2020-12-14' AS Date), CAST(N'2021-05-13' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (24, N'BA023', N'BUR', N'CR020', 1, 25, CAST(N'2020-09-05' AS Date), CAST(N'2021-02-02' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (25, N'BA024', N'SWA', N'CR038', 1, 20, CAST(N'2020-08-17' AS Date), CAST(N'2021-01-14' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (26, N'BA025', N'NEP', N'CR042', 1, 25, CAST(N'2020-04-06' AS Date), CAST(N'2020-09-03' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (27, N'BA026', N'SPA', N'CR027', 1, 20, CAST(N'2021-03-23' AS Date), CAST(N'2021-08-20' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (28, N'BA027', N'PLI', N'CR032', 1, 25, CAST(N'2020-02-20' AS Date), CAST(N'2020-07-19' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (29, N'BA028', N'SUN', N'CR028', 1, 20, CAST(N'2021-02-07' AS Date), CAST(N'2021-07-07' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (30, N'BA029', N'VIE', N'CR039', 1, 25, CAST(N'2021-10-18' AS Date), CAST(N'2022-03-17' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (31, N'BA030', N'CZE', N'CR002', 1, 20, CAST(N'2021-11-27' AS Date), CAST(N'2022-04-26' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (32, N'BA031', N'IPK', N'CR007', 1, 25, CAST(N'2020-08-04' AS Date), CAST(N'2021-01-01' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (33, N'BA032', N'NDO', N'CR025', 1, 20, CAST(N'2020-01-02' AS Date), CAST(N'2020-05-31' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (34, N'BA033', N'TSO', N'CR033', 1, 25, CAST(N'2021-05-13' AS Date), CAST(N'2021-10-10' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (35, N'BA034', N'YOR', N'CR015', 1, 20, CAST(N'2021-11-30' AS Date), CAST(N'2022-04-29' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (36, N'BA035', N'SAG', N'CR011', 1, 25, CAST(N'2021-04-15' AS Date), CAST(N'2021-09-12' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (37, N'BA036', N'CHE', N'CR021', 1, 20, CAST(N'2020-09-25' AS Date), CAST(N'2021-02-22' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (38, N'BA037', N'COS', N'CR026', 1, 25, CAST(N'2021-05-11' AS Date), CAST(N'2021-10-08' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (39, N'BA038', N'TWI', N'CR029', 1, 20, CAST(N'2020-06-29' AS Date), CAST(N'2020-11-26' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (40, N'BA039', N'TUK', N'CR034', 1, 25, CAST(N'2020-03-30' AS Date), CAST(N'2020-08-27' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (41, N'BA040', N'BAK', N'CR030', 1, 20, CAST(N'2021-07-05' AS Date), CAST(N'2021-12-02' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (42, N'BA041', N'FRE', N'CR022', 1, 25, CAST(N'2021-04-29' AS Date), CAST(N'2021-09-26' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (43, N'BA042', N'TAH', N'CR018', 1, 20, CAST(N'2021-11-11' AS Date), CAST(N'2022-04-10' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (44, N'BA043', N'EWE', N'CR035', 1, 25, CAST(N'2020-07-08' AS Date), CAST(N'2020-12-05' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (45, N'BA044', N'IKU', N'CR031', 1, 20, CAST(N'2020-12-07' AS Date), CAST(N'2021-05-06' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (46, N'BA045', N'OJI', N'CR003', 1, 25, CAST(N'2021-01-26' AS Date), CAST(N'2021-06-25' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (47, N'BA046', N'XHO', N'CR027', 1, 20, CAST(N'2021-09-22' AS Date), CAST(N'2022-02-19' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (48, N'BA047', N'HUN', N'CR016', 1, 25, CAST(N'2020-10-16' AS Date), CAST(N'2021-03-15' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (49, N'BA048', N'ORM', N'CR032', 1, 20, CAST(N'2020-08-14' AS Date), CAST(N'2021-01-11' AS Date))
+GO
+INSERT [dbo].[batches] ([id], [batchId], [batchName], [batchCourseId], [batchStatus], [batchStrength], [batchStartDate], [batchEndDate]) VALUES (50, N'BA049', N'SSW', N'CR023', 1, 25, CAST(N'2020-08-08' AS Date), CAST(N'2021-01-05' AS Date))
+GO
+SET IDENTITY_INSERT [dbo].[batches] OFF
+GO
 SET IDENTITY_INSERT [dbo].[category] ON 
 GO
 INSERT [dbo].[category] ([categoryId], [categoryName], [categoryStatus], [categoryComments]) VALUES (1, N'JAVA', 1, N'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum')
@@ -311,95 +543,211 @@ INSERT [dbo].[category] ([categoryId], [categoryName], [categoryStatus], [catego
 GO
 SET IDENTITY_INSERT [dbo].[category] OFF
 GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (1, 1060, 20, 10, N'ENQUIRED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (2, 181, 22, 47, N'ENQUIRED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (3, 614, 47, 29, N'REJECTED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (4, 131, 15, 43, N'ENQUIRED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (5, 91, 39, 12, N'COMPLETED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (6, 178, 36, 22, N'ENROLLED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (7, 272, 27, 33, N'COMPLETED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (8, 396, 31, 29, N'REJECTED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (9, 612, 40, 34, N'ENQUIRED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (10, 1412, 32, 42, N'COMPLETED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (11, 144, 25, 10, N'COMPLETED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (12, 886, 28, 42, N'COMPLETED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (13, 1372, 34, 50, N'ENQUIRED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (14, 922, 40, 19, N'ENROLLED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (15, 79, 23, 12, N'COMPLETED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (16, 1000, 25, 23, N'COMPLETED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (17, 737, 28, 48, N'ENROLLED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (18, 1274, 19, 24, N'ENQUIRED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (19, 87, 37, 39, N'ENQUIRED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (20, 1463, 49, 2, N'REJECTED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (21, 562, 9, 32, N'COMPLETED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (22, 149, 13, 36, N'COMPLETED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (23, 986, 12, 30, N'ENROLLED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (24, 400, 14, 24, N'ENQUIRED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (25, 527, 29, 29, N'ENQUIRED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (26, 863, 34, 12, N'REJECTED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (27, 812, 11, 12, N'COMPLETED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (28, 1030, 10, 45, N'ENQUIRED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (29, 1120, 35, 3, N'ENROLLED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (30, 1524, 29, 8, N'ENROLLED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (31, 871, 8, 33, N'ENROLLED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (32, 426, 15, 8, N'ENROLLED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (33, 353, 25, 35, N'COMPLETED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (34, 175, 44, 44, N'REJECTED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (35, 1530, 37, 28, N'ENROLLED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (36, 1413, 29, 32, N'ENROLLED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (37, 1152, 43, 8, N'COMPLETED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (38, 144, 18, 10, N'ENROLLED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (39, 1391, 16, 32, N'REJECTED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (40, 736, 39, 19, N'ENQUIRED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (41, 1564, 32, 7, N'REJECTED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (42, 283, 18, 38, N'ENQUIRED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (43, 582, 39, 16, N'REJECTED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (44, 226, 36, 9, N'ENQUIRED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (45, 1443, 15, 40, N'ENQUIRED', 100)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (46, 7, 25, 47, N'ENQUIRED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (47, 468, 40, 5, N'ENROLLED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (48, 6, 18, 40, N'ENROLLED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (49, 95, 47, 5, N'COMPLETED', 0)
+GO
+INSERT [dbo].[course_enrollment] ([id], [userId], [courseId], [batchId], [enrollStatus], [score]) VALUES (50, 1142, 47, 13, N'COMPLETED', 0)
+GO
 SET IDENTITY_INSERT [dbo].[courses] ON 
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (8, N'CR000', N'JAVA FULL STACK WITH ANGULAR', 1, N'6', N'ng through collaboration with community partners ', 5, 2, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (8, N'CR000', N'JAVA FULL STACK WITH ANGULAR', 1, N'6', N'ng through collaboration with community partners ', 5, 2, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (9, N'CR001', N'DATA SCIENCE', 5, N'6', N'ng through collaboration with community partners ', 10, 1, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (9, N'CR001', N'DATA SCIENCE', 5, N'6', N'ng through collaboration with community partners ', 10, 1, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (10, N'CR002', N'ARTIFICIAL INTELLIGENCE', 5, N'6', N'ng through collaboration with community partners ', 5, 3, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (10, N'CR002', N'ARTIFICIAL INTELLIGENCE', 5, N'6', N'ng through collaboration with community partners ', 5, 3, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (11, N'CR003', N'GRAPHIC DESIGN', 5, N'12', N'ng through collaboration with community partners ', 8, 1, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (11, N'CR003', N'GRAPHIC DESIGN', 5, N'12', N'ng through collaboration with community partners ', 8, 1, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (12, N'CR004', N'CYBER SECURITY', 5, N'6', N'ng through collaboration with community partners ', 7, 3, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (12, N'CR004', N'CYBER SECURITY', 5, N'6', N'ng through collaboration with community partners ', 7, 3, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (13, N'CR005', N'DATA ANALYTICS', 5, N'12', N'ng through collaboration with community partners ', 9, 1, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (13, N'CR005', N'DATA ANALYTICS', 5, N'12', N'ng through collaboration with community partners ', 9, 1, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (14, N'CR006', N'DIGITAL MARKETING', 6, N'6', N'ng through collaboration with community partners ', 10, 1, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (14, N'CR006', N'DIGITAL MARKETING', 6, N'6', N'ng through collaboration with community partners ', 10, 1, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (15, N'CR007', N'SOCIAL MEDIA MARKETING', 6, N'12', N'ng through collaboration with community partners ', 3, 2, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (15, N'CR007', N'SOCIAL MEDIA MARKETING', 6, N'12', N'ng through collaboration with community partners ', 3, 2, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (16, N'CR008', N'PROGRAMMING', 5, N'12', N'ng through collaboration with community partners ', 5, 1, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (16, N'CR008', N'PROGRAMMING', 5, N'12', N'ng through collaboration with community partners ', 5, 1, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (17, N'CR009', N'FOREIGN LANGUAGE', 5, N'12', N'ng through collaboration with community partners ', 3, 1, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (17, N'CR009', N'FOREIGN LANGUAGE', 5, N'12', N'ng through collaboration with community partners ', 3, 1, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (18, N'CR010', N'WEB DEVELOPMENT', 5, N'6', N'ng through collaboration with community partners ', 8, 2, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (18, N'CR010', N'WEB DEVELOPMENT', 5, N'6', N'ng through collaboration with community partners ', 8, 2, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (19, N'CR011', N'.NET FULL STACK WITH ANGULAR', 3, N'12', N'ng through collaboration with community partners ', 7, 1, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (19, N'CR011', N'.NET FULL STACK WITH ANGULAR', 3, N'12', N'ng through collaboration with community partners ', 7, 1, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (20, N'CR012', N'NODE FULL STACK WITH REACT', 5, N'12', N'ng through collaboration with community partners ', 10, 3, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (20, N'CR012', N'NODE FULL STACK WITH REACT', 5, N'12', N'ng through collaboration with community partners ', 10, 3, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (21, N'CR013', N'FUNDAMENTAL MARKETING', 6, N'6', N'ng through collaboration with community partners ', 9, 3, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (21, N'CR013', N'FUNDAMENTAL MARKETING', 6, N'6', N'ng through collaboration with community partners ', 9, 3, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (22, N'CR014', N'CONTENT MARKETING', 6, N'12', N'ng through collaboration with community partners ', 2, 3, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (22, N'CR014', N'CONTENT MARKETING', 6, N'12', N'ng through collaboration with community partners ', 2, 3, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (23, N'CR015', N'EMAIL MARKETING', 6, N'12', N'ng through collaboration with community partners ', 2, 3, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (23, N'CR015', N'EMAIL MARKETING', 6, N'12', N'ng through collaboration with community partners ', 2, 3, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (24, N'CR016', N'SEM', 5, N'12', N'ng through collaboration with community partners ', 7, 1, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (24, N'CR016', N'SEM', 5, N'12', N'ng through collaboration with community partners ', 7, 1, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (25, N'CR017', N'SALES', 6, N'6', N'ng through collaboration with community partners ', 3, 3, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (25, N'CR017', N'SALES', 6, N'6', N'ng through collaboration with community partners ', 3, 3, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (26, N'CR018', N'ECOMMERCE', 5, N'12', N'ng through collaboration with community partners ', 7, 2, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (26, N'CR018', N'ECOMMERCE', 5, N'12', N'ng through collaboration with community partners ', 7, 2, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (27, N'CR019', N'CODING', 5, N'6', N'ng through collaboration with community partners ', 5, 2, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (27, N'CR019', N'CODING', 5, N'6', N'ng through collaboration with community partners ', 5, 2, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (28, N'CR020', N'PERSONAL & PROFESSIONAL DEVELOPMENT', 5, N'6', N'ng through collaboration with community partners ', 10, 1, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (28, N'CR020', N'PERSONAL & PROFESSIONAL DEVELOPMENT', 5, N'6', N'ng through collaboration with community partners ', 10, 1, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (29, N'CR021', N'DESIGN', 5, N'6', N'ng through collaboration with community partners ', 6, 3, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (29, N'CR021', N'DESIGN', 5, N'6', N'ng through collaboration with community partners ', 6, 3, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (30, N'CR022', N'ENTREPRENEURSHIP', 6, N'12', N'ng through collaboration with community partners ', 7, 3, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (30, N'CR022', N'ENTREPRENEURSHIP', 6, N'12', N'ng through collaboration with community partners ', 7, 3, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (31, N'CR023', N'BUSINESS & FINANCE', 5, N'12', N'ng through collaboration with community partners ', 6, 1, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (31, N'CR023', N'BUSINESS & FINANCE', 5, N'12', N'ng through collaboration with community partners ', 6, 1, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (32, N'CR024', N'WRITING', 5, N'12', N'ng through collaboration with community partners ', 4, 1, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (32, N'CR024', N'WRITING', 5, N'12', N'ng through collaboration with community partners ', 4, 1, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (33, N'CR025', N'COMMUNICATION', 5, N'12', N'ng through collaboration with community partners ', 5, 1, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (33, N'CR025', N'COMMUNICATION', 5, N'12', N'ng through collaboration with community partners ', 5, 1, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (34, N'CR026', N'HUMANITIES', 5, N'12', N'ng through collaboration with community partners ', 10, 2, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (34, N'CR026', N'HUMANITIES', 5, N'12', N'ng through collaboration with community partners ', 10, 2, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (35, N'CR027', N'LANGUAGES', 5, N'6', N'ng through collaboration with community partners ', 4, 2, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (35, N'CR027', N'LANGUAGES', 5, N'6', N'ng through collaboration with community partners ', 4, 2, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (36, N'CR028', N'PYTHON FULL STACK WITH ANGULAR', 2, N'6', N'ng through collaboration with community partners ', 8, 3, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (36, N'CR028', N'PYTHON FULL STACK WITH ANGULAR', 2, N'6', N'ng through collaboration with community partners ', 8, 3, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (37, N'CR029', N'.NET+ MICROSOFT DYNAMICS', 3, N'6', N'ng through collaboration with community partners ', 10, 1, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (37, N'CR029', N'.NET+ MICROSOFT DYNAMICS', 3, N'6', N'ng through collaboration with community partners ', 10, 1, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (38, N'CR030', N'SDET- TEST AUTOMATION', 4, N'6', N'ng through collaboration with community partners ', 6, 3, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (38, N'CR030', N'SDET- TEST AUTOMATION', 4, N'6', N'ng through collaboration with community partners ', 6, 3, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (39, N'CR031', N'JAVA -GENERIC', 1, N'12', N'ng through collaboration with community partners ', 8, 1, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (39, N'CR031', N'JAVA -GENERIC', 1, N'12', N'ng through collaboration with community partners ', 8, 1, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (40, N'CR032', N'ASP.NET', 3, N'12', N'ng through collaboration with community partners ', 2, 3, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (40, N'CR032', N'ASP.NET', 3, N'12', N'ng through collaboration with community partners ', 2, 3, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (41, N'CR033', N'JAVA.NET', 7, N'6', N'ng through collaboration with community partners ', 7, 1, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (41, N'CR033', N'JAVA.NET', 7, N'6', N'ng through collaboration with community partners ', 7, 1, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (42, N'CR034', N'JAVA', 1, N'12', N'ng through collaboration with community partners ', 10, 2, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (42, N'CR034', N'JAVA', 1, N'12', N'ng through collaboration with community partners ', 10, 2, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (43, N'CR035', N'POPEL(.NET)', 3, N'6', N'ng through collaboration with community partners ', 2, 2, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (43, N'CR035', N'POPEL(.NET)', 3, N'6', N'ng through collaboration with community partners ', 2, 2, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (44, N'CR036', N'TESTING', 4, N'6', N'ng through collaboration with community partners ', 6, 1, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (44, N'CR036', N'TESTING', 4, N'6', N'ng through collaboration with community partners ', 6, 1, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (45, N'CR037', N'IPATH', 5, N'6', N'ng through collaboration with community partners ', 6, 1, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (45, N'CR037', N'IPATH', 5, N'6', N'ng through collaboration with community partners ', 6, 1, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (46, N'CR038', N'.NET', 3, N'6', N'ng through collaboration with community partners ', 10, 3, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (46, N'CR038', N'.NET', 3, N'6', N'ng through collaboration with community partners ', 10, 3, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (47, N'CR039', N'EDGE .NET', 3, N'6', N'ng through collaboration with community partners ', 2, 3, 25, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (47, N'CR039', N'EDGE .NET', 3, N'6', N'ng through collaboration with community partners ', 2, 3, 25, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (48, N'CR040', N'EDGE JAVA', 1, N'6', N'ng through collaboration with community partners ', 8, 1, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (48, N'CR040', N'EDGE JAVA', 1, N'6', N'ng through collaboration with community partners ', 8, 1, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (49, N'CR041', N'EDGE-INFRA', 5, N'6', N'ng through collaboration with community partners ', 2, 1, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (49, N'CR041', N'EDGE-INFRA', 5, N'6', N'ng through collaboration with community partners ', 2, 1, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
-INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (50, N'CR042', N'ITCP', 5, N'12', N'ng through collaboration with community partners ', 4, 1, 20, N'https://www.youtube.com/watch?v=QH2-TGUlwu4', 1, 1)
+INSERT [dbo].[courses] ([id], [courseId], [courseName], [courseCategoryId], [courseDuration], [courseDescription], [courseInstructorID], [courseMinQualificationId], [courseBatchSize], [courseVideoLink], [courseRating], [courseStatus]) VALUES (50, N'CR042', N'ITCP', 5, N'12', N'ng through collaboration with community partners ', 4, 1, 20, N'//vjs.zencdn.net/v/oceans.mp4', 1, 1)
 GO
 SET IDENTITY_INSERT [dbo].[courses] OFF
+GO
+INSERT [dbo].[enquiries] ([enquiryId], [enquiryCode], [enquiryUserId], [enquiryCourseId], [enquiryDescription], [enquiryStatus], [enquiryUpdate]) VALUES (1, N'EN0000', 35, 14, N'Quibusdam eos reprehenderit. Ullam nemo quo. Nostrum nihil quisquam. Sed possimus dolorem. Nemo tempore repellat. Similique ipsa quia! Assumenda asperiores.', 1, N'ON_REVIEW')
+GO
+INSERT [dbo].[enquiries] ([enquiryId], [enquiryCode], [enquiryUserId], [enquiryCourseId], [enquiryDescription], [enquiryStatus], [enquiryUpdate]) VALUES (2, N'EN0001', 22, 8, N'Sed aut ut qui. Saepe vitae quis. Quae officia qui ut accusantium. Obcaecati itaque et! Veniam rerum inventore; porro eos error.', 1, N'ENQUIRED')
+GO
+INSERT [dbo].[enquiries] ([enquiryId], [enquiryCode], [enquiryUserId], [enquiryCourseId], [enquiryDescription], [enquiryStatus], [enquiryUpdate]) VALUES (3, N'EN0002', 43, 13, N'Reprehenderit sit est. Quia aut a. Illo pariatur voluptas! Cupiditate doloremque odit; cum delectus unde? Alias sit ut; sunt fugiat totam.', 1, N'ENQUIRED')
+GO
+INSERT [dbo].[enquiries] ([enquiryId], [enquiryCode], [enquiryUserId], [enquiryCourseId], [enquiryDescription], [enquiryStatus], [enquiryUpdate]) VALUES (4, N'EN0003', 6, 11, N'Molestias natus minima necessitatibus repudiandae nesciunt doloremque. Sit molestiae fugit itaque assumenda omnis? Dignissimos ratione eligendi. Architecto.', 1, N'ENQUIRED')
+GO
+INSERT [dbo].[enquiries] ([enquiryId], [enquiryCode], [enquiryUserId], [enquiryCourseId], [enquiryDescription], [enquiryStatus], [enquiryUpdate]) VALUES (5, N'EN0004', 2, 10, N'Sed hic explicabo repudiandae ab aperiam facere. Unde quae ipsa quos porro incidunt et...', 1, N'REJECTED')
+GO
+INSERT [dbo].[enquiries] ([enquiryId], [enquiryCode], [enquiryUserId], [enquiryCourseId], [enquiryDescription], [enquiryStatus], [enquiryUpdate]) VALUES (6, N'EN0005', 48, 9, N'Nulla illum sint. Rem ipsam rerum. Adipisci eligendi reiciendis! Vitae omnis quis? Et nihil cupiditate! Placeat quia iure. Delectus neque labore. Maiores.', 1, N'ENQUIRED')
+GO
+INSERT [dbo].[enquiries] ([enquiryId], [enquiryCode], [enquiryUserId], [enquiryCourseId], [enquiryDescription], [enquiryStatus], [enquiryUpdate]) VALUES (7, N'EN0006', 15, 15, N'Sed nobis maiores omnis dolorem a. Qui consequatur dolor omnis rerum molestiae? Voluptates qui velit aut! Magni ut saepe.', 1, N'ENQUIRED')
+GO
+INSERT [dbo].[enquiries] ([enquiryId], [enquiryCode], [enquiryUserId], [enquiryCourseId], [enquiryDescription], [enquiryStatus], [enquiryUpdate]) VALUES (8, N'EN0007', 15, 12, N'Laborum qui exercitationem. Voluptatem illum quae! Autem aut deserunt voluptas deleniti? Harum sapiente sunt tempora facere iusto repudiandae.', 1, N'ENQUIRED')
 GO
 SET IDENTITY_INSERT [dbo].[instructor] ON 
 GO
@@ -446,6 +794,210 @@ GO
 INSERT [dbo].[role] ([roleId], [roleName]) VALUES (2, N'User')
 GO
 SET IDENTITY_INSERT [dbo].[role] OFF
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (1, 3, 31)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (2, 4, 50)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (3, 5, 18)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (4, 6, 6)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (5, 7, 26)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (6, 8, 37)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (7, 9, 43)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (8, 10, 32)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (9, 11, 38)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (10, 12, 1)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (11, 13, 44)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (12, 14, 13)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (13, 15, 19)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (14, 16, 27)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (15, 17, 39)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (16, 18, 14)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (17, 19, 7)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (18, 20, 20)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (19, 21, 47)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (20, 22, 2)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (21, 23, 15)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (22, 24, 34)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (23, 25, 45)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (24, 26, 21)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (25, 27, 40)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (26, 28, 48)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (27, 29, 16)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (28, 30, 35)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (29, 31, 8)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (30, 32, 3)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (31, 33, 46)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (32, 34, 49)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (33, 35, 22)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (34, 36, 41)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (35, 37, 33)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (36, 38, 17)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (37, 39, 12)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (38, 40, 28)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (39, 41, 23)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (40, 42, 9)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (41, 43, 36)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (42, 44, 29)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (43, 45, 24)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (44, 46, 4)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (45, 47, 42)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (46, 48, 10)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (47, 49, 5)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (48, 50, 11)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (49, 51, 30)
+GO
+INSERT [dbo].[user_batch] ([id], [userId], [batchId]) VALUES (50, 52, 25)
+GO
+SET IDENTITY_INSERT [dbo].[user_qualification] ON 
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (1, 3, 1)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (2, 4, 3)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (3, 5, 5)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (4, 6, 4)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (5, 7, 2)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (6, 8, 4)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (7, 9, 1)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (8, 10, 3)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (9, 11, 5)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (10, 12, 2)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (11, 13, 3)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (12, 14, 4)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (13, 15, 5)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (14, 16, 2)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (15, 17, 1)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (16, 18, 1)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (17, 19, 5)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (18, 20, 3)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (19, 21, 2)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (20, 22, 4)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (21, 23, 4)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (22, 24, 3)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (23, 25, 2)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (24, 26, 1)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (25, 27, 5)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (26, 28, 3)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (27, 29, 1)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (28, 30, 2)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (29, 31, 4)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (30, 32, 5)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (31, 33, 1)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (32, 34, 3)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (33, 35, 4)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (34, 36, 5)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (35, 37, 2)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (36, 38, 5)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (37, 39, 4)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (38, 40, 2)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (39, 41, 1)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (40, 42, 3)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (41, 43, 1)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (42, 44, 4)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (43, 45, 5)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (44, 46, 3)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (45, 47, 2)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (46, 48, 4)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (47, 49, 3)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (48, 50, 5)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (49, 51, 2)
+GO
+INSERT [dbo].[user_qualification] ([id], [userId], [qualificationId]) VALUES (50, 52, 1)
+GO
+SET IDENTITY_INSERT [dbo].[user_qualification] OFF
 GO
 SET IDENTITY_INSERT [dbo].[users] ON 
 GO
@@ -3819,11 +4371,29 @@ INSERT [dbo].[users] ([userId], [userCode], [userName], [userPassword], [userRol
 GO
 INSERT [dbo].[users] ([userId], [userCode], [userName], [userPassword], [userRoleId], [userEmail], [userPhone], [userCountry], [userState], [userCity], [userNew], [userStatus]) VALUES (1687, N'USER01686', N'Suneeth John Varghese', N'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', 2, N'ducthangi.dinh@gmail.com', N'9889513684', N'India', N'Karnataka', N'Bangalore', 1, 1)
 GO
+INSERT [dbo].[users] ([userId], [userCode], [userName], [userPassword], [userRoleId], [userEmail], [userPhone], [userCountry], [userState], [userCity], [userNew], [userStatus]) VALUES (1688, NULL, N'prince', N'sha256$Ztm6XtVU$358fc83465eb0da7a2a2e914f2d4ec3cdca1ca0896d52ff501ba62e860b16222', 1, N'prince@email.com', N'7012868066', N'India', N'Kerala', N'TVM', NULL, NULL)
+GO
+INSERT [dbo].[users] ([userId], [userCode], [userName], [userPassword], [userRoleId], [userEmail], [userPhone], [userCountry], [userState], [userCity], [userNew], [userStatus]) VALUES (1690, N'CRM1686', N'prince', N'sha256$D04EU2Y1$ee0a74da71c33732bfeaa5f1e85422818b6086cc200016eb6036a531e6557ea0', 1, N'princejohnson37@gmail.com', N'+91701286806', N'India', N'Kerala', N'Attingal', NULL, NULL)
+GO
+INSERT [dbo].[users] ([userId], [userCode], [userName], [userPassword], [userRoleId], [userEmail], [userPhone], [userCountry], [userState], [userCity], [userNew], [userStatus]) VALUES (1691, N'USER01687+1', N'Jane', N'sha256$8xCEHKFy$7d8bfb406d782213a5f56781b05387124773defefc08aa994169fe153a6ecdf1', 1, N'superjane@email.com', N'7878784512', N'USA', N'ALABAMA', N'AL', NULL, NULL)
+GO
+INSERT [dbo].[users] ([userId], [userCode], [userName], [userPassword], [userRoleId], [userEmail], [userPhone], [userCountry], [userState], [userCity], [userNew], [userStatus]) VALUES (1692, N'USER01689', N'Jane', N'sha256$uetZNaZd$1476742c0031747276e6020ee8f3b394652296f79dc39b88450c9843b9ae9c97', 2, N'janedoe@email.com', N'7845126598', N'ind', N'ind', N'ind', 1, 1)
+GO
+INSERT [dbo].[users] ([userId], [userCode], [userName], [userPassword], [userRoleId], [userEmail], [userPhone], [userCountry], [userState], [userCity], [userNew], [userStatus]) VALUES (1693, N'USER01689+1', N'Jane Doe', N'sha256$QISP8PjA$6b59ffc80b55e1c744bd8419c6362588ad714e88ea6cdc17b062a034f0e193b6', 1, N'janedoe1@email.com', N'', N'', N'', N'', NULL, NULL)
+GO
+INSERT [dbo].[users] ([userId], [userCode], [userName], [userPassword], [userRoleId], [userEmail], [userPhone], [userCountry], [userState], [userCity], [userNew], [userStatus]) VALUES (1694, N'USER01691', N'prince', N'sha256$9SD1XQ5t$b1dbaf1c137a6d642238a72392ab0508abbc3ab6ec987fb239aef5aaa1817d09', 2, N'user01@gmail.com', N'78787878', N'ind', N'kerala', N'tvm', NULL, NULL)
+GO
+INSERT [dbo].[users] ([userId], [userCode], [userName], [userPassword], [userRoleId], [userEmail], [userPhone], [userCountry], [userState], [userCity], [userNew], [userStatus]) VALUES (1695, N'USER0Users.userId', N'prince', N'sha256$nbVwsMZG$38abdb5bf44eb796fa6bb88c321ba79a066155ee2b54045808ef6fa1357dc67e', 2, N'user01@email.com', N'78784521', N'ind', N'kerla', N'tvm', 1, 1)
+GO
+INSERT [dbo].[users] ([userId], [userCode], [userName], [userPassword], [userRoleId], [userEmail], [userPhone], [userCountry], [userState], [userCity], [userNew], [userStatus]) VALUES (1697, N'USER01693', N'prince', N'sha256$FDYY1cRM$d563fc47fff4a1d988ea43bd3e241c0dd22cdfd9213d0346dc8d4dc6bc0bdddc', 2, N'user02@email.com', N'4515', N'fsf', N'fse', N'fse', 1, 1)
+GO
+INSERT [dbo].[users] ([userId], [userCode], [userName], [userPassword], [userRoleId], [userEmail], [userPhone], [userCountry], [userState], [userCity], [userNew], [userStatus]) VALUES (1698, N'USER01694', N'prince', N'sha256$9fwsF6ub$4629ba57883fadf035239cb61017868096a63880fa57ee1334ccd4746a02cfc6', 2, N'user03@email.com', N'4515', N'fsf', N'fse', N'fse', 1, 1)
+GO
 SET IDENTITY_INSERT [dbo].[users] OFF
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__batches__78CCD77224169B36]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Index [UQ__batches__78CCD772B6A2AA24]    Script Date: 05-09-2022 08:40:10 ******/
 ALTER TABLE [dbo].[batches] ADD UNIQUE NONCLUSTERED 
 (
 	[batchId] ASC
@@ -3831,7 +4401,7 @@ ALTER TABLE [dbo].[batches] ADD UNIQUE NONCLUSTERED
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__category__37077ABDB7BCE4EA]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Index [UQ__category__37077ABD46CF84C8]    Script Date: 05-09-2022 08:40:10 ******/
 ALTER TABLE [dbo].[category] ADD UNIQUE NONCLUSTERED 
 (
 	[categoryName] ASC
@@ -3839,7 +4409,7 @@ ALTER TABLE [dbo].[category] ADD UNIQUE NONCLUSTERED
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__courses__2AA84FD0427647DC]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Index [UQ__courses__2AA84FD075237CDD]    Script Date: 05-09-2022 08:40:10 ******/
 ALTER TABLE [dbo].[courses] ADD UNIQUE NONCLUSTERED 
 (
 	[courseId] ASC
@@ -3847,15 +4417,7 @@ ALTER TABLE [dbo].[courses] ADD UNIQUE NONCLUSTERED
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__enquirie__463D5BE79315A4F0]    Script Date: 9/2/2022 8:24:19 PM ******/
-ALTER TABLE [dbo].[enquiries] ADD UNIQUE NONCLUSTERED 
-(
-	[enquiryCode] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-GO
-SET ANSI_PADDING ON
-GO
-/****** Object:  Index [UQ__instruct__370F55D986DAC138]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Index [UQ__instruct__370F55D9C11AFC00]    Script Date: 05-09-2022 08:40:10 ******/
 ALTER TABLE [dbo].[instructor] ADD UNIQUE NONCLUSTERED 
 (
 	[instructorCode] ASC
@@ -3863,7 +4425,7 @@ ALTER TABLE [dbo].[instructor] ADD UNIQUE NONCLUSTERED
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__users__F97F2AEAADB9B8DE]    Script Date: 9/2/2022 8:24:19 PM ******/
+/****** Object:  Index [UQ__users__F97F2AEA694C6182]    Script Date: 05-09-2022 08:40:10 ******/
 ALTER TABLE [dbo].[users] ADD UNIQUE NONCLUSTERED 
 (
 	[userCode] ASC
@@ -3874,46 +4436,41 @@ REFERENCES [dbo].[users] ([userId])
 GO
 ALTER TABLE [dbo].[activity_log] NOCHECK CONSTRAINT [FK__activity___userI__440B1D61]
 GO
-ALTER TABLE [dbo].[batches]  WITH CHECK ADD FOREIGN KEY([batchCourseId])
+ALTER TABLE [dbo].[batches]  WITH CHECK ADD  CONSTRAINT [FK__batches__batchCo__403A8C7D] FOREIGN KEY([batchCourseId])
 REFERENCES [dbo].[courses] ([courseId])
 GO
-ALTER TABLE [dbo].[course_enrollment]  WITH CHECK ADD FOREIGN KEY([batchId])
-REFERENCES [dbo].[batches] ([batchId])
+ALTER TABLE [dbo].[batches] CHECK CONSTRAINT [FK__batches__batchCo__403A8C7D]
 GO
-ALTER TABLE [dbo].[course_enrollment]  WITH CHECK ADD FOREIGN KEY([courseId])
-REFERENCES [dbo].[courses] ([courseId])
+ALTER TABLE [dbo].[course_enrollment]  WITH NOCHECK ADD  CONSTRAINT [FK_course_enrollment_batches] FOREIGN KEY([batchId])
+REFERENCES [dbo].[batches] ([id])
 GO
-ALTER TABLE [dbo].[course_enrollment]  WITH NOCHECK ADD  CONSTRAINT [FK__course_en__userI__4AB81AF0] FOREIGN KEY([userId])
+ALTER TABLE [dbo].[course_enrollment] CHECK CONSTRAINT [FK_course_enrollment_batches]
+GO
+ALTER TABLE [dbo].[course_enrollment]  WITH NOCHECK ADD  CONSTRAINT [FK_course_enrollment_course_enrollment1] FOREIGN KEY([id])
+REFERENCES [dbo].[course_enrollment] ([id])
+GO
+ALTER TABLE [dbo].[course_enrollment] CHECK CONSTRAINT [FK_course_enrollment_course_enrollment1]
+GO
+ALTER TABLE [dbo].[course_enrollment]  WITH NOCHECK ADD  CONSTRAINT [FK_course_enrollment_users] FOREIGN KEY([userId])
 REFERENCES [dbo].[users] ([userId])
 GO
-ALTER TABLE [dbo].[course_enrollment] NOCHECK CONSTRAINT [FK__course_en__userI__4AB81AF0]
+ALTER TABLE [dbo].[course_enrollment] CHECK CONSTRAINT [FK_course_enrollment_users]
 GO
-ALTER TABLE [dbo].[courses]  WITH CHECK ADD FOREIGN KEY([courseCategoryId])
+ALTER TABLE [dbo].[courses]  WITH NOCHECK ADD FOREIGN KEY([courseCategoryId])
 REFERENCES [dbo].[category] ([categoryId])
 GO
-ALTER TABLE [dbo].[courses]  WITH CHECK ADD FOREIGN KEY([courseInstructorID])
+ALTER TABLE [dbo].[courses]  WITH NOCHECK ADD FOREIGN KEY([courseInstructorID])
 REFERENCES [dbo].[instructor] ([instructorId])
 GO
-ALTER TABLE [dbo].[courses]  WITH CHECK ADD FOREIGN KEY([courseMinQualificationId])
+ALTER TABLE [dbo].[courses]  WITH NOCHECK ADD FOREIGN KEY([courseMinQualificationId])
 REFERENCES [dbo].[qualifications] ([qualificationId])
 GO
-ALTER TABLE [dbo].[enquiries]  WITH NOCHECK ADD  CONSTRAINT [FK__enquiries__enqui__403A8C7D] FOREIGN KEY([enquiryUserId])
+ALTER TABLE [dbo].[enquiries]  WITH NOCHECK ADD  CONSTRAINT [FK_Enquiries_users] FOREIGN KEY([enquiryUserId])
 REFERENCES [dbo].[users] ([userId])
 GO
-ALTER TABLE [dbo].[enquiries] NOCHECK CONSTRAINT [FK__enquiries__enqui__403A8C7D]
+ALTER TABLE [dbo].[enquiries] CHECK CONSTRAINT [FK_Enquiries_users]
 GO
-ALTER TABLE [dbo].[enquiries]  WITH CHECK ADD FOREIGN KEY([enquiryCourseId])
-REFERENCES [dbo].[courses] ([courseId])
-GO
-ALTER TABLE [dbo].[user_batch]  WITH CHECK ADD FOREIGN KEY([batchId])
-REFERENCES [dbo].[batches] ([batchId])
-GO
-ALTER TABLE [dbo].[user_batch]  WITH NOCHECK ADD  CONSTRAINT [FK__user_batc__userI__46E78A0C] FOREIGN KEY([userId])
-REFERENCES [dbo].[users] ([userId])
-GO
-ALTER TABLE [dbo].[user_batch] NOCHECK CONSTRAINT [FK__user_batc__userI__46E78A0C]
-GO
-ALTER TABLE [dbo].[user_qualification]  WITH CHECK ADD FOREIGN KEY([qualificationId])
+ALTER TABLE [dbo].[user_qualification]  WITH NOCHECK ADD FOREIGN KEY([qualificationId])
 REFERENCES [dbo].[qualifications] ([qualificationId])
 GO
 ALTER TABLE [dbo].[user_qualification]  WITH NOCHECK ADD  CONSTRAINT [FK__user_qual__userI__37A5467C] FOREIGN KEY([userId])

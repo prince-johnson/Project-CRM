@@ -68,8 +68,8 @@ def  users():
         elif request.args.get('roles').split(',') == ['']:
             listAll = True
             users = Users.query.order_by(userId).paginate(page=page, per_page=ROWS_PER_PAGE)
-        return render_template('users.html', users=users, listAll=listAll)
-    return render_template('users.html', users=users, listAll=True)
+        return render_template('users.html', user=current_user, users=users, listAll=listAll)
+    return render_template('users.html', user=current_user, users=users, listAll=True)
 
 # Search user
 @views.route('/users/<searchBy>/<searchConstraint>')
@@ -81,7 +81,7 @@ def searchUser(searchBy, searchConstraint):
         users = Users.query.filter(Users.userId.like("%"+searchConstraint+"%")).order_by(Users.userId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
         users = Users.query.filter(Users.userName.like("%"+searchConstraint+"%")).order_by(Users.userId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    return render_template('users.html', users=users, listAll=False)
+    return render_template('users.html', user=current_user, users=users, listAll=False)
 
 #batches
 @views.route('/batches', methods=['GET', 'POST'])
@@ -114,15 +114,15 @@ def batches():
         elif request.args.get('status').split(',') == ['']:
             listAll = True
             batches = Batches.query.order_by(Batches.batchId).paginate(page=page, per_page=ROWS_PER_PAGE)
-        return render_template('batches.html', batches=batches, listAll=listAll, courses=courses, categories=categories)
-    return render_template('batches.html', batches=batches, listAll=True, courses=courses, categories=categories)
+        return render_template('batches.html',user=current_user, batches=batches, listAll=listAll, courses=courses, categories=categories)
+    return render_template('batches.html',user=current_user, batches=batches, listAll=True, courses=courses, categories=categories)
 
 #delete batch
 @views.route('/batches/<batchId>', methods=['DELETE'])
 @login_required
 @admin_required
 def deleteBatch(batchId):
-    batch = Batches.query.get(batchId)
+    batch = Batches.query.filter_by(batchId=batchId).first()
     if batch:
         db.session.delete(batch)
         db.session.commit()
@@ -164,7 +164,7 @@ def searchBatch(searchBy, searchConstraint):
         searchConstraint = dateList[2] + "-" + f"{(months.index(dateList[0])+1):02}" + "-" + f"{dateList[1][:-1]:02}"
         print(searchConstraint)
         batches = Batches.query.filter(Batches.batchStartDate.like("%"+searchConstraint+"%")).order_by(Batches.batchId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    return render_template('batches.html', batches=batches, listAll=False)
+    return render_template('batches.html',user=current_user, batches=batches, listAll=False)
 
 #enquiry
 @views.route('/enquiries', methods=['GET', 'POST'])
@@ -187,7 +187,7 @@ def enquiries():
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     users = Users.query.with_entities(Users.userId).distinct().all()
     enquiryStatus = Enquiries.query.with_entities(Enquiries.enquiryStatus).distinct().all()
-    return render_template('enquiries.html', enquiries=enquiries, listAll=True, users=users, courses=courses, enquiryStatus=enquiryStatus)
+    return render_template('enquiries.html',user=current_user, enquiries=enquiries, listAll=True, users=users, courses=courses, enquiryStatus=enquiryStatus)
 
 # #delete enquiry
 # @views.route('/enquiries/<enquiryId>', methods=['DELETE'])
@@ -215,7 +215,7 @@ def searchEnquiry(searchBy, searchConstraint):
     elif searchBy == 'name':
         enquiries = Enquiries.query.filter(Enquiries.enquiryCourseId.like("%"+searchConstraint+"%")).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     
-    return render_template('enquiries.html', enquiries=enquiries, courses=courses, listAll=False)
+    return render_template('enquiries.html',user=current_user, enquiries=enquiries, courses=courses, listAll=False)
 
 # Edit enquiry
 @views.route('/enquiries/<enquiryId>', methods=['PUT', 'PATCH'])
@@ -242,7 +242,7 @@ def categories():
     page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
         #batchId = "BA" + f"{(len(Batches.query.all())):03}"
-        categoryId = "CA"+ f"{(len(Category.query.all())+1):03}"
+        categoryId = len(Category.query.all()) + 1
         categoryName = request.form.get('categoryName')
         categoryStatus = bool(request.form.get('categoryStatus'))
         categoryComments = request.form.get('categoryComments')
@@ -251,7 +251,7 @@ def categories():
         db.session.add(new_category)
         db.session.commit()
     categories=Category.query.order_by(Category.categoryId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    return render_template('categories.html', categories=categories, listAll=True)
+    return render_template('categories.html',user=current_user, categories=categories, listAll=True)
 
 #delete category
 @views.route('/categories/<categoryId>', methods=['DELETE'])
@@ -275,7 +275,7 @@ def searchCategory(searchBy, searchConstraint):
         categories = Category.query.filter(Category.categoryId.like("%"+searchConstraint+"%")).order_by(Category.categoryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
         categories = Category.query.filter(Category.categoryName.like("%"+searchConstraint+"%")).order_by(Category.categoryId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    return render_template('categories.html', categories=categories, listAll=False)
+    return render_template('categories.html', user=current_user, categories=categories, listAll=False)
 
 #edit category
 @views.route('/categories/<categoryId>', methods=['PUT','PATCH'])
@@ -308,7 +308,7 @@ def qualifications():
         db.session.add(new_qualification)
         db.session.commit()
     qualifications=Qualifications.query.order_by(Qualifications.qualificationId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    return render_template('qualification.html',qualifications=qualifications, listAll=True)
+    return render_template('qualification.html',user=current_user,qualifications=qualifications, listAll=True)
 
 #delete qualification
 @views.route('/qualification/<qualificationId>', methods=['DELETE'])
@@ -332,7 +332,7 @@ def searchQualification(searchBy, searchConstraint):
         qualifications = Qualifications.query.filter(Qualifications.qualificationId.like("%"+searchConstraint+"%")).order_by(Qualifications.qualificationId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
         qualifications = Qualifications.query.filter(Qualifications.qualificationName.like("%"+searchConstraint+"%")).order_by(Qualifications.qualificationId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    return render_template('qualification.html', qualifications=qualifications, listAll=False)
+    return render_template('qualification.html', user=current_user, qualifications=qualifications, listAll=False)
 
 #edit qualifiaction
 @views.route('/qualification/<qualificationId>', methods=['PUT','PATCH'])
@@ -354,6 +354,8 @@ def editQualification(qualificationId):
 @login_required
 @admin_required
 def courses():
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
         courseName = request.form.get('courseName')
         courseCategoryId = request.form.get('courseCategoryId')
@@ -369,21 +371,21 @@ def courses():
         for i in Courses.query.all():
             if i.courseId == courseId:
                 courseId = courseCategoryId+courseName+str(int(i.courseId[-1])+1)
-        course = Courses(courseName=courseName, courseId=courseId, courseCategoryId=courseCategoryId, courseDuration=courseDuration, courseMinQualificationId=courseMinQualification, courseInstructorID=courseInstructorId, courseStatus=courseStatus, courseDescription=courseDescription, courseBatchSize=courseBatchSize, courseVideoLink=courseVideoLink, courseSyllabus=None)
+        course = Courses(courseName=courseName, courseId=courseId, courseCategoryId=courseCategoryId, courseDuration=courseDuration, courseMinQualificationId=courseMinQualification, courseInstructorID=courseInstructorId, courseStatus=courseStatus, courseDescription=courseDescription, courseBatchSize=courseBatchSize, courseVideoLink=courseVideoLink) #, courseSyllabus=None
         db.session.add(course)
         db.session.commit()  
     if request.args:
         print(request.args.get('status').split(',')) 
         listAll = False
-        courses = Courses.query.filter(Courses.courseStatus.in_((request.args.get('status')).split(','))).all()
+        courses = Courses.query.filter(Courses.courseStatus.in_((request.args.get('status')).split(','))).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
         if len(request.args.get('status').split(',')) == 2:
             listAll = True
         elif request.args.get('status').split(',') == ['']:
             listAll = True
-            courses = Courses.query.all()
+            courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
         print(courses)
-        return render_template('courses.html', courses = courses[::-1], categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll = listAll)
-    return render_template('courses.html', courses = Courses.query.all(), categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll=True)
+        return render_template('courses.html', courses = courses, categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll = listAll)
+    return render_template('courses.html', user=current_user,courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE), categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll=True)
 
 #edit courses
 @views.route('/courses/<courseId>', methods=['PUT', 'PATCH'])
@@ -427,14 +429,14 @@ def searchCourse(searchBy, searchConstraint):
         courses = Courses.query.filter(Courses.courseId.like("%"+searchConstraint+"%")).all()
     elif searchBy == 'name':
         courses = Courses.query.filter(Courses.courseName.like("%"+searchConstraint+"%")).all()
-    return render_template('courses.html', courses=courses, categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll=False)
+    return render_template('courses.html',user=current_user, courses=courses, categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll=False)
 
 # Delete Course
 @views.route('/courses/<courseId>', methods=['DELETE'])
 @login_required
 @admin_required
 def deleteCourse(courseId):
-    course = Courses.query.get(courseId)
+    course = Courses.query.filter_by(courseId=courseId).first()
     if course:
         db.session.delete(course)
         db.session.commit()
@@ -442,4 +444,4 @@ def deleteCourse(courseId):
 
 @views.route('/profile', methods=['GET'])
 def profile():
-    return render_template('profile.html')
+    return render_template('profile.html', user=current_user)

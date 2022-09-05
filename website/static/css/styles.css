@@ -250,6 +250,7 @@ body {
     color: #E74C3C;
 }
 
+
 /*Profile*/
 .parent {
     position: relative;
@@ -268,3 +269,8 @@ body {
     left: 45%;
     border: 1px solid;
   }
+
+.errorCard {
+    background-color: var(--red);
+}
+
