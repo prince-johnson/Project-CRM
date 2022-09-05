@@ -59,16 +59,20 @@
             <h1 class="card-title">
                 {{ course.courseName }}
             </h1>
-            <center><video id="my-video" class="video-js" controls preload="auto" width="320" height="240"
+            <!-- modal -->
+            <a class="waves-effect waves-light btn modal-trigger" href="#modal{{ course.courseId }}">View
+                Video</a>
+        <div id="modal{{ course.courseId }}" class="modal center">
+            <video id="my-video" class="video-js" controls preload="auto" width="1024" height="640"
                 poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
                 <source src="{{ course.courseVideoLink }}" type="video/mp4" />
                 <source src="{{ course.courseVideoLink }}" type="video/webm" />
-                <p class="vjs-no-js">
-                    To view this video please enable JavaScript, and consider upgrading to a
-                    web browser that
-                    <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                </p>
-            </video></center>
+            </video>
+        </div>
+                
+
+            <br>
+            <br>
             <span class="card-subtitle"><em>CourseId : {{ course.courseId }}</em></span>
             <p class="card-subtitle"><em>Course Name : {{ course.courseName }}</em></p>
             <p>
