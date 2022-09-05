@@ -35,7 +35,7 @@
             </div>
             <div class="modal-footer">
                 <button class="modal-close btn-flat waves-effect waves-orange" type="submit" name="action"
-                    onClick="searchCourse()">Search
+                    onClick="userEnrollSearchCourse()">Search
                     <i class="material-icons right">search</i>
                 </button>
             </div>
@@ -49,9 +49,6 @@
     {% endif %}
     {% endif %}
 </div>
-{% if courses.items|length == 0 %}
-<p class="center empty-content">There are no courses to show</p>
-{% else %}
 {% for course in courses %}
 <div class="card">
     <div class="row">
@@ -102,5 +99,5 @@
     </div>
 </div>
 {% endfor %}
-{% endif %}
+
 {% endblock %}

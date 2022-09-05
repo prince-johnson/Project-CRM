@@ -114,16 +114,24 @@ def enrolledCourses():
     courseIds = []
     courses = []
     category_name = dict()
-    enrollments = CourseEnrollment.query.filter_by(userId=current_user.userId).order_by(CourseEnrollment.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
+    #user = current_user.userId
+    user = 1698
+    enrollments = CourseEnrollment.query.filter_by(userId=user).order_by(CourseEnrollment.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
     print(type(enrollments))
     for enrollment in enrollments.items:
         courseIds.append(enrollment.courseId)
-    for courseId in courseIds:
-        course = Courses.query.filter_by(id=courseId).first()
+    print(courseIds)
+    for id in courseIds:
+        print(id)
+        course = Courses.query.filter_by(id=id).first()
+        #print(course)
         courses.append(course)
         result = Category.query.filter_by(categoryId=course.courseCategoryId).first()
+        print(result)
         category_name[course.courseCategoryId] = result.categoryName
+    print(courses)
     for course in courses:
+        print(course)
         instructor = Instructor.query.filter_by(instructorId=course.courseInstructorID).first()
         course_instructor[instructor.instructorId] = instructor.instructorName
     #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
