@@ -611,8 +611,8 @@ function checkInputs(email, pswd1, pswd2) {
 function userEnrollSearchCourse() {
     searchBy = document.getElementById("searchBy").value;
     searchConstraint = document.getElementById("searchConstraint").value;
-    fetch("/user/" + searchBy + "/" + searchConstraint, {
+    fetch("/user/enrolledCourses/" + searchBy + "/" + searchConstraint, {
         method: "GET"
     })
-        .then(() => (window.location.href = "/user/enrolledCourses" + searchBy + "/" + searchConstraint));
+        .then(() => (window.location.href = "/user/enrolledCourses/" + searchBy + "/" + searchConstraint));
 }

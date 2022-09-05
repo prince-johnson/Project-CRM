@@ -114,48 +114,57 @@ def enrolledCourses():
     courseIds = []
     courses = []
     category_name = dict()
-    #user = current_user.userId
-    user = 1698
+    user = current_user.userId
+    #user = 1698
     enrollments = CourseEnrollment.query.filter_by(userId=user).order_by(CourseEnrollment.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    print(type(enrollments))
+    #print(type(enrollments))
     for enrollment in enrollments.items:
         courseIds.append(enrollment.courseId)
-    print(courseIds)
+    #print(courseIds)
     for id in courseIds:
-        print(id)
+        #print(id)
         course = Courses.query.filter_by(id=id).first()
         #print(course)
         courses.append(course)
         result = Category.query.filter_by(categoryId=course.courseCategoryId).first()
-        print(result)
+        #print(result)
         category_name[course.courseCategoryId] = result.categoryName
-    print(courses)
+    #print(courses)
     for course in courses:
-        print(course)
+        #print(course)
         instructor = Instructor.query.filter_by(instructorId=course.courseInstructorID).first()
         course_instructor[instructor.instructorId] = instructor.instructorName
     #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
     return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments, listAll=True)
 
+
 @userviews.route('/enrolledCourses/<searchBy>/<searchConstraint>')
+@login_required
+@user_required
 def userSearchEnrolledCourses(searchBy, searchConstraint):
     page = request.args.get('page', 1, type=int)
     course_instructor = dict()
     courseIds = []
     courses = []
     category_name = dict()
-    enrollments = CourseEnrollment.query.filter_by(userId=6).paginate(page=page, per_page=ROWS_PER_PAGE)
-    print(type(enrollments))
+    user = current_user.userId
+    enrollments = CourseEnrollment.query.filter_by(userId=user).order_by(CourseEnrollment.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
+    #print(type(enrollments))
     if searchBy == 'id':
         for enrollment in enrollments.items:
             courseIds.append(enrollment.courseId)
-        for courseId in courseIds:
-            if courseId == searchConstraint:
-                course = Courses.query.filter_by(id=courseId).first()
-                courses.append(course)
-                result = Category.query.filter_by(categoryId=course.courseCategoryId).first()
-                category_name[course.courseCategoryId] = result.categoryName   
+        for courseId in courseIds:            
+            course = Courses.query.filter_by(id=courseId).first()
+            print(course)
+            courses.append(course)
+            result = Category.query.filter_by(categoryId=course.courseCategoryId).first()
+            category_name[course.courseCategoryId] = result.categoryName   
+        found = False
+        new_courses = []
         for course in courses:
+            if course.courseId == searchConstraint:
+                found = True
+                new_courses.append(course)
             instructor = Instructor.query.filter_by(instructorId=course.courseInstructorID).first()
             course_instructor[instructor.instructorId] = instructor.instructorName
         #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
@@ -163,15 +172,20 @@ def userSearchEnrolledCourses(searchBy, searchConstraint):
     elif searchBy == 'name':
         for enrollment in enrollments.items:
             courseIds.append(enrollment.courseId)
-        for courseId in courseIds:
+        for courseId in courseIds:            
             course = Courses.query.filter_by(id=courseId).first()
-            if course.courseName == searchConstraint:
-                courses.append(course)
-                result = Category.query.filter_by(categoryId=course.courseCategoryId).first()
-                category_name[course.courseCategoryId] = result.categoryName   
+            print(course)
+            courses.append(course)
+            result = Category.query.filter_by(categoryId=course.courseCategoryId).first()
+            category_name[course.courseCategoryId] = result.categoryName   
+        found = False
+        new_courses = []
         for course in courses:
+            if course.courseName == searchConstraint:
+                found = True
+                new_courses.append(course)
             instructor = Instructor.query.filter_by(instructorId=course.courseInstructorID).first()
             course_instructor[instructor.instructorId] = instructor.instructorName
         #courses = courses.paginate(1, per_page=ROWS_PER_PAGE)
 
-    return render_template('/enrolledCourses.html', user=current_user, courses = courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments, listAll=False)
+    return render_template('/enrolledCourses.html', user=current_user, courses = new_courses, category_name=category_name,course_instructor = course_instructor, enrollments=enrollments, listAll=False)
