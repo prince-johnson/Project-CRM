@@ -67,7 +67,7 @@ def  users():
             listAll = True
         elif request.args.get('roles').split(',') == ['']:
             listAll = True
-            users = Users.query.order_by(userId).paginate(page=page, per_page=ROWS_PER_PAGE)
+            users = Users.query.order_by(Users.userId).paginate(page=page, per_page=ROWS_PER_PAGE)
         return render_template('users.html', user=current_user, users=users, listAll=listAll)
     return render_template('users.html', user=current_user, users=users, listAll=True)
 
@@ -133,15 +133,17 @@ def deleteBatch(batchId):
 @login_required
 @admin_required
 def editBatch(batchId):
-    batch = Batches.query.get_or_404(batchId)
+    batch = Batches.query.filter_by(batchId = batchId).first()
+    print(batch)
     value = json.loads(request.data)
-    batch.batchId = value['batchId']
-    batch.batchName = value['batchName']
+    # batch.batchId = value['batchId']
+    # batch.batchName = value['batchName']
     batch.batchStrength = value['batchStrength']
-    batch.batchCourseId = value['batchCourseId']
-    batch.batchStatus = value['batchStatus']
-    batch.batchStartDate = value['batchStartDate']
-    batch.batchEndDate = value['batchEndDate']
+    # batch.batchCourseId = value['batchCourseId']
+    # batch.batchStatus = value['batchStatus']
+    # batch.batchStartDate = value['batchStartDate']
+    # batch.batchEndDate = value['batchEndDate']
+    print(value)
     db.session.add(batch)
     db.session.commit()
     return jsonify({})
@@ -393,7 +395,7 @@ def courses():
 @login_required
 @admin_required
 def editCourse(courseId):
-    c = Courses.query.get_or_404(courseId)
+    c = Courses.query.filter_by(courseId = courseId).first()
     value = json.loads(request.data)
     courseName = value['courseName']
     courseCategoryId = value['courseCategoryId']
@@ -426,10 +428,12 @@ def editCourse(courseId):
 @login_required
 @admin_required
 def searchCourse(searchBy, searchConstraint):
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
     if searchBy == 'id':
-        courses = Courses.query.filter(Courses.courseId.like("%"+searchConstraint+"%")).all()
+        courses = Courses.query.filter(Courses.courseId.like("%"+searchConstraint+"%")).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
-        courses = Courses.query.filter(Courses.courseName.like("%"+searchConstraint+"%")).all()
+        courses = Courses.query.filter(Courses.courseName.like("%"+searchConstraint+"%")).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
     return render_template('courses.html',user=current_user, courses=courses, categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll=False)
 
 # Delete Course

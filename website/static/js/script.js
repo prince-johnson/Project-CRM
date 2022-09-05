@@ -186,7 +186,7 @@ function editCourse(courseId) {
     if (courseDescription == "") {
         courseDescription = document.getElementById("editCourseDescription" + courseId).placeholder;
     }
-    alert(courseDescription);
+
     fetch("/admin/courses/" + courseId, {
         method: 'PUT',
         body: JSON.stringify({
