@@ -91,7 +91,7 @@ def batches():
     # Set the pagination configuration
     page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
-        batchId = "BA" + f"{(len(Batches.query.all())):03}"
+        batchId = "BA" + f"{(len(Batches.query.all()) + 1):03}"
         batchName = request.form.get('batchName')
         batchStrength = int(request.form.get('batchStrength'))
         batchCourseId = request.form.get('batchCourseId')
@@ -140,7 +140,7 @@ def editBatch(batchId):
     # batch.batchName = value['batchName']
     batch.batchStrength = value['batchStrength']
     # batch.batchCourseId = value['batchCourseId']
-    # batch.batchStatus = value['batchStatus']
+    batch.batchStatus = value['batchStatus']
     # batch.batchStartDate = value['batchStartDate']
     # batch.batchEndDate = value['batchEndDate']
     print(value)

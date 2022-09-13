@@ -162,7 +162,7 @@
         </a>
         <div id="{{ batch.batchId }}" class="modal">
             <div class="modal-content">
-                <form action="">
+                <form action="" onsubmit="event.preventDefault()">
                     <div class="row">
                         <div class="input-field col s6">
                             <textarea name="batchName" id="editBatchName{{ batch.batchId }}" class="materialize-textarea" disabled>{{ batch.batchName }}</textarea>
@@ -181,11 +181,14 @@
                             <label>Batch CourseId</label>
                         </div>
                         <div class="input-field col s6">
-                            <select name="BatchStatus" id="editBatchStatus{{ batch.batchId }}" disabled>
+                            <select name="BatchStatus" id="editBatchStatus{{ batch.batchId }}">
                                 {% if batch.batchStatus %}
-                                <option value='1' >ENABLED</option>
-                                {% else %}
+                                <option value='1' selected>ENABLED</option>
                                 <option value='' >DISABLED</option>
+
+                                {% else %}
+                                <option value='1'>ENABLED</option>
+                                <option value='' selected>DISABLED</option>
                                 {% endif %}
                             </select>
                             <label>Batch Status</label>
