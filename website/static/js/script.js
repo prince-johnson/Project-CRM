@@ -541,7 +541,7 @@ function changePass(){
                     pass: pswd1.value
                 })
             })
-            .then(() => {window.location.href = window.location.href})
+            .then(() => {window.location.href = "/"})
         }
     });
 }
