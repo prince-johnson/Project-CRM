@@ -124,6 +124,7 @@ def batches():
         new_batch = Batches(batchId=batchId,batchName=batchName,batchStrength=batchStrength,batchCourseId=batchCourseId,batchStatus=batchStatus,batchStartDate=batchStartDate,batchEndDate=batchEndDate)
         db.session.add(new_batch)
         db.session.commit()
+        flash("Batch Created!", category="success")
     batches = Batches.query.order_by(Batches.batchId).paginate(page=page, per_page=ROWS_PER_PAGE)
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     categories = Category.query.with_entities(Category.categoryId, Category.categoryName).distinct().all()
@@ -148,6 +149,8 @@ def deleteBatch(batchId):
     if batch:
         db.session.delete(batch)
         db.session.commit()
+        flash("Batch Deleted!", category="success")
+    flash("Batch not found!", category="error")
     return jsonify({})
 
 #edit batch
@@ -168,6 +171,7 @@ def editBatch(batchId):
     print(value)
     db.session.add(batch)
     db.session.commit()
+    flash('Batch updated!', category='success')
     return jsonify({})
 
 #search batch
