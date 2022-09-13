@@ -175,6 +175,19 @@ function editEnquiry(enquiryId) {
     })
         .then(() => window.location.href = window.location.href);
 }
+
+// Filter Enquiries
+function applyEnquiryFilters() {
+    inputs = document.querySelectorAll(".filterCheckbox:checked");
+    let status = {
+        status: []
+    };
+    inputs.forEach(ip => {
+        status["status"].push(ip.value);
+    });
+    fetch("/admin/enquiries", { method: "GET" }).then(() => (window.location.href = "/admin/enquiries?status=" + status["status"]));
+}
+
 // Back to enquiries
 function enquiryBack() {
     window.location.href = "/admin/enquiries"
@@ -487,7 +500,7 @@ function userSearchEnquiry(date) {
         .then(() => window.location.href = "/user/enquiries/" + searchBy + '/' + searchConstraint);
 }
 
-// Filter Courses
+// Filter User Enquiries
 function applyUserEnquiryFilters() {
     inputs = document.querySelectorAll(".filterCheckbox:checked");
     let status = {

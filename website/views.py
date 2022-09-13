@@ -212,6 +212,17 @@ def enquiries():
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     users = Users.query.with_entities(Users.userId).distinct().all()
     enquiryStatus = Enquiries.query.with_entities(Enquiries.enquiryStatus).distinct().all()
+    if request.args.get('status') :
+        print(request.args.get('status').split(','))
+        listAll = False
+        enquiries = Enquiries.query.filter(Enquiries.enquiryStatus.in_((request.args.get('status')).split(','))).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
+        if len(request.args.get('status').split(',')) == 2:
+            listAll = True
+        elif request.args.get('status').split(',') == ['']:
+            listAll = True
+            enquiries = Enquiries.query.order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
+        return render_template('enquiries.html',user=current_user, enquiries=enquiries, listAll=listAll, users=users, courses=courses, enquiryStatus=enquiryStatus)
+    
     return render_template('enquiries.html',user=current_user, enquiries=enquiries, listAll=True, users=users, courses=courses, enquiryStatus=enquiryStatus)
 
 # #delete enquiry
@@ -225,7 +236,7 @@ def enquiries():
 #         db.session.commit()
 #     return jsonify({})
 
-#serach enquiry
+#search enquiry
 @views.route('/enquiries/<searchBy>/<searchConstraint>')
 @login_required
 @admin_required
