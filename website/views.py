@@ -408,10 +408,21 @@ def courses():
         courseBatchSize = request.form.get('courseBatchSize')
         courseSyllabus = request.form.get('courseSyllabus')
         courseVideoLink = request.form.get('courseUrl')
-        courseId = courseCategoryId+courseName+'0'
-        for i in Courses.query.all():
-            if i.courseId == courseId:
-                courseId = courseCategoryId+courseName+str(int(i.courseId[-1])+1)
+        last_course_id = Courses.query.order_by(Courses.courseId.desc()).first()
+        print(last_course_id)
+        temp = ''
+        for i in last_course_id.courseId:
+            try:
+                if int(i):
+                    temp=temp+i
+            except:
+                continue
+        print(temp)
+        courseId = 'C'+str(int(temp)+1)   
+
+        # for i in Courses.query.all():
+        #     if i.courseId == courseId:
+        #         courseId = courseCategoryId+courseName+str(int(i.courseId[-1])+1)
         course = Courses(courseName=courseName, courseId=courseId, courseCategoryId=courseCategoryId, courseDuration=courseDuration, courseMinQualificationId=courseMinQualification, courseInstructorID=courseInstructorId, courseStatus=courseStatus, courseDescription=courseDescription, courseBatchSize=courseBatchSize, courseVideoLink=courseVideoLink) #, courseSyllabus=None
         db.session.add(course)
         db.session.commit()  
