@@ -86,15 +86,15 @@
                 <div class="row">
                     <div class="input-field col s6">
                         <select name="courseInstructorId" id="editcourseInstructorId" class="materialize-textarea" >
-                            {% for instructor in instructors %}
-                            <option value='{{ instructor.instructorId }}'>{{ instructor.instructorName }}</option>
+                            {% for key,value in instructors.items() %}
+                            <option value='{{ key }}'>{{ value }}</option>
                             {% endfor %}
                         </select>
                         <label for="courseInstructorId">Course Instructor</label>
                     </div>
                     <div class="input-field col s6">
                         <select name="courseMinQualification" id="qualificationId">
-                            {% for qua in qualifications %}
+                            {% for qua in qualifications_orm %}
                                 {% if qua.qualificationStatus %}
                             <option value='{{ qua.qualificationId }}'>{{qua.qualificationId }} - {{ qua.qualificationName}}</option>
                                 {% endif %}
@@ -225,7 +225,7 @@
                     <div class="row">
                         <div class="input-field col s6">
                             <select name="courseInstructorId" id="editcourseInstructorId{{ course.courseId }}" class="materialize-textarea" >
-                                {% for instructor in instructors %}
+                                {% for instructor in instructors_orm %}
                                 <option value='{{ instructor.instructorId }}'>{{ instructor.instructorName }}</option>
                                 {% endfor %}
                             </select>
@@ -233,7 +233,7 @@
                         </div>
                         <div class="input-field col s6">
                             <select name="courseMinQualificationId" id="editCourseMinQualificationId{{ course.courseId }}">
-                                {% for qua in qualifications %}
+                                {% for qua in qualifications_orm %}
                                     {% if qua.qualificationStatus %}
                                 <option value='{{ qua.qualificationId }}'>{{qua.qualificationId }} - {{ qua.qualificationName}}</option>
                                     {% endif %}
