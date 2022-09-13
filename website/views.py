@@ -100,7 +100,7 @@ def  users():
 def searchUser(searchBy, searchConstraint):
     page = request.args.get('page', 1, type=int)
     if searchBy == 'id':
-        users = Users.query.filter(Users.userId.like("%"+searchConstraint+"%")).order_by(Users.userId).paginate(page=page, per_page=ROWS_PER_PAGE)
+        users = Users.query.filter(Users.userCode.like("%"+searchConstraint+"%")).order_by(Users.userId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
         users = Users.query.filter(Users.userName.like("%"+searchConstraint+"%")).order_by(Users.userId).paginate(page=page, per_page=ROWS_PER_PAGE)
     return render_template('users.html', user=current_user, users=users, listAll=False)
@@ -483,6 +483,11 @@ def deleteCourse(courseId):
         db.session.commit()
     return jsonify({})
 
+# profile
 @views.route('/profile', methods=['GET'])
+@login_required
+@admin_required
 def profile():
-    return render_template('profile.html', user=current_user)
+    user_all=[]
+    user_all = Users.query.filter_by(userId=current_user.userId).first()
+    return render_template('profile.html', user_all=user_all, user=current_user)
