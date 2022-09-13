@@ -57,8 +57,8 @@ class Batches(db.Model):
     #     self.batchStrength = batchStrength
 
 class Enquiries(db.Model):
-    enquiryId = db.Column(db.Integer, primary_key=True, autoincrement=True) #primary key
-    enquiryCode = db.Column(db.String(80), unique=True, primary_key=True)
+    enquiryId = db.Column(db.Integer, primary_key=True) #primary key
+    enquiryCode = db.Column(db.String(80), unique=True)
     enquiryUserId = db.Column(db.Integer, db.ForeignKey('users.userId')) #foreign key
     enquiryCourseId = db.Column(db.Integer, db.ForeignKey('courses.id')) #foreign key
     enquiryDescription = db.Column(db.String(250))

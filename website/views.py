@@ -7,6 +7,7 @@ from sqlalchemy import func, Date, desc
 from datetime import date
 from flask_login import login_user, login_required, logout_user, current_user
 from functools import wraps
+import re
 
 ROWS_PER_PAGE = 5
 
@@ -208,6 +209,7 @@ def enquiries():
         enquiryStatus = bool(request.form.get('enquiryStatus'))
         enquiryDescription = request.form.get('enquiryDescription')
         enquiryUpdate = request.form.get('enquiryUpdate')
+        print(enquiryUpdate)
         print(enquiryId, enquiryUserId, enquiryStatus, enquiryDescription,enquiryUpdate)
         new_enquiry = Enquiries(enquiryId=enquiryId, enquiryUserId=enquiryUserId, enquiryCourseId=enquiryCourseId, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription,enquiryUpdate=enquiryUpdate)
         db.session.add(new_enquiry)
@@ -263,11 +265,14 @@ def searchEnquiry(searchBy, searchConstraint):
 @admin_required
 def editEnquiry(enquiryId):
     enquiry = Enquiries.query.get_or_404(enquiryId)
-    value = json.loads(request.data)
+    value = json.loads(request.data) # ? TODO: check if this is the right way to do this
+    print(value)
     enquiry.enquiryUserId = value['enquiryUserId']
     enquiry.enquiryCourseId = value['enquiryCourseId']
     enquiry.enquiryDescription = value['enquiryDescription']
     enquiry.enquiryStatus = bool(value['enquiryStatus'])
+    enquiry.enquiryUpdate = value['enquiryUpdate']
+    print(enquiry.enquiryUserId, enquiry.enquiryCourseId, enquiry.enquiryDescription, enquiry.enquiryStatus, enquiry.enquiryUpdate)
     db.session.add(enquiry)
     db.session.commit()
     print(value)
@@ -408,10 +413,12 @@ def courses():
         courseBatchSize = request.form.get('courseBatchSize')
         courseSyllabus = request.form.get('courseSyllabus')
         courseVideoLink = request.form.get('courseUrl')
-        courseId = courseCategoryId+courseName+'0'
-        for i in Courses.query.all():
-            if i.courseId == courseId:
-                courseId = courseCategoryId+courseName+str(int(i.courseId[-1])+1)
+        course_last_id = Courses.query.order_by(Courses.id.desc()).first()
+        
+        courseId = 'CR0'+ str(course_last_id.id + 1 if course_last_id else 1)
+        # for i in Courses.query.all():
+        #     if i.courseId == courseId:
+        #         courseId = courseCategoryId+courseName+str(int(i.courseId[-1])+1)
         course = Courses(courseName=courseName, courseId=courseId, courseCategoryId=courseCategoryId, courseDuration=courseDuration, courseMinQualificationId=courseMinQualification, courseInstructorID=courseInstructorId, courseStatus=courseStatus, courseDescription=courseDescription, courseBatchSize=courseBatchSize, courseVideoLink=courseVideoLink) #, courseSyllabus=None
         db.session.add(course)
         db.session.commit()  

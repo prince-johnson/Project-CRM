@@ -197,6 +197,15 @@
                             </select>
                             <label>Enquiry Status</label>
                         </div>
+                        <div class="row">
+                            <div class="col s6">
+                                <select name="enquiryUpdate">
+                                    <option value="ENQUIRED" disabled selected>Choose your option</option>
+                                    <option value="ENROLLED">ENROLL</option>
+                                    <option value="REJECTED">REJECT</option>
+                                </select>
+                            </div>
+                        </div>
             
                     </div>
                     <div class="modal-footer">
@@ -240,6 +249,12 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col s2">
+            <strong>Enquiry Status : {{ enquiry.enquiryUpdate }}</strong>
+        </div>
+    </div>
+
 </div>
 {% endfor %}
 {% endif %}
