@@ -10,6 +10,7 @@ from functools import wraps
 
 ROWS_PER_PAGE = 5
 
+
 def admin_required(func):
     @wraps(func)
     def isadmin(*args,**kwargs):
@@ -23,6 +24,27 @@ views = Blueprint('views', __name__)
 categories =[]
 batches =[]
 enquiries = []
+
+def get_instructor_dict():
+    instructor_dict = {}
+    instructors = Instructor.query.all()
+    for instructor in instructors:
+        instructor_dict[instructor.instructorId] = instructor.instructorName
+    return instructor_dict
+
+def get_category_dict():
+    category_dict = {}
+    categories = Category.query.all()
+    for category in categories:
+        category_dict[category.categoryId] = category.categoryName
+    return category_dict
+
+def get_qualification_dict():
+    qualification_dict = {}
+    qualifications = Qualifications.query.all()
+    for qualification in qualifications:
+        qualification_dict[qualification.qualificationId] = qualification.qualificationName
+    return qualification_dict   
 
 #dashboard
 @views.route('/dashboard')
@@ -91,7 +113,7 @@ def batches():
     # Set the pagination configuration
     page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
-        batchId = "BA" + f"{(len(Batches.query.all())):03}"
+        batchId = "BA" + f"{(len(Batches.query.all()) + 1):03}"
         batchName = request.form.get('batchName')
         batchStrength = int(request.form.get('batchStrength'))
         batchCourseId = request.form.get('batchCourseId')
@@ -140,7 +162,7 @@ def editBatch(batchId):
     # batch.batchName = value['batchName']
     batch.batchStrength = value['batchStrength']
     # batch.batchCourseId = value['batchCourseId']
-    # batch.batchStatus = value['batchStatus']
+    batch.batchStatus = value['batchStatus']
     # batch.batchStartDate = value['batchStartDate']
     # batch.batchEndDate = value['batchEndDate']
     print(value)
@@ -359,6 +381,20 @@ def editQualification(qualificationId):
 def courses():
     # Set the pagination configuration
     page = request.args.get('page', 1, type=int)
+    categories = Category.query.all()
+    qualifications = Qualifications.query.all()
+    instructors=Instructor.query.all()
+    instructor_dict = {}
+    category_dict = {}
+    qualification_dict = {}
+
+    for instructor in instructors:
+        instructor_dict[instructor.instructorId] = instructor.instructorName
+    for category in categories:
+        category_dict[category.categoryId] = category.categoryName
+    for qualification in qualifications:
+        qualification_dict[qualification.qualificationId] = qualification.qualificationName
+        
     if request.method == 'POST':
         courseName = request.form.get('courseName')
         courseCategoryId = request.form.get('courseCategoryId')
@@ -377,7 +413,7 @@ def courses():
         course = Courses(courseName=courseName, courseId=courseId, courseCategoryId=courseCategoryId, courseDuration=courseDuration, courseMinQualificationId=courseMinQualification, courseInstructorID=courseInstructorId, courseStatus=courseStatus, courseDescription=courseDescription, courseBatchSize=courseBatchSize, courseVideoLink=courseVideoLink) #, courseSyllabus=None
         db.session.add(course)
         db.session.commit()  
-    if request.args:
+    if request.args.get('status'):
         print(request.args.get('status').split(',')) 
         listAll = False
         courses = Courses.query.filter(Courses.courseStatus.in_((request.args.get('status')).split(','))).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
@@ -388,7 +424,7 @@ def courses():
             courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
         print(courses)
         return render_template('courses.html', courses = courses, categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll = listAll)
-    return render_template('courses.html', user=current_user,courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE), categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll=True)
+    return render_template('courses.html', user=current_user,courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE), categories = category_dict, qualifications = qualification_dict, instructors=instructor_dict, listAll=True)
 
 #edit courses
 @views.route('/courses/<courseId>', methods=['PUT', 'PATCH'])
@@ -434,7 +470,7 @@ def searchCourse(searchBy, searchConstraint):
         courses = Courses.query.filter(Courses.courseId.like("%"+searchConstraint+"%")).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
         courses = Courses.query.filter(Courses.courseName.like("%"+searchConstraint+"%")).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    return render_template('courses.html',user=current_user, courses=courses, categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll=False)
+    return render_template('courses.html',user=current_user, courses=courses, categories = get_category_dict(), qualifications =get_qualification_dict(), instructors=get_instructor_dict(), listAll=False)
 
 # Delete Course
 @views.route('/courses/<courseId>', methods=['DELETE'])

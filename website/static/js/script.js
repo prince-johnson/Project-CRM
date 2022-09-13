@@ -63,6 +63,7 @@ function toggleBatch() {
 }
 //edit batch
 function editBatch(batchId) {
+    console.log(Boolean(document.getElementById('editBatchStatus' + batchId).value));
     strength = document.getElementById('editBatchStrength' + batchId).value
     if (strength == 0) {
         strength = document.getElementById('editBatchStrength' + batchId).placeholder
