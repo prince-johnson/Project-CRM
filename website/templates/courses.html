@@ -302,7 +302,7 @@
             <span class="card-subtitle"><em>CourseId : {{ course.courseId }}</em></span>
             <p class="card-subtitle"><em>Course Name : {{ course.courseName }}</em></p>
             <p>
-                <strong>Category </strong> : {{ course.courseCategoryId }}
+                <strong>Category </strong> : {{ categories[course.courseCategoryId] }}
             </p>
             <p>
                 <strong>Course Duration</strong> : {{ course.courseDuration }}
@@ -311,10 +311,10 @@
                 <strong>course Description</strong> : {{ course.courseDescription }}
             </p>
             <p>
-                <strong>Instructor</strong> : {{ course.courseInstructorID }}
+                <strong>Instructor</strong> : {{ instructors[course.courseInstructorID] }}
             </p>
             <p>
-                <strong>Min. Qualification</strong> : {{ course.courseMinQualificationId }}
+                <strong>Min. Qualification</strong> : {{ qualifications[course.courseMinQualificationId] }}
             </p>
             <p>
                 <strong>Batch Size</strong> : {{ course.courseBatchSize }}
