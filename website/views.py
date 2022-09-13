@@ -413,9 +413,11 @@ def courses():
         courseBatchSize = request.form.get('courseBatchSize')
         courseSyllabus = request.form.get('courseSyllabus')
         courseVideoLink = request.form.get('courseUrl')
+
         course_last_id = Courses.query.order_by(Courses.id.desc()).first()
         
         courseId = 'CR0'+ str(course_last_id.id + 1 if course_last_id else 1)
+
         # for i in Courses.query.all():
         #     if i.courseId == courseId:
         #         courseId = courseCategoryId+courseName+str(int(i.courseId[-1])+1)
