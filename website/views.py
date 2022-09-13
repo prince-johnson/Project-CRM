@@ -421,8 +421,8 @@ def courses():
             listAll = True
             courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
         print(courses)
-        return render_template('courses.html', courses = courses, categories = get_category_dict(), qualifications =get_qualification_dict(), instructors=get_instructor_dict(), listAll = listAll)
-    return render_template('courses.html', user=current_user,courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE), categories = get_category_dict(), qualifications =get_qualification_dict(), instructors=get_instructor_dict(), listAll=True)
+        return render_template('courses.html', courses = courses, categories = get_category_dict(), qualifications =get_qualification_dict(), instructors=get_instructor_dict(),qualifications_orm = Qualifications.query.all(),instructors_orm = Instructor.query.all(), listAll = listAll)
+    return render_template('courses.html', user=current_user,courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE), categories = get_category_dict(), qualifications =get_qualification_dict(), instructors=get_instructor_dict(),qualifications_orm = Qualifications.query.all(),instructors_orm = Instructor.query.all(), listAll=True)
 
 #edit courses
 @views.route('/courses/<courseId>', methods=['PUT', 'PATCH'])
@@ -468,7 +468,7 @@ def searchCourse(searchBy, searchConstraint):
         courses = Courses.query.filter(Courses.courseId.like("%"+searchConstraint+"%")).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
     elif searchBy == 'name':
         courses = Courses.query.filter(Courses.courseName.like("%"+searchConstraint+"%")).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    return render_template('courses.html',user=current_user, courses=courses, categories = get_category_dict(), qualifications =get_qualification_dict(), instructors=get_instructor_dict(), listAll=False)
+    return render_template('courses.html',user=current_user, courses=courses, categories = get_category_dict(), qualifications =get_qualification_dict(), instructors=get_instructor_dict(),qualifications_orm = Qualifications.query.all(),instructors_orm = Instructor.query.all(), listAll=False)
 
 # Delete Course
 @views.route('/courses/<courseId>', methods=['DELETE'])
