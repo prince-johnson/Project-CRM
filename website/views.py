@@ -392,19 +392,6 @@ def editQualification(qualificationId):
 def courses():
     # Set the pagination configuration
     page = request.args.get('page', 1, type=int)
-    categories = Category.query.all()
-    qualifications = Qualifications.query.all()
-    instructors=Instructor.query.all()
-    instructor_dict = {}
-    category_dict = {}
-    qualification_dict = {}
-
-    for instructor in instructors:
-        instructor_dict[instructor.instructorId] = instructor.instructorName
-    for category in categories:
-        category_dict[category.categoryId] = category.categoryName
-    for qualification in qualifications:
-        qualification_dict[qualification.qualificationId] = qualification.qualificationName
         
     if request.method == 'POST':
         courseName = request.form.get('courseName')
@@ -434,8 +421,8 @@ def courses():
             listAll = True
             courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
         print(courses)
-        return render_template('courses.html', courses = courses, categories = Category.query.all(), qualifications = Qualifications.query.all(), instructors=Instructor.query.all(), listAll = listAll)
-    return render_template('courses.html', user=current_user,courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE), categories = category_dict, qualifications = qualification_dict, instructors=instructor_dict, listAll=True)
+        return render_template('courses.html', courses = courses, categories = get_category_dict(), qualifications =get_qualification_dict(), instructors=get_instructor_dict(), listAll = listAll)
+    return render_template('courses.html', user=current_user,courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE), categories = get_category_dict(), qualifications =get_qualification_dict(), instructors=get_instructor_dict(), listAll=True)
 
 #edit courses
 @views.route('/courses/<courseId>', methods=['PUT', 'PATCH'])
