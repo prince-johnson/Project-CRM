@@ -268,7 +268,7 @@ def searchEnquiry(searchBy, searchConstraint):
     elif searchBy == 'name':
         enquiries = Enquiries.query.filter(Enquiries.enquiryCourseId.like("%"+searchConstraint+"%")).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
     
-    return render_template('enquiries.html',user=current_user, enquiries=enquiries, courses=courses, listAll=False)
+    return render_template('enquiries.html',user=current_user, course_id_names=get_course_dict(), enquiries=enquiries, courses=courses, listAll=False)
 
 # Edit enquiry
 @views.route('/enquiries/<enquiryId>', methods=['PUT', 'PATCH'])
