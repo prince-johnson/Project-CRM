@@ -246,6 +246,6 @@ def profile():
     # user_qualification = Qualifications.query.get(user_qualificationId)
     # user_quali_name = Qualifications.query.with_entities(Qualifications.qualificationName).filter_by(qualificationId =user_qualifications)
     print(user_qualification)
-    return render_template('profile.html', user_all=user_all,user=current_user,user_qualifications=user_qualification)
+    return render_template('userProfile.html', user_all=user_all,user=current_user,user_qualifications=user_qualification)
 
 
