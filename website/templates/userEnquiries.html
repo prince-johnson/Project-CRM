@@ -22,9 +22,8 @@
         <div class="modal-content">
             <div class="search-bar row">
                 <div class="input-field col s3">
-                    <select name="searchBy" id="searchBy">
+                    <select name="searchBy" id="searchBy" disabled>
                         <option value='id' selected>Enquiry Code</option>
-                        <option value='name' selected>Course Name</option>
                     </select>
                     <label>Search By</label>
                 </div>
@@ -36,7 +35,7 @@
             </div>
             <div class="modal-footer">
                 <button class="modal-close btn-flat waves-effect waves-orange" type="submit" name="action"
-                    onClick="userSearchEnquiry('')">Search
+                    onClick="userSearchEnquiry('id')">Search
                     <i class="material-icons right">search</i>
                 </button>
             </div>
