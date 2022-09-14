@@ -1,0 +1,172 @@
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+ WHERE id = 8
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4'
+ WHERE id = 9
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4'
+ WHERE id = 10
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'
+ WHERE id = 11
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
+ WHERE id = 12
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'
+ WHERE id = 13
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+ WHERE id = 14
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
+ WHERE id = 15
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
+ WHERE id = 16
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'
+ WHERE id = 17
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4'
+ WHERE id = 18
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4'
+ WHERE id = 19
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+ WHERE id = 20
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4'
+ WHERE id = 21
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
+ WHERE id = 22
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = '//vjs.zencdn.net/v/oceans.mp4'
+ WHERE id = 23
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'
+ WHERE id = 24
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'
+ WHERE id = 25
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
+ WHERE id = 26
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4'
+ WHERE id = 27
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+ WHERE id = 28
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
+ WHERE id = 29
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4'
+ WHERE id = 30
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = '//vjs.zencdn.net/v/oceans.mp4'
+ WHERE id = 31
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4'
+ WHERE id = 32
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4'
+ WHERE id = 33
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = '//vjs.zencdn.net/v/oceans.mp4'
+ WHERE id = 34
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4'
+ WHERE id = 35
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4'
+ WHERE id = 36
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
+ WHERE id = 37
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'
+ WHERE id = 38
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4'
+ WHERE id = 39
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4'
+ WHERE id = 40
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
+ WHERE id = 41
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4'
+ WHERE id = 42
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
+ WHERE id = 43
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4'
+ WHERE id = 44
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'
+ WHERE id = 45
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+ WHERE id = 46
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4'
+ WHERE id = 47
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4'
+ WHERE id = 48
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
+ WHERE id = 49
+GO
+UPDATE [dbo].[courses]
+   SET [courseVideoLink] = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
+ WHERE id = 50
+GO
