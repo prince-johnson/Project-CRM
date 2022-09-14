@@ -48,14 +48,14 @@
 
     <div id="modal2" class="modal">
         <div class="modal-content">
-            <form action="" method="post">
+            <form action="" onsubmit="event.preventDefault()" method="post">
                 <div class="row">
                     <div class="input-field col s6">
-                        <input name="userName" type="text" id="userName" class="validate"></input>
+                        <input name="userName" type="text" id="userName" class="validate" required></input>
                         <label for="userName">Full name</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="userEmail" type="email" class="validate" name="userEmail">
+                        <input id="userEmail" type="email" class="validate" name="userEmail" required>
                         <label for="userEmail">Email</label>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         <label>Role</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="userPhone" type="tel" class="validate" name="userPhone">
+                        <input id="userPhone" type="tel" class="validate" name="userPhone" required>
                         <label for="userPhone">Phone</label>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="modal-close btn-flat waves-effect waves-orange" type="submit" name="action">Submit
+                    <button class="btn-flat waves-effect waves-orange" type="submit" name="action">Submit
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
