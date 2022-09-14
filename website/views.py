@@ -443,7 +443,7 @@ def courses():
             listAll = True
             courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
         print(courses)
-        return render_template('courses.html', courses = courses, categories = get_category_dict(), qualifications =get_qualification_dict(), instructors=get_instructor_dict(),qualifications_orm = Qualifications.query.all(),instructors_orm = Instructor.query.all(), listAll = listAll)
+        return render_template('courses.html', user=current_user, courses = courses, categories = get_category_dict(), qualifications =get_qualification_dict(), instructors=get_instructor_dict(),qualifications_orm = Qualifications.query.all(),instructors_orm = Instructor.query.all(), listAll = listAll)
     return render_template('courses.html', user=current_user,courses = Courses.query.order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE), categories = get_category_dict(), qualifications =get_qualification_dict(), instructors=get_instructor_dict(),qualifications_orm = Qualifications.query.all(),instructors_orm = Instructor.query.all(), listAll=True)
 
 #edit courses
