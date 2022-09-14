@@ -138,6 +138,7 @@ def userSearchEnquiry(searchBy, searchConstraint):
         for i in userEnquiries.items:
             if i.enquiryCourseId in course_id_names.keys():
                 courses = i
+                print(courses)
                 found = True
         if not found:
             course = []
