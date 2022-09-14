@@ -48,7 +48,7 @@
 
     <div id="modal2" class="modal">
         <div class="modal-content">
-            <form action="" method="post" onsubmit="event.preventDefault()">
+            <form action="" method="post">
                 <div class="row">
                     <div class="input-field col s12">
                         <select name="courseCategoryId" id="categoryId">
@@ -104,20 +104,9 @@
                     </div>                        
                 </div>
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12">
                         <textarea name="courseBatchSize" id="editcourseBatchSize" class="materialize-textarea validate" required></textarea>
                         <label for="courseBatchSize">Course Batch Size </label>
-                    </div>
-                    <div class="input-field col s6">
-                        <div class="file-field input-field">
-                            <div class="btn">
-                                <span>File</span>
-                                <input name="courseSyllabus" id="editSyallbus" type="file" class="materialize">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" placeholder="Upload Syllabus in PDF">
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -127,7 +116,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn-flat waves-effect waves-orange" type="submit" name="action"
+                    <button class="modal-close btn-flat waves-effect waves-orange" type="submit" name="action"
                         onClick="addCourse()">Add
                         <i class="material-icons right">add</i>
                     </button>

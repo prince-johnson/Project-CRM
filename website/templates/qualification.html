@@ -51,7 +51,7 @@
     </a>
     <div id="modal2" class="modal">
         <div class="modal-content">
-            <form action="" method="post" onsubmit="event.preventDefault()">
+            <form action="" method="post">
                 <div class="row">
                     <!--
                     <div class="input-field col s6">
@@ -125,7 +125,7 @@
 {% for qual in qualifications.items %}
     <div class="card">
         <div class="row right">
-            <a href="#{{ qual.qualificationId }}" class="modal-close btn-flat green-text waves-effect waves-green" onclick="$('#{{ qual.qualificationId }}').modal('open');">Edit
+            <a href="#{{ qual.qualificationId }}" class="modal-trigger btn-flat green-text waves-effect waves-green" onclick="$('#{{ qual.qualificationId }}').modal('open');">Edit
                 <i class="material-icons green-text right">edit</i>
             </a>
             <div id="{{ qual.qualificationId }}" class="modal">
