@@ -171,6 +171,7 @@ function editEnquiry(enquiryId) {
             enquiryCourseId: document.getElementById('editenquiryCourseId' + enquiryId).value,
             enquiryDescription: enquiryDescription,
             enquiryStatus: document.getElementById('editenquiryStatus' + enquiryId).value,
+            enquiryUpdate: document.getElementById('editenquiryUpdate' + enquiryId).value
         })
     })
         .then(() => window.location.href = window.location.href);

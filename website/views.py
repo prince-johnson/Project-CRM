@@ -203,15 +203,15 @@ def enquiries():
     # Set the pagination configuration
     page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
-        enquiryId = request.form.get('enquiryId')
+        enquiryCode = f"EQ{(len(Enquiries.query.all())+1):02}"
         enquiryUserId = request.form.get('enquiryUserId')
         enquiryCourseId = request.form.get('enquiryCourseId')
         enquiryStatus = bool(request.form.get('enquiryStatus'))
         enquiryDescription = request.form.get('enquiryDescription')
         enquiryUpdate = request.form.get('enquiryUpdate')
         print(enquiryUpdate)
-        print(enquiryId, enquiryUserId, enquiryStatus, enquiryDescription,enquiryUpdate)
-        new_enquiry = Enquiries(enquiryId=enquiryId, enquiryUserId=enquiryUserId, enquiryCourseId=enquiryCourseId, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription,enquiryUpdate=enquiryUpdate)
+        print(enquiryCode, enquiryUserId, enquiryStatus, enquiryDescription,enquiryUpdate)
+        new_enquiry = Enquiries(enquiryCode=enquiryCode, enquiryUserId=enquiryUserId, enquiryCourseId=enquiryCourseId, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription,enquiryUpdate=enquiryUpdate)
         db.session.add(new_enquiry)
         db.session.commit()
     enquiries=Enquiries.query.order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
@@ -265,7 +265,7 @@ def searchEnquiry(searchBy, searchConstraint):
 @admin_required
 def editEnquiry(enquiryId):
     enquiry = Enquiries.query.get_or_404(enquiryId)
-    value = json.loads(request.data) # ? TODO: check if this is the right way to do this
+    value = json.loads(request.data) 
     print(value)
     enquiry.enquiryUserId = value['enquiryUserId']
     enquiry.enquiryCourseId = value['enquiryCourseId']
