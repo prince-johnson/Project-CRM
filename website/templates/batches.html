@@ -75,8 +75,9 @@
                         <label for="batchName">Enter the batch name</label>
                     </div>
                     <div class="input-field col s6">
-                        <textarea name="batchStrength" id="batchStrength" class="materialize-textarea validate" required></textarea>
+                        <textarea onchange="validateStrength()" name="batchStrength" id="batchStrength" class="materialize-textarea validate" required></textarea>
                         <label for="batchStrength">Enter the batch strength</label>
+                        <span class="hide" id="batchStrengthHelper">invalid input</span>
                     </div>
                 </div>
                 <div class="row">

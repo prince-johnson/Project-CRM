@@ -51,6 +51,16 @@ function userBack() {
 }
 
 // Batch 
+// validate strength input
+function validateStrength() {
+    if (parseInt(document.getElementById('batchStrength').value)) {
+        document.getElementById('batchStrengthHelper').className = 'hide helper-text'
+    }
+    else {
+        document.getElementById('batchStrengthHelper').className = 'visible helper-text red-text'
+    }
+}
+
 // Close/Open Batch
 function toggleBatch() {
     toggleSwitch = document.getElementById('batchSwitch')
