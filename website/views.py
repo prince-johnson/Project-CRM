@@ -414,6 +414,7 @@ def courses():
         courseSyllabus = request.form.get('courseSyllabus')
         courseVideoLink = request.form.get('courseUrl')
 
+
         course_last_id = Courses.query.order_by(Courses.id.desc()).first()
         
         courseId = 'CR0'+ str(course_last_id.id + 1 if course_last_id else 1)
@@ -422,6 +423,7 @@ def courses():
         #     if i.courseId == courseId:
         #         courseId = courseCategoryId+courseName+str(int(i.courseId[-1])+1)
         course = Courses(courseName=courseName, courseId=courseId, courseCategoryId=courseCategoryId, courseDuration=courseDuration, courseMinQualificationId=courseMinQualification, courseInstructorID=courseInstructorId, courseStatus=courseStatus, courseDescription=courseDescription, courseBatchSize=courseBatchSize, courseVideoLink=courseVideoLink) #, courseSyllabus=None
+
         db.session.add(course)
         db.session.commit()  
     if request.args.get('status'):
