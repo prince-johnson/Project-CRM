@@ -136,7 +136,7 @@
 {% for category in categories.items %}
     <div class="card" id="page">
         <div class="row right">
-            <a href="#{{ category.categoryId }}" class="modal-close btn-flat green-text waves-effect waves-green" onclick="$('#{{ category.categoryId }}').modal('open');">Edit
+            <a href="#{{ category.categoryId }}" class="modal-trigger btn-flat green-text waves-effect waves-green" onclick="$('#{{ category.categoryId }}').modal('open');">Edit
                 <i class="material-icons green-text right">edit</i>
             </a>
             <div id="{{ category.categoryId }}" class="modal">
@@ -168,7 +168,7 @@
                         </div>
                         
                         <div class="modal-footer">
-                            <button class="modal-close btn-flat waves-effect waves-orange" type="submit"
+                            <button class="btn-flat waves-effect waves-orange" type="submit"
                                 name="action" onClick="editCategory('{{ category.categoryId }}')">Submit
                                 <i class="material-icons right">send</i>
                             </button>
