@@ -34,6 +34,7 @@ def dashboard():
     # Set the pagination configuration
     page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
+        enquiryCode = f"EQ{(len(Enquiries.query.all())+1):02}"
         enquiryUserId = request.form.get('enquiryUserId')
         enquiryCourseId = request.form.get('enquiryCourseId')
         course = Courses.query.filter_by(courseId=enquiryCourseId).first()
@@ -41,7 +42,7 @@ def dashboard():
         enquiryUpdate = 'ENQUIRED'
         enquiryDescription = request.form.get('enquiryDescription')
         print(enquiryCourseId, enquiryStatus, enquiryUpdate, enquiryDescription)
-        new_enquiry = Enquiries(enquiryUserId=enquiryUserId, enquiryCourseId=course.id, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription)
+        new_enquiry = Enquiries( enquiryCode= enquiryCode, enquiryUserId=enquiryUserId, enquiryCourseId=course.id, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription)
         db.session.add(new_enquiry)
         db.session.commit()
     courses = Courses.query.filter_by(courseStatus = 1).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
