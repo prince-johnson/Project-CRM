@@ -106,8 +106,8 @@
                         <textarea id="enquiryDescription" name="enquiryDescription" class="materialize-textarea"></textarea>
                         <label for="enquiryDescription">Enter an enquiry</label>
                     </div>
-                    <div class="input-field col s6">
-                        <textarea id="enquiryUpdate" name="enquiryUpdate" class="materialize-textarea"></textarea>
+                    <div class="input-field col s6" hidden>
+                        <textarea id="enquiryUpdate" name="enquiryUpdate" class="materialize-textarea" >ENQUIRED</textarea>
                         <label for="enquiryUpdate">Enquiry Update</label>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
         </a>
         <div id="{{ enquiry.enquiryId }}" class="modal">
             <div class="modal-content">
-                <form action="">
+                <form action="" onsubmit="event.preventDefault()">
                     <div class="row">
                         <div class="input-field col s12">
                             <textarea name="enquiryDescription" id="editenquiryDescription{{ enquiry.enquiryId }}" class="materialize-textarea" placeholder="{{ enquiry.enquiryDescription }}" ></textarea>
@@ -197,14 +197,23 @@
                             </select>
                             <label>Enquiry Status</label>
                         </div>
-                        <div class="row">
-                            <div class="col s6">
-                                <select name="enquiryUpdate">
-                                    <option value="ENQUIRED" disabled selected>Choose your option</option>
-                                    <option value="ENROLLED">ENROLL</option>
-                                    <option value="REJECTED">REJECT</option>
-                                </select>
-                            </div>
+                        <div class="input-field col s6">
+                            <select name="enquiryUpdate" id="editenquiryUpdate{{ enquiry.enquiryId }}">
+                                {% if enquiry.enquiryUpdate == "ENROLLED" %}
+                                <option value="ENQUIRED" disabled>ENQUIRED</option>
+                                <option value="ENROLLED" selected>ENROLL</option>
+                                <option value="REJECTED">REJECT</option>
+                                {% elif enquiry.enquiryUpdate == "REJECTED" %}
+                                <option value="ENQUIRED" disabled>ENQUIRED</option>
+                                <option value="ENROLLED">ENROLL</option>
+                                <option value="REJECTED" selected>REJECT</option>
+                                {% else %}
+                                <option value="ENQUIRED" disabled selected>ENQUIRED</option>
+                                <option value="ENROLLED">ENROLL</option>
+                                <option value="REJECTED">REJECT</option>
+                                {% endif %}
+                            </select>
+                            <label for="enquiryUpdate">Enquiry Update</label>
                         </div>
             
                     </div>

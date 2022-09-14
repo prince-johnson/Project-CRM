@@ -133,9 +133,7 @@ def userSearchEnquiry(searchBy, searchConstraint):
         course_id_names[i.id] = i.courseName
     if searchBy == 'id':
         userEnquiries = Enquiries.query.filter(Enquiries.enquiryCode.like("%"+searchConstraint+"%")).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    elif searchBy == 'name':
-        
-        
+    elif searchBy == 'name':  
         userEnquiries = Enquiries.query.filter_by(enquiryUserId = current_user.userId).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
         for i in userEnquiries.items:
             if i.enquiryCourseId in course_id_names.keys():
