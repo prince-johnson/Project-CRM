@@ -47,6 +47,13 @@ def get_qualification_dict():
         qualification_dict[qualification.qualificationId] = qualification.qualificationName
     return qualification_dict   
 
+def get_course_dict():
+    course_id_names = dict()
+    course_obj = Courses.query.all()
+    for i in course_obj:
+        course_id_names[i.id] = i.courseName
+    return course_id_names
+
 #dashboard
 @views.route('/dashboard')
 @login_required
@@ -227,9 +234,9 @@ def enquiries():
         elif request.args.get('status').split(',') == ['']:
             listAll = True
             enquiries = Enquiries.query.order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
-        return render_template('enquiries.html',user=current_user, enquiries=enquiries, listAll=listAll, users=users, courses=courses, enquiryStatus=enquiryStatus)
+        return render_template('enquiries.html',user=current_user,course_id_names=get_course_dict(), enquiries=enquiries, listAll=listAll, users=users, courses=courses, enquiryStatus=enquiryStatus)
     
-    return render_template('enquiries.html',user=current_user, enquiries=enquiries, listAll=True, users=users, courses=courses, enquiryStatus=enquiryStatus)
+    return render_template('enquiries.html',user=current_user,course_id_names=get_course_dict(), enquiries=enquiries, listAll=True, users=users, courses=courses, enquiryStatus=enquiryStatus)
 
 # #delete enquiry
 # @views.route('/enquiries/<enquiryId>', methods=['DELETE'])
