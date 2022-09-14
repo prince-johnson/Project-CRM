@@ -34,6 +34,7 @@ def dashboard():
     # Set the pagination configuration
     page = request.args.get('page', 1, type=int)
     if request.method == 'POST':
+        enquiryCode = f"EQ{(len(Enquiries.query.all())+1):02}"
         enquiryUserId = request.form.get('enquiryUserId')
         enquiryCourseId = request.form.get('enquiryCourseId')
         course = Courses.query.filter_by(courseId=enquiryCourseId).first()
@@ -41,7 +42,7 @@ def dashboard():
         enquiryUpdate = 'ENQUIRED'
         enquiryDescription = request.form.get('enquiryDescription')
         print(enquiryCourseId, enquiryStatus, enquiryUpdate, enquiryDescription)
-        new_enquiry = Enquiries(enquiryUserId=enquiryUserId, enquiryCourseId=course.id, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription)
+        new_enquiry = Enquiries( enquiryCode= enquiryCode, enquiryUserId=enquiryUserId, enquiryCourseId=course.id, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription)
         db.session.add(new_enquiry)
         db.session.commit()
     courses = Courses.query.filter_by(courseStatus = 1).order_by(Courses.courseId).paginate(page=page, per_page=ROWS_PER_PAGE)
@@ -133,17 +134,7 @@ def userSearchEnquiry(searchBy, searchConstraint):
         course_id_names[i.id] = i.courseName
     if searchBy == 'id':
         userEnquiries = Enquiries.query.filter(Enquiries.enquiryCode.like("%"+searchConstraint+"%")).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
-    elif searchBy == 'name':  
-        userEnquiries = Enquiries.query.filter_by(enquiryUserId = current_user.userId).order_by(Enquiries.enquiryId).paginate(page=page, per_page=ROWS_PER_PAGE)
-        for i in userEnquiries.items:
-            if i.enquiryCourseId in course_id_names.keys():
-                courses = i
-                print(courses)
-                found = True
-        if not found:
-            course = []
-        
-            
+
     
     return render_template('/userEnquiries.html', userEnquiries=userEnquiries, courses=courses, listAll=False,course_id_names = course_id_names, user=current_user)
 
