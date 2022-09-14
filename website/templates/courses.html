@@ -48,7 +48,7 @@
 
     <div id="modal2" class="modal">
         <div class="modal-content">
-            <form action="" method="post">
+            <form action="" method="post" onsubmit="event.preventDefault()">
                 <div class="row">
                     <div class="input-field col s12">
                         <select name="courseCategoryId" id="categoryId">
@@ -59,14 +59,14 @@
                         <label>Category</label>
                     </div>
                     <div class="input-field col s6">
-                        <textarea name="courseName" id="editCourseName" class="materialize-textarea" ></textarea>
+                        <textarea name="courseName" id="editCourseName" class="materialize-textarea validate" required></textarea>
                         <label for="courseName">Course Name</label>
                     </div>
                     
                 </div>
                 <div class="row">
                     <div class="input-field col s6">
-                        <textarea type="text" name="courseDuration" id="editCourseDuration" class="materialize-textarea"></textarea>
+                        <textarea type="text" name="courseDuration" id="editCourseDuration" class="materialize-textarea validate" required></textarea>
                         <label>Course Duration</label>
                     </div>
                     <div class="input-field col s6">
@@ -105,7 +105,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s6">
-                        <textarea name="courseBatchSize" id="editcourseBatchSize" class="materialize-textarea" ></textarea>
+                        <textarea name="courseBatchSize" id="editcourseBatchSize" class="materialize-textarea validate" required></textarea>
                         <label for="courseBatchSize">Course Batch Size </label>
                     </div>
                     <div class="input-field col s6">
@@ -122,12 +122,12 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <textarea name="courseUrl" id="editCourseUrl" class="materialize-textarea"></textarea>
+                        <textarea name="courseUrl" id="editCourseUrl" class="materialize-textarea validate" required></textarea>
                         <label for="courseUrl">Course Video Link</label>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="modal-close btn-flat waves-effect waves-orange" type="submit" name="action"
+                    <button class="btn-flat waves-effect waves-orange" type="submit" name="action"
                         onClick="addCourse()">Add
                         <i class="material-icons right">add</i>
                     </button>
@@ -190,6 +190,7 @@
                                 {% for key, value in categories.items() %}
                                 <option value='{{ key }}'>{{ key }} - {{ value }}</option>
                                 {% endfor %}
+                                <option selected value="{{ course.courseCategoryId }}">{{ categories[course.courseCategoryId] }}</option>
                             </select>
                             <label>Category</label>
                         </div>
@@ -204,7 +205,7 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <textarea type="text" name="courseDuration" id="editCourseDuration{{ course.courseId }}" class="materialize-textarea" placeholder="{{ course.courseDuration }}"></textarea>
+                            <textarea type="text" name="courseDuration" id="editCourseDuration{{ course.courseId }}" class="materialize-textarea" placeholder="{{ course.courseDuration }}">{{ course.courseDuration }}</textarea>
                             <label>Course Duration</label>
                         </div>
                         <div class="input-field col s6">

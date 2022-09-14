@@ -51,7 +51,7 @@
     </a>
     <div id="modal2" class="modal">
         <div class="modal-content">
-            <form action="" method="post">
+            <form action="" method="post" onsubmit="event.preventDefault()">
                 <div class="row">
                     <!--
                     <div class="input-field col s6">
@@ -59,7 +59,7 @@
                         <label for="categoryId">Enter the qualification Id</label>
                     </div>-->
                     <div class="input-field col s6">
-                        <textarea name="qualificationName" id="qualificationName" class="materialize-textarea"></textarea>
+                        <textarea name="qualificationName" id="qualificationName" class="materialize-textarea validate" required></textarea>
                         <label for="qualificationName">Enter the qualification</label>
                     </div>
                     <div class="input-field col s6">
@@ -78,7 +78,7 @@
                     </div>
                 </div>-->
                 <div class="modal-footer">
-                    <button class="modal-close btn-flat waves-effect waves-orange" type="submit"
+                    <button class="btn-flat waves-effect waves-orange" type="submit"
                         name="action">Submit
                         <i class="material-icons right">send</i>
                     </button>
@@ -130,7 +130,7 @@
             </a>
             <div id="{{ qual.qualificationId }}" class="modal">
                 <div class="modal-content">
-                    <form action="">
+                    <form action="" onsubmit="event.preventDefault()">
                         <div class="row">
                             <div class="input-field col s6">
                                 <textarea name="qualificationId" id="editQualificationId{{ qual.qualificationId }}" class="materialize-textarea" placeholder="{{ qual.qualificationId }}" disabled></textarea>
