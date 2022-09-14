@@ -412,7 +412,7 @@ def courses():
         for i in Courses.query.all():
             if i.courseId == courseId:
                 courseId = courseCategoryId+courseName+str(int(i.courseId[-1])+1)
-        course = Courses(courseName=courseName, courseId=courseId, courseCategoryId=courseCategoryId, courseDuration=courseDuration, courseMinQualificationId=courseMinQualification, courseInstructorID=courseInstructorId, courseStatus=courseStatus, courseDescription=courseDescription, courseBatchSize=courseBatchSize, courseVideoLink=courseVideoLink) #, courseSyllabus=None
+        course = Courses(courseName=courseName, courseId=courseId, courseCategoryId=courseCategoryId, courseDuration=courseDuration, courseMinQualificationId=courseMinQualification, courseInstructorId=courseInstructorId, courseStatus=courseStatus, courseDescription=courseDescription, courseBatchSize=courseBatchSize, courseVideoLink=courseVideoLink) #, courseSyllabus=None
         db.session.add(course)
         db.session.commit()  
     if request.args.get('status'):
