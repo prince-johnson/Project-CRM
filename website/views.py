@@ -1,7 +1,7 @@
 from tkinter.tix import ROW
 from flask import Blueprint, render_template, request, jsonify, url_for, redirect, flash
 from . import db
-from .models import Category, Batches, Courses, Enquiries, Users, Qualifications, ActivityLog, Instructor
+from .models import Category, Batches, Courses, Enquiries, Users, Qualifications, ActivityLog, Instructor, CourseEnrollment
 import json
 from sqlalchemy import func, Date, desc
 from datetime import date
@@ -216,6 +216,10 @@ def enquiries():
         enquiryStatus = bool(request.form.get('enquiryStatus'))
         enquiryDescription = request.form.get('enquiryDescription')
         enquiryUpdate = request.form.get('enquiryUpdate')
+        if enquiryUpdate == 'ENROLLED':
+            enroll = CourseEnrollment(userId=enquiryUserId, courseId=enquiryCourseId, batchId =2, enrollStatus = True, score = 0)
+            db.session.add(enroll)
+            db.session.commit()
         print(enquiryUpdate)
         print(enquiryCode, enquiryUserId, enquiryStatus, enquiryDescription,enquiryUpdate)
         new_enquiry = Enquiries(enquiryCode=enquiryCode, enquiryUserId=enquiryUserId, enquiryCourseId=enquiryCourseId, enquiryStatus=enquiryStatus, enquiryDescription=enquiryDescription,enquiryUpdate=enquiryUpdate)
@@ -279,6 +283,10 @@ def editEnquiry(enquiryId):
     enquiry.enquiryDescription = value['enquiryDescription']
     enquiry.enquiryStatus = bool(value['enquiryStatus'])
     enquiry.enquiryUpdate = value['enquiryUpdate']
+    if enquiry.enquiryUpdate == 'ENROLLED':
+            enroll = CourseEnrollment(userId=enquiry.enquiryUserId, courseId=enquiry.enquiryCourseId, batchId =2, enrollStatus = True, score = 0)
+            db.session.add(enroll)
+            db.session.commit()
     print(enquiry.enquiryUserId, enquiry.enquiryCourseId, enquiry.enquiryDescription, enquiry.enquiryStatus, enquiry.enquiryUpdate)
     db.session.add(enquiry)
     db.session.commit()
